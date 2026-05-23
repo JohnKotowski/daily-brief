@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief v2 PREVIEW · 2026-05-23</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  .preview-banner { background: linear-gradient(135deg,var(--rust),var(--ocean)); color:#fff; padding: 10px 14px; border-radius: 8px; margin: 0 0 18px; font-size: 13px; }
+  .preview-banner strong { font-size: 14px; display: block; margin-bottom: 2px; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS (existing) */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="brief-head">
+  <h1>Daily Brief</h1>
+  <p class="sub">Saturday, May 23, 2026 · agenda + 7 conversations + 12 stories</p>
+</header>
+
+<div class="preview-banner">
+  <strong>📝 SAMPLE — v2 preview</strong>
+  New sections at top: Today's Agenda + Active Conversations. Reply on Telegram with what you'd like changed before I lock this into the daily skill.
+</div>
+
+<nav class="section-nav">
+  <a href="#agenda">Today's Agenda</a>
+  <a href="#conversations">Conversations</a>
+  <a href="#ai-products">AI Products</a>
+  <a href="#ai-meta">AI Industry</a>
+  <a href="#innovation">Innovation</a>
+  <a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Sat May 23</h2>
+
+<div class="agenda-conflict">
+  <strong>⚠️ Conflict 1:00 PM</strong> — Lily's Snipers practice AND her 4-on-4 game both start at 1:00 PM. She can only attend one. Suggest 4-on-4 (real game) and skip practice — flag the coach.
+</div>
+
+<div class="agenda">
+  <div class="agenda-item">
+    <div class="time">1:00 PM</div>
+    <div class="body">
+      <div class="title">Lily · Snipers U11 AAA Black — Practice <span class="cal-tag">Snipers</span></div>
+      <div class="meta">1:00–2:00 PM</div>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="time">1:00 PM</div>
+    <div class="body">
+      <div class="title">Lily · 4 on 4 Team Red vs Green <span class="cal-tag">Family</span></div>
+      <div class="meta">1:00–2:00 PM</div>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="time">4:45 PM</div>
+    <div class="body">
+      <div class="title">Lily · Green Eagles ENLL Picture Day <span class="cal-tag">Green Eagles</span></div>
+      <div class="meta">Picture day — arrive in full gear</div>
+    </div>
+  </div>
+  <div class="agenda-item">
+    <div class="time">6:00 PM</div>
+    <div class="body">
+      <div class="title">Mark · U15B Light Blue vs Red <span class="cal-tag">Family</span></div>
+      <div class="meta">6:00–7:00 PM</div>
+    </div>
+  </div>
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin-top:8px;">Work calendar (buyerson + pricingsaas) is clear. Calendars checked: personal, family, Myers Snipers, Green Eagles, SSHD, Nepean Wildcats, buyerson, pricingsaas.</p>
+
+<!-- ============== ACTIVE CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+<p style="font-size:12px; color:var(--slate); margin: 0 0 12px;">Human-only. Newsletters and notifications filtered out.
+<br><span class="badge" style="background:var(--red); color:#fff;">Action</span> needs you to do something ·
+<span class="badge" style="background:var(--amber); color:#fff;">Follow-up</span> waiting on a reply ·
+<span class="badge" style="background:var(--olive); color:#fff;">FYI</span> just so you know</p>
+
+<div class="conv action">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Action</span> Emily Turcotte (Wildcats)</div>
+      <div class="when">Thu/Fri</div>
+    </div>
+    <div class="subj">Jersey orders due <strong>Jun 8</strong> · sock sizes · volunteer / bench-staff registration</div>
+    <div class="note">Lily's preferred jersey #13 is confirmed. Order needs to be placed at the Gadar link. Sock-size form attached. Volunteer cert thread separate — needs review of who's certifying for the season.</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e4d3ca0041efed" target="_blank">Open Jerseys/Socks thread →</a>
+  </div>
+</div>
+
+<div class="conv action">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Action</span> Jennifer Kelly · U13 team budget close-out</div>
+      <div class="when">Thu</div>
+    </div>
+    <div class="subj">$1,754.55 remaining · ~$109.66 per family refund · 16 families</div>
+    <div class="note">Pallavi confirmed no more payments coming in. You're cleared to e-transfer refunds to families and then close the team bank account with Jennifer.</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e45be202661f8f" target="_blank">Open NMHA refund thread →</a>
+  </div>
+</div>
+
+<div class="conv action">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Action</span> Julie Lattanzio (School)</div>
+      <div class="when">Thu</div>
+    </div>
+    <div class="subj">Grade 5 EOYT field trip form — return 2nd page + medical pages</div>
+    <div class="note">Lily came home with the End-of-Year Field Trip form. School needs the permission page + medical info returned, or pay online via School Cash.</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e4b22ebad1f324" target="_blank">Open Grade 5 EOYT →</a>
+  </div>
+</div>
+
+<div class="conv followup">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Follow-up</span> Bruce Gillespie · Squash</div>
+      <div class="when">Tue (4d silent)</div>
+    </div>
+    <div class="subj">You offered Thu May 21 / Sat May 23 9:30am / Wed May 27 5:30pm</div>
+    <div class="note">Bruce hasn't picked yet. Sat May 23 9:30am has passed (you're playing other stuff today anyway). Wed May 27 5:30pm is still open — nudge him?</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e0dd497b27a1b7" target="_blank">Open squash thread →</a>
+  </div>
+</div>
+
+<div class="conv followup">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Follow-up</span> Tessa Belanger (School) · POWWOW</div>
+      <div class="when">Wed</div>
+    </div>
+    <div class="subj">Mark wanted to attend — you asked "is it too late?" · event was Fri May 22</div>
+    <div class="note">No reply from Tessa. Event has passed; ask her if Mark got to attend or close the loop.</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e2d3305bdf6127" target="_blank">Open Powwow thread →</a>
+  </div>
+</div>
+
+<div class="conv followup">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">Follow-up</span> Ken Evraire · 5X Adventure Camp</div>
+      <div class="when">Wed</div>
+    </div>
+    <div class="subj">Submit availability for team-leader sessions (Jul 6 – Aug 21)</div>
+    <div class="note">7 weeks listed: Jul 6–10, Jul 13–17, Jul 20–24, Jul 27–Aug 1, Aug 4–7, Aug 10–14, Aug 17–21. Note Aug 10–14 overlaps your Mazury sailing leg — exclude that one.</div>
+    <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/19e459eae9259c45" target="_blank">Open Adventure Camp →</a>
+  </div>
+</div>
+
+<div class="conv fyi">
+  <div class="flag"></div>
+  <div class="main">
+    <div class="head">
+      <div class="who"><span class="badge">FYI</span> Jeremy Kyte · Spring 2 squash league</div>
+      <div class="when">Tue</div>
+    </div>
+    <div class="subj">First Spring-2 session: <strong>Wed May 27, 4:15 PM, Jim Durrell Arena</strong></div>
+    <div class="note">No action needed — calendar already shows that window is free, but worth adding the recurring event yourself or letting me add it.</div>
+  </div>
+</div>
+
+<!-- ============== AI PRODUCTS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+  <summary>Anthropic's Project Glasswing finds 10K+ critical vulnerabilities in a month <span class="source-tag">Anthropic · HN 426</span>
+    <span class="teaser">Claude Mythos Preview, run with ~50 partners against systemically important software, surfaced more high/critical CVEs than humans can triage.</span>
+  </summary>
+  <div class="body-news">
+    <p>Anthropic's first public update on Project Glasswing — a collaboration with about 50 partners to find and patch vulnerabilities in critical software before models can weaponise them — reports more than 10,000 high- or critical-severity findings in a single month using Claude Mythos Preview. The framing matters: Anthropic is explicit that discovery is no longer the bottleneck — verification, disclosure, and patching are. That inverts most of the assumptions baked into the existing CVE ecosystem (bug bounties, disclosure timelines, vendor SLAs) and quietly previews the next argument from the labs: that defensive AI work justifies the offensive risks. If you maintain any production stack, the operational implication is that your incoming-CVE volume is about to step-function up.</p>
+    <a class="source-link" href="https://www.anthropic.com/research/glasswing-initial-update" target="_blank" rel="noopener">Read at Anthropic →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Microsoft starts canceling Claude Code licenses <span class="source-tag">The Verge · HN 233</span>
+    <span class="teaser">The OpenAI-aligned giant is pulling Anthropic's coding agent from internal estates as it consolidates around its own Copilot stack.</span>
+  </summary>
+  <div class="body-news">
+    <p>Microsoft has begun canceling Claude Code licenses for internal and enterprise users, redirecting workflows into its own Copilot-branded coding tools. Given Microsoft's OpenAI exposure, the move reads less as a procurement decision and more as a tightening of the platform war — the same dynamic that pushed AWS to Anthropic and Google to first-party silicon. The wider signal for buyers: multi-model strategies inside the hyperscalers are getting harder to defend year-on-year, and any enterprise standardising on "Claude inside Microsoft" should plan for a Copilot-only future. Anthropic's response will tell you how confident they are in their direct enterprise channel.</p>
+    <a class="source-link" href="https://www.theverge.com/tech/930447/microsoft-claude-code-discontinued-notepad" target="_blank" rel="noopener">Read at The Verge →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Antigravity 2.0 tops the OpenSCAD architectural 3D LLM benchmark <span class="source-tag">ModelRift · HN 383</span>
+    <span class="teaser">Google's I/O agent app, paired with Gemini 3.5 Flash, beats every other autonomous stack at generating a coffered-ceiling Pantheon in code.</span>
+  </summary>
+  <div class="body-news">
+    <p>ModelRift's OpenSCAD architectural benchmark asks LLMs to generate a parametric 3D model of the Pantheon from reference images — a task that rewards spatial reasoning, parametric thinking, and tolerance for long, structured code output. Google's Antigravity 2.0 with Gemini 3.5 Flash scored 4.5/5 in autonomous mode, the only stack to model the building's coffered interior ceiling correctly. ModelRift's own human-in-the-loop runs scored 3.8/5, which is the more interesting datapoint: even at the new SOTA, visual feedback still beats autonomy on geometry-heavy tasks. A useful early read on where Gemini 3.5 Flash actually outperforms Anthropic and OpenAI's frontier models.</p>
+    <a class="source-link" href="https://modelrift.com/blog/openscad-llm-benchmark/" target="_blank" rel="noopener">Read at ModelRift →</a>
+  </div>
+</details>
+
+<!-- ============== AI INDUSTRY & META ============== -->
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+  <summary>Ben Thompson: the data center veto is AI's new political bottleneck <span class="source-tag">Stratechery</span>
+    <span class="teaser">Unlike globalisation, AI needs physical permits in your zip code — and that gives ordinary residents leverage they didn't have over offshoring.</span>
+  </summary>
+  <div class="body-news">
+    <p>Thompson's argument: AI's reliance on physical data centres means every meaningful capacity build needs a local zoning, water, and grid permit — and unlike offshoring, where communities had no procedural lever, those permits give residents an effective veto. The Trump-administration push for "permitting reform" is the federal admission that this veto is starting to bind. Thompson's more provocative move is to argue that fighting misinformation about data centres is a category error: the opposition is mostly rational self-interest about water, noise, and grid load, and labs should treat that as the actual problem rather than a comms one. Pair with the Cannes-AI-film piece below for both the demand and supply side of the energy story.</p>
+    <a class="source-link" href="https://stratechery.com/2026/the-data-center-veto/" target="_blank" rel="noopener">Read at Stratechery →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Casey Newton: Google's James Manyika is betting doomers are wrong on AI &amp; jobs <span class="source-tag">Platformer</span>
+    <span class="teaser">Google's policy lead argues automatable tasks don't equal automatable jobs — and lays out why Google's I/O agent push isn't aimed at headcount.</span>
+  </summary>
+  <div class="body-news">
+    <p>Newton's sit-down with James Manyika — Google's policy-and-society lead and longtime McKinsey labour-economics author — at I/O 2026. Manyika's framing: the "tasks are automatable, jobs are not" distinction is the right unit of analysis, and the historical pattern is task-substitution plus role-redefinition rather than mass displacement. Newton presses on the fact that Google's own product roadmap (agents that draft, decide, and act) seems engineered exactly for the task-replacement quadrant. Useful as a primary-source read of what the biggest AI deployer in the world is willing to commit to on the labour question — and where it deliberately leaves wiggle room.</p>
+    <a class="source-link" href="https://www.platformer.news/james-manyika-google-ai-jobs-io-2026/" target="_blank" rel="noopener">Read at Platformer →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>A Cannes film cost $500K — and $400K of it was AI compute <span class="source-tag">Slashdot</span>
+    <span class="teaser">A 95-minute AI-generated feature needed 16,181 video generations for its first 25 minutes — early data on what generative cinema actually costs.</span>
+  </summary>
+  <div class="body-news">
+    <p>A 95-minute AI-generated feature screened at Cannes cost roughly $500K to produce, with 80% of the budget going to inference. The first 25 minutes alone required 16,181 video generations, each driven by ~3,000-word prompts — i.e. a single human "scene" now requires a prompt artefact roughly the length of a New Yorker short story. The cost mix is the interesting datapoint: traditional cinema's bill of materials is people; generative cinema's is energy and silicon. Read alongside Thompson's data-centre-veto piece — this is the demand side of the same equation, and it's why utility-scale AI buildouts are accelerating despite the local pushback.</p>
+    <a class="source-link" href="https://entertainment.slashdot.org/story/26/05/22/1723236/this-cannes-film-cost-500000-to-make-400000-was-ai-compute-costs" target="_blank" rel="noopener">Read at Slashdot →</a>
+  </div>
+</details>
+
+<!-- ============== INNOVATION & INFRA ============== -->
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+  <summary>SpaceX launches Starship V3 — first flight, booster lost on return <span class="source-tag">TechCrunch</span>
+    <span class="teaser">22 dummy Starlinks deployed and a clean Indian Ocean splashdown for the upper stage; the booster didn't survive recovery.</span>
+  </summary>
+  <div class="body-news">
+    <p>Starship V3's maiden flight cleared its primary objectives — orbital insertion, dummy-Starlink deployment (22 units), and a controlled splashdown in the Indian Ocean — but lost the booster during the recovery attempt. V3 is the variant that's supposed to anchor SpaceX's near-term cadence story: more thrust, more reuse, higher payload-to-orbit numbers. The booster loss is real, but the more important read for the industry is that the v3 upper-stage profile held through ascent, deployment, and re-entry on the first attempt. Pair with the Blue Origin headline this week (New Glenn cleared to fly again) — heavy-lift competition is finally a multi-vendor market in 2026.</p>
+    <a class="source-link" href="https://techcrunch.com/2026/05/22/spacex-launches-starship-v3-for-the-first-time-but-loses-booster-on-return/" target="_blank" rel="noopener">Read at TechCrunch →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Caltech could lose JPL for the first time in decades <span class="source-tag">Slashdot</span>
+    <span class="teaser">NASA will open JPL's operations contract to competition when Caltech's deal expires in 2028 — a structural shock to deep-space science.</span>
+  </summary>
+  <div class="body-news">
+    <p>NASA is opening JPL's operations contract to competitive bid when Caltech's current agreement expires in 2028 — the first time in nearly a century that another institution could plausibly run the lab behind Mars rovers, Voyager, and most of the agency's deep-space programmes. The trigger is a combination of cost-overrun pressure on flagship missions and an administration that's openly hostile to single-source contracts. For the broader research ecosystem, the message is that even the most prestigious federally funded labs are now exposed to procurement competition — and the resulting uncertainty is already affecting hiring at JPL. Quietly one of the biggest stories in US science institutions this decade.</p>
+    <a class="source-link" href="https://science.slashdot.org/story/26/05/23/038238/caltech-could-lose-control-of-jpl-for-first-time-in-decades" target="_blank" rel="noopener">Read at Slashdot →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Deleted Google API keys keep working — median 16-minute window <span class="source-tag">Slashdot</span>
+    <span class="teaser">Researchers measured how long revoked Google API keys still authenticate; a 16-minute gap is plenty of time for an attacker to finish the job.</span>
+  </summary>
+  <div class="body-news">
+    <p>Researchers at Truffle Security measured how long revoked Google API keys remain usable after deletion: a median of 16 minutes, with a long tail. For incident-response teams the implication is direct — "we rotated the key" no longer means "the compromise is contained," and the IR runbook needs an explicit window-to-actual-revocation step. It also throws light on the fundamentals of cloud authz at scale: revocation propagation is a distributed-systems problem nobody has fully solved, and Google is far from the worst offender. If you operate on GCP, treat key rotations as eventually-consistent rather than synchronous.</p>
+    <a class="source-link" href="https://tech.slashdot.org/story/26/05/22/1827258/google-api-keys-remain-active-after-deletion" target="_blank" rel="noopener">Read at Slashdot →</a>
+  </div>
+</details>
+
+<!-- ============== NEWSLETTER PICKS ============== -->
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+  <summary>Paweł Huryn: PM Brain OS — a markdown second-brain for product managers <span class="source-tag">Product Compass</span>
+    <span class="teaser">A folder of markdown files Claude can read and write — open-source templates for briefs, discovery, prioritisation, customer-interview synthesis.</span>
+  </summary>
+  <div class="body-news">
+    <p>Huryn's follow-up to his viral Claude-Code-for-PMs guide: a markdown-based second brain — just a folder of files with a defined schema that Claude can read and update over time — released with an open-source template pack covering briefs, RICE prioritisation, discovery synthesis, and stakeholder notes. The interesting strategic claim is that PMs no longer need bespoke SaaS for any of this; a folder, a schema, and an agent are now the floor. If you're a PM or you manage a PM org, treat this as a serious "rip up your Notion stack" prompt rather than a thought-experiment.</p>
+    <a class="source-link" href="https://www.productcompass.pm/p/pm-brain-os" target="_blank" rel="noopener">Read at Product Compass →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Kyle Poyar: who's actually hiring in GTM right now <span class="source-tag">Growth Unhinged</span>
+    <span class="teaser">AI-native sellers are stacking SDR teams while everyone else holds flat — Poyar's data on which categories are growing GTM headcount in 2026.</span>
+  </summary>
+  <div class="body-news">
+    <p>Poyar's GTM hiring data for May 2026: AI-native sales companies (think Clay, Apollo, Common Room) are aggressively expanding SDR and AE headcount while broader B2B SaaS holds roughly flat. The detail worth chewing on is that the AI-native sellers are scaling people because their own product makes each rep more leveraged — the opposite of the "AI will replace SDRs" story. If you sell into RevOps or sales-leadership buyers, expect their org charts to shift quickly toward fewer-but-stronger AEs with much larger AI-augmented territories. The piece pairs nicely with this week's Manyika "tasks not jobs" framing in Platformer.</p>
+    <a class="source-link" href="https://www.growthunhinged.com/p/who-s-actually-hiring-in-gtm-right-now" target="_blank" rel="noopener">Read at Growth Unhinged →</a>
+  </div>
+</details>
+
+<details class="item">
+  <summary>Every: inside the 100-agent software factory <span class="source-tag">Every · Context Window</span>
+    <span class="teaser">Katie Parrott on the orgs running dozens of Claude/Cursor agents in parallel — what scheduling, review, and merge actually look like at that scale.</span>
+  </summary>
+  <div class="body-news">
+    <p>Parrott's reporting from inside engineering orgs running 50–100 agents in parallel on a single codebase. The operational picture is much more interesting than the hype version: most of the work is not coding, it's orchestrating queues, batching review, isolating worktrees, and writing the merge policies that let a human engineer absorb that many concurrent PRs without losing the plot. The teams that make it work treat agents as a fleet — staffing-style — rather than as power-tools individual ICs wield. If you're trying to figure out what an "AI-augmented engineering org" actually looks like in production, this is the cleanest field report so far.</p>
+    <a class="source-link" href="https://every.to/context-window/inside-the-100-agent-software-factory" target="_blank" rel="noopener">Read at Every →</a>
+  </div>
+</details>
+
+<footer>
+SAMPLE for John's review · 2026-05-23 11:30 UTC · Reply on Telegram with feedback before this becomes the new daily-brief template.<br>
+Permalink: <a href="sample-2026-05-23-v2.html">sample-2026-05-23-v2.html</a> · Original: <a href="2026-05-23.html">2026-05-23.html</a>
+</footer>
+
+</div>
+</body>
+</html>
