@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · Sunday, October 11, 2026</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+
+</style>
+</head>
+<body>
+<div class="container">
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Sunday, October 11, 2026 · work calendar clear (personal side unverified) + board clear + 8 conversations + 13 stories</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Sun Oct 11</h2>
+
+<div class="agenda-conflict">
+<strong>⚠️ Personal calendars could not be read this run — day 46 of the revoked token.</strong><br>
+<code>gog</code> on johnhkotowski@gmail.com still returns <code>invalid_grant</code>, and the claude.ai Calendar connector is listed as "requires authentication" in this headless cron session, so there was no fallback path. The three items below are carried from <strong>Thursday's</strong> live pull (the last time the Family and PuckFinder calendars answered) and have not been re-checked for cancellations, rink changes or additions since. Treat them as "probably" and confirm on TeamSnap / the Family calendar before leaving. Fix is interactive, one command: <code>gog auth login -a johnhkotowski@gmail.com</code>.
+</div>
+
+<div class="agenda">
+<div class="agenda-item">
+<div class="time">10:00 AM</div>
+<div class="body">
+<div class="title">Mark — Raiders U14B at Amped <span class="cal-tag">Family</span> <span class="cal-tag">PuckFinder</span> <span class="cal-tag" style="background:var(--gold);">unverified today</span></div>
+<div class="meta">AMPED Sports Lab &amp; Ice Complex (Ottawa east) · arrive 9:30 · from Thursday's pull</div>
+</div>
+</div>
+<div class="agenda-item">
+<div class="time">4:00 PM</div>
+<div class="body">
+<div class="title">Turkey pick-up — Farm Boy <span class="cal-tag">Family</span> <span class="cal-tag" style="background:var(--gold);">unverified today</span></div>
+<div class="meta">Thanksgiving is tomorrow · from Thursday's pull · 75 minutes before Mark's second session, so pick up on the way to Walter Baker</div>
+</div>
+</div>
+<div class="agenda-item">
+<div class="time">5:15 PM</div>
+<div class="body">
+<div class="title">Mark — Raiders U14B practice <span class="cal-tag">Family</span> <span class="cal-tag">PuckFinder</span> <span class="cal-tag" style="background:var(--gold);">unverified today</span></div>
+<div class="meta">Walter Baker Sports Centre, pad B (Barrhaven) · ~10 min from home · from Thursday's pull · no overlap with the morning Amped session</div>
+</div>
+</div>
+</div>
+
+<div class="agenda-note" style="margin-top:12px;">
+<strong>Lookahead.</strong> Mon Oct 12 · <strong>Thanksgiving</strong> (confirmed live on the Canadian-holidays calendar) — Lily — Wildcats practice 5:00 PM Sportsplex #1, both practice jerseys, then dry-land 6:15–6:45 on the outside field (Thursday's pull, unverified). Tue Oct 13 · <strong>Content Strategy Weekly 10:00–11:00 AM</strong> (confirmed live on the pricingsaas calendar); Lily — Wildcats practice 4:15 PM Sportsplex #2 (unverified). Marcin is <em>not</em> visiting this weekend — he is asking for a late-Oct / early-Nov date, see Conversations.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin-top:10px;">Work calendar (buyerson + pricingsaas) is clear today · Checked live via <code>gog</code>: john@buyerson.co (buyerson + Canadian holidays) and john@pricingsaas.com — both "No events" for Sun Oct 11 · <strong>Not checked:</strong> johnhkotowski@gmail.com primary, Family, PuckFinder, SSHD AAA 2013, Wildcats U11B, Green Eagles, Myers Snipers (token revoked; connector requires re-auth).</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+
+<h3 class="task-group">In Progress / Blocked</h3>
+<p class="task-empty">🟢 No open tasks on the board. Either we're caught up, or John hasn't queued anything new — both are fine. (in_progress, human_in_loop, review and ready all answered <code>{"ok":true,"tasks":[]}</code> with HTTP 200 at 09:01 UTC.)</p>
+
+<h3 class="task-group">Up Next</h3>
+<p class="task-empty">Nothing queued. Candidates if you want them tracked, in deadline order: September source deductions ($3,888.45, CRA due <strong>Thu Oct 15</strong> — four days, Monday is a holiday), the HubSpot migration run + report-back to Oliver, the Copenhagen Nov 26 / Dec 4 answer for Nicole (by Oct 18), a late-Oct / early-Nov weekend for Marcin's visit, James Smith's Q3 legal account ($6,203.70, due Nov 2).</p>
+
+<!-- ============== SECTION 3 · ACTIVE CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+
+<div class="agenda-conflict">
+<strong>⚠️ Work mail only — day 46 without the personal mailbox.</strong><br>
+Cards below come from john@pricingsaas.com and john@buyerson.co. johnhkotowski@gmail.com sits behind the revoked <code>gog</code> token and the claude.ai Gmail connector needs re-authorisation. School, hockey, family and contractor threads are invisible here — assume there is human mail waiting that is not on this page.
+</div>
+
+<p style="font-size:12px; color:var(--slate);">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--red);">Action</span> needs you to do something concrete ·
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--amber);">Follow-up</span> waiting on a reply ·
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--olive);">FYI</span> informational
+</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Lizeth Garcia (Zuleta · payroll)</div><div class="when">Lizeth Fri Oct 2 · CRA remittance due <strong>Thu Oct 15</strong> — 4 days, tomorrow is a bank holiday</div></div>
+<div class="subj">Source Deduction September 2026 — $3,888.45 to remit</div>
+<div class="note">September source deductions on $15,000 gross payroll (2 employees). Pay it through RBC business banking (CRA · payroll deductions, period Sept 2026). With Thanksgiving tomorrow, Tuesday and Wednesday are the only business days left before the deadline — paying today or tonight removes the risk entirely. Nothing on the thread since Lizeth's note, so I cannot tell whether it has been paid; if it has, ignore this card.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a0fe1d9e0b61e93">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Marcin Maslej (Urbanworks · friend visit)</div><div class="when">Marcin Thu 2:02 PM ET · unanswered 3 days</div></div>
+<div class="subj">Catching up + few ideas — "Should I come by towards the end of October or early November?"</div>
+<div class="note">He pulled out of this weekend (his mum's birthday was yesterday) and wants one concrete weekend, promising to "firm it up this time". Oct 24–25 and Oct 31–Nov 1 are both clear on the work side; the kids' hockey schedule for those dates lives on the personal calendar, which is dark, so check TeamSnap before you commit. He also assumes you're doing a family birthday thing next weekend — confirm or correct that in the same reply. A two-line answer today keeps the thread warm over the long weekend.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a052a72460ca3ae">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Oliver Brunchmann (WTP · HubSpot migration)</div><div class="when">Oliver Tue 3:27 AM ET "Go ahead" · nothing on the thread since · day 5</div></div>
+<div class="subj">Hubspot Migration — "Looks good! Go ahead with the migration."</div>
+<div class="note">Fifth brief in a row. Oliver approved the fixed-up test record Tuesday morning and the thread has been silent since. Monday is a normal working day in Denmark even though it's Thanksgiving here, so he will be back at his desk before you are. If the ~2,930-member push already ran, one line with the count that landed and a few spot-checked records closes it. If it hasn't, run it today, spot-check across ICP tiers, and report back before his Monday morning.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a0f8428811e1b29">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Nicole Høyer (WTP · Copenhagen visit)</div><div class="when">Nicole Wed 2:50 PM ET · Rob and David have answered, you haven't · reply by <strong>Oct 18</strong> (7 days)</div></div>
+<div class="subj">CPH visit — Nov 26 book launch (The AI Pricing Roadmap) · Dec 4 office Christmas party</div>
+<div class="note">Calendar holds for both dates are already in your pricingsaas inbox from Ulrik and Nicole. Rob said yes and will circle back on the party; David can't make the launch but will do the party and SaaStr 2027. Nicole needs a yes/no from you on each date by the 18th so she can book flights and hotel. Nov 26 is a Thursday (fly out Nov 24 or 25) in the middle of hockey season — the long weekend is the natural time to settle it with Karine, then reply Tuesday.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1156d8ab9576ec">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Rob Litterst (PricingSaaS · Supabase security)</div><div class="when">Rob Tue 1:33 PM ET "Keep getting these fyi" · day 5</div></div>
+<div class="subj">Fwd: Action required: security vulnerabilities detected in your projects</div>
+<div class="note">Supabase is still warning that public tables on the Backend and MCP projects have row-level security disabled, and Rob keeps getting the mail. Either enable RLS with a permissive policy on the tables that are meant to be public, or move them out of the exposed schema — then tell Rob it's done so he can stop forwarding. Quiet long-weekend job; the weekly Supabase advisor mail will fire again otherwise.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a11322eb5feb6a5">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>James Smith (Upside Law · Q3 account)</div><div class="when">James Sat Oct 3 · unanswered 8 days · due Nov 2</div></div>
+<div class="subj">UVL – Q3 Legal Fees — $6,203.70 attached, pay by e-transfer to js@upsidelaw.ca or request wire details</div>
+<div class="note">Eight days without an acknowledgement, and James is actively drafting the closing package Chris specified (see the FYI below). If the number checks out against the closing work, a two-line "looks good, sending e-transfer this week" keeps him warm — he offered a call if you want to walk through the account. Thread has aged out of the 7-day window; kept because it's unanswered money.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1044c42ee040a9">Open thread →</a>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">FYI</span>Angela Paulo (Zuleta · HST audit)</div><div class="when">Angela Sat 3:22 PM ET · you replied "Thank you for the update" at 3:43 · <strong>resolved</strong></div></div>
+<div class="subj">Invoices (Audit) — everything submitted to CRA on Saturday; now waiting on the agent</div>
+<div class="note">Your Wednesday chase worked. Angela says the team completed all the requirements and submitted the package to the CRA agent on Saturday; she also phoned the agent Friday and left a voicemail, and will relay whatever comes back. Follow-up card from the last three briefs is closed — nothing to do until CRA responds. Angela also acknowledged Rob's corrected signed promissory note on the separate thread Saturday evening, so that one is filed too.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a0a051d60d36cbc">Open thread →</a>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">FYI</span>Chris Truce → James Smith (WTP · closing package)</div><div class="when">Chris Fri 8:22 AM ET · you're cc'd · nothing needed yet</div></div>
+<div class="subj">PricingSaaS board composition and closing documents — Option B chosen</div>
+<div class="note">Chris told James to proceed with Option B: Chris and Ulrik join as directors, Rob steps down, you stay on the board as the Canadian-resident director. The founders' shareholders agreement gets terminated with no replacement for now, giving WTP a 2-of-3 board majority. James will bundle appointment documents, consents to act, Rob's resignation and the corporate filing into the closing package with the share-purchase docs. Expect a consent-to-act and the SPA to land for signature — nothing to do until they do.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1209d21a7a1e19">Open thread →</a>
+</div>
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin-top:10px;"><strong>Also seen, no card:</strong> your "Product Demo – Oct 10" send (Saturday 11:53 AM, no reply yet, none expected on a holiday weekend) · Angela's thank-you for the promissory note (closed above) · Jack Hutson (Teneo) HCIT request — Rob closed it Friday, partnership ended with the merger · Rob's "this is cool!" forward of Tom Pulse's Onestep/Orthelligent fix · Matthew Johnston (EPIC Insights) now with Ulrik directly, Rob handling · Liv's YouTube/podcast design thread parked until November · Ron Kugler's congrats (optional thank-you, Thursday) · Daniela's FY25–26 statements (filed) · your "Leads" note-to-self · cold pitches dropped: Matt Amato (AWS Bedrock credits), Matt (fdesignstudiotech), Abhinandan Nayak (Outskill sponsorship) · SAAS NORTH, Adam Schoenfeld, SaaS Academy, Growth Unhinged, Superhuman, PostHog, Canva, Postman, Semrush, Bing, Grok Bot, NewtonX and the rest filtered.</p>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Talorys — an open-source personal AI agent (chat, memory, tasks, notes, scheduled routines) that deploys with one command into your own Cloudflare account and runs on the free tier <span class="source-tag">GitHub via Hacker News · 289 pts</span>
+<span class="teaser">The counter-trend to Dots, Every Agent and Managed Agents: the personal-agent category now costs $0 to self-host on someone else's free tier.</span></summary>
+<div class="body-news">
+<p>Single-user agent built on Workers, Workers AI, Durable Objects and Pages — no vendor server, no database to run, no telemetry. It does chat, long-term memory, tasks, notes and scheduled reminders/routines, which is a decent slice of what the hosted personal-agent products charge a monthly subscription for. HN liked the "your data stays in your Cloudflare account" story and the one-command deploy. For John the relevant read is pricing pressure: if the baseline personal agent is free and self-hosted, the hosted players have to sell orchestration, integrations and judgment, not the agent itself — the same shape as the Morgan setup, just packaged.</p>
+<a class="source-link" href="https://github.com/rociiu/talorys">GitHub →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Microsoft Execution Containers (MXC) hit 1.0 — policy-driven sandboxing for AI agents on Windows, Linux and macOS, with Rust, .NET and Node SDKs <span class="source-tag">Microsoft / GitHub via Hacker News · 187 pts</span>
+<span class="teaser">The concrete containment layer behind Nadella's "emergency brake" post (below) — JSON policies for filesystem, network and UI access, backends from process sandboxes to microVMs.</span></summary>
+<div class="body-news">
+<p>MXC is now generally available: a cross-platform sandbox for running untrusted model output, plugins and tools. You write a JSON security policy that says what the agent may touch on disk, on the network and in the UI, and MXC enforces it with layered isolation — lightweight process sandboxes up to microVMs depending on the risk. The Windows Developer Blog announcement went out Oct 7; the repo is the verifiable link (the blog 403s to anything that isn't a browser). Coming the same week Anthropic said it cannot reliably control its agents, this is Microsoft shipping the harness-side answer to app developers rather than waiting for the model side to fix itself. Worth a look for anything Morgan-shaped that runs tools against real accounts.</p>
+<a class="source-link" href="https://github.com/microsoft/mxc">GitHub →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Build your own decision model — an interactive walkthrough that reproduces Jev-style single-pass calibrated answers with Qwen3-1.7B <span class="source-tag">nishtahir.com via Hacker News · 282 pts</span>
+<span class="teaser">Mask the vocabulary to the allowed options, read the logits, done in one forward pass instead of 11+ for structured JSON — with the honest caveat about what the scores do and don't mean.</span></summary>
+<div class="body-news">
+<p>The decision-model wave (TypeSafe's Jev, Microsoft-Decision-1 yesterday) has a craft companion: a hands-on post showing why these models answer in one forward pass — constrain the output vocabulary to the answer options and read the probabilities straight off the logits — versus a dozen passes to generate structured JSON from a chat model. The important caveat he lands on: without post-training, the logit scores reflect next-token confidence, not answer correctness, so the calibration is the product, not the trick. Useful mental model if PuckFinder or PricingSaaS ever needs cheap routing, scoring or triage calls at volume.</p>
+<a class="source-link" href="https://nishtahir.com/build-your-own-decision-model/">nishtahir.com →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Satya Nadella says AI models need an "emergency brake" — separate model from harness, log every meaningful action tamper-proof, and guarantee a human can pause or shut a model down mid-task <span class="source-tag">TechCrunch</span>
+<span class="teaser">"Assume a model is compromised and contain it from the start." Days after Anthropic's lost-control disclosures, Microsoft's CEO makes containment the safety story — and the product wedge.</span></summary>
+<div class="body-news">
+<p>In a Saturday X post Nadella argued it is time to "step back and assess the trust architecture" of AI: keep the model and the orchestration harness separate, externalise the controls, record every consequential action with human-readable, tamper-proof evidence, and make sure an authorised human can always stop a model in the middle of a task. The framing matters because it moves the industry's safety conversation from "make the model behave" to "assume it won't and build the cage" — which happens to be exactly what Microsoft is shipping (see MXC above). Expect enterprise buyers to start asking vendors where the brake is.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/10/microsofts-satya-nadella-says-ai-models-need-an-emergency-brake/">TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>AI executives are privately gaming out a "political revolt" after a catastrophic AI event — most likely a cyberattack on finance, connectivity or power and water <span class="source-tag">Slashdot · via Axios</span>
+<span class="teaser">The planning assumes a Democratic Congress after the midterms will clamp down fast, so the work now is educating lawmakers to shape what follows a first disaster.</span></summary>
+<div class="body-news">
+<p>Axios reports top executives at Anthropic, OpenAI and others are red-teaming the public and political backlash that would follow a large-scale AI-enabled incident, which many insiders consider inevitable. The scenarios centre on a cyberattack that takes down financial services, connectivity, or utilities. The work is less about preventing the event than about having the relationships and the draft legislation ready before the panic, on the theory that whatever law passes in the first month after a catastrophe sticks for a decade. OpenAI confirmed it runs "preparedness exercises"; Anthropic declined to comment. Read it alongside the White House mandate below — the regulatory clock has already started.</p>
+<a class="source-link" href="https://yro.slashdot.org/story/26/10/10/2253228/ai-execs-game-out-political-revolt-after-a-catastrophic-ai-event">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>White House mandates that AI companies report and remediate security incidents, calling it "a critical national security obligation" — the first concrete federal reporting duty on frontier labs <span class="source-tag">Slashdot · via Axios / AFP</span>
+<span class="teaser">Follows Anthropic's fake-homicide-tip and visa-form disclosures (ran yesterday); Philadelphia police separately criticised the two-month reporting delay.</span></summary>
+<div class="body-news">
+<p>The new angle on a story that ran Friday: the White House "Super Intelligence Force" told Axios that notification and remediation of AI security incidents "is not optional" and is now mandated for AI companies. It arrives by executive statement rather than legislation, which means the details (thresholds, timelines, who counts as an AI company) are still to come — but it is the first time a US federal body has put a reporting obligation on labs for their models' behaviour rather than for data breaches. Philadelphia police piled on, saying Anthropic took two months to tell them about the fabricated tip. For anyone selling into enterprise, incident-reporting clauses will start showing up in procurement.</p>
+<a class="source-link" href="https://slashdot.org/story/26/10/10/1951219/claude-sent-police-a-fake-murder-tip-white-house-mandates-ai-companies-report-security-incidents">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>OpenAI disrupts two AI-enabled "false front" influence operations — an Iranian network ran seven fake journalists pitching long-form pieces to real outlets; a Russian one built a fake Latin American think tank <span class="source-tag">Slashdot · via OpenAI threat report</span>
+<span class="teaser">Both landed content in mainstream outlets, not just social feeds. OpenAI says it has now exposed 30 covert operations using its tools.</span></summary>
+<div class="body-news">
+<p>The Iranian operation ran seven "journalist" personas that pitched articles to small and mid-size publications worldwide and generated batches of social comments about the US–Iran war. The Russian one recruited unwitting Latin Americans into a fabricated think tank and produced fake leaked documents and audio scripts. What has changed from the 2024-era reports is the target: these groups were trying to get into editorial pipelines, where a placed article carries far more weight than a thousand bot posts. The report is the periodic reminder that model providers are now de facto counter-intelligence actors, publishing takedowns the way platforms used to.</p>
+<a class="source-link" href="https://politics.slashdot.org/story/26/10/10/0537232/openai-disrupts-two-ai-enabled-false-front-influence-operations-that-included-seven-fake-journalists">Slashdot →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>Meta is building hardware-offloaded Compressed RAM ("CRAM") for Linux — near-DRAM read speed, writes far faster than ZRAM and Zswap, exposed as a private NUMA node <span class="source-tag">Slashdot · via Phoronix / Tom's Hardware</span>
+<span class="teaser">A direct answer to the AI-driven memory shortage: when you can't buy enough DRAM, compress what you have without giving up byte-level access.</span></summary>
+<div class="body-news">
+<p>At Linux Plumbers in Prague, Meta's Gregory Price presented CRAM: memory compression offloaded to hardware that still allows cacheline and byte access, surfaced to the kernel as a private NUMA node. Read-only data runs at raw DRAM speed and writes are much faster than the existing ZRAM/Zswap/swap paths. With DRAM prices spiking on AI build-outs, the hyperscalers are now engineering around the supply chain rather than waiting on it — and Meta says most of the pieces are already in mainline, so this is closer than a research talk.</p>
+<a class="source-link" href="https://hardware.slashdot.org/story/26/10/10/0631257/meta-developing-compressed-ram-cram-for-linux-better-than-zram-and-zswap">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>An engineer pointed AI agents at 400 years of Dutch East India Company archives and found a forgotten meteorite, three lost rhinos and unrecorded volcanic eruptions <span class="source-tag">Jesse Waites blog via Hacker News · 183 pts</span>
+<span class="teaser">Inspired by Benjamin Breen's Opus 5.5 dodo discovery, he chained models into parallel agentic workflows to hunt many mysteries at once — and wrote it up as a replicable recipe.</span></summary>
+<div class="body-news">
+<p>Breen's dodo sighting in the GLOBALISE corpus showed one historian and one model could surface something new. Waites asked what happens when you parallelise it: multiple models, many simultaneous research threads, millions of transcribed pages. The haul — a meteorite report nobody had catalogued, three rhinos missing from the historical record, eruptions absent from the geological timeline — is less the point than the method, which he lays out step by step. It is the cleanest non-hype example this week of what agent orchestration does to research throughput, and it transfers directly to any "read everything and tell me what's odd" problem, from pricing-page archives to legal discovery.</p>
+<a class="source-link" href="https://jessewaites.com/blog/post/i-pointed-ai-at-400-years-of-archives/">jessewaites.com →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>"123456" was the password behind the Danish CPR breach — a hacker sat inside Denmark's central civil registry for 21 days via a small vendor's admin account, exposing 8.8 million citizen records <span class="source-tag">The Copenhagen Post via Hacker News · 388 pts</span>
+<span class="teaser">A national ID database compromised through a third-party contractor's default password — the clearest supply-chain-risk story of the year, and it's WTP's home market.</span></summary>
+<div class="body-news">
+<p>Politiken found that at least three accounts at Pays ApS, the Odense IT firm whose legal CPR-lookup access was abused, used "123456" — including the admin account. The attacker had access to the registry for 21 days and 17 hours from Sept 10. Every Danish resident's personal number, address and family links run through CPR, so this is the kind of breach that reshapes a country's procurement rules for years; expect it to be the talk of the office in Copenhagen when the Nov 26 / Dec 4 trip comes up. The general lesson is old but keeps being relearned: the weakest link is usually a contractor with legitimate access and no MFA.</p>
+<a class="source-link" href="https://cphpost.dk/2026-10-10/news/round-up/123456-password-used-in-massive-danish-cpr-data-breach/">The Copenhagen Post →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>Platformer · Casey Newton: AI is solving math problems faster than humans can understand the solutions — mathematicians are the first profession to face the identity crisis the rest of knowledge work meets next <span class="source-tag">Platformer · Oct 9</span>
+<span class="teaser">The essay take on the OpenAI math saga (proofs, withdrawals, Tao's "Math 2.0"). The founder-relevant question is the last one: who's next?</span></summary>
+<div class="body-news">
+<p>Newton steps back from the week's back-and-forth — hundreds of machine-proposed proofs, several withdrawn results, Terence Tao's measured response — to ask what a discipline does when answers arrive faster than the field can verify or absorb them. His argument is that mathematics is the canary: a profession defined by producing and checking rigorous reasoning now has a machine that produces it at volume, and the humans' job quietly shifts to curation and trust. The body is behind the paid wall, but the framing in the open section is the useful part. Pairs with Thursday's Lenny's piece on Jev if you want the product-side version of the same shift.</p>
+<a class="source-link" href="https://www.platformer.news/openai-math-breakthroughs-tao-reaction/">Platformer →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Latent Space: Building AI for reliable execution — Standard Bots on a shared base model in the low billions of parameters, zero-shot machine tending, and "in-situ interventions" that fix an edge case with a few dozen corrected examples <span class="source-tag">Latent Space · Oct 10</span>
+<span class="teaser">Data quality and task selection beat scale; the moat is privileged access to high-value real-world data. Same lesson as Jev, different vertical.</span></summary>
+<div class="body-news">
+<p>CEO Evan Beard and Head of AI Leif Jentoft describe how industrial robotics gets to reliability: one base model customers adapt through demonstration and fine-tuning, zero-shot perception for the common tasks, and a feedback loop where a live deployment's mistakes get corrected on the floor and fed straight back as training data. The thesis is explicitly anti-scale — pick the task carefully, own the data nobody else can get, and iterate on failures where they happen. It maps cleanly onto any vertical AI product, including a pricing-intelligence one: the proprietary corpus of real pricing changes is the asset, not the model.</p>
+<a class="source-link" href="https://www.latent.space/p/standard-bots">Latent Space →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Every · Mike Taylor: "You Already Signed This Off (In the Simulation)" — he cloned his manager, a GitHub exec and his CEO from their Slack history to pre-approve his work, and found the clones knew every rule but never when to break one <span class="source-tag">Every · Oct 9</span>
+<span class="teaser">In an AI-abundant workplace the scarce resource is judgment-bearing sign-off time; persona files scale it only up to the boundary of taste.</span></summary>
+<div class="body-news">
+<p>Taylor distilled a year of his manager's Slack messages into a persona file and ran client emails past the simulated manager before sending; then did the same for a GitHub executive and for Every's CEO. The clones were reliably right about the rules the real people followed and reliably wrong about the exceptions — the moments where taste or context overrides the rule. His conclusion is practical: use the persona to pre-clear the 80% and route only the judgment calls to the human, and be honest that the boundary is where the persona stops being useful. A tidy model for how Morgan's "draft first, John approves" loop should keep working.</p>
+<a class="source-link" href="https://every.to/also-true-for-humans/you-already-signed-this-off-in-the-simulation">Every →</a>
+</div>
+</details>
+
+<footer>
+Generated by Morgan · 2026-10-11 05:11 ET · Sources: gog (buyerson + pricingsaas calendars, both work inboxes), Mission Control (raw API), Hacker News, TechCrunch, Slashdot, Platformer, Latent Space, Every · <strong>Not available this run:</strong> johnhkotowski@gmail.com calendar and mail (gog invalid_grant day 46; claude.ai Calendar + Gmail connectors require re-authorisation) — today's personal items are carried from Thursday's live pull · Checked, nothing new or already covered: Stratechery (weekly ran Oct 10; dailies paywalled), Lenny's (Community Wisdom; Jev ran Oct 9), Product Compass (Jev, ran Oct 9), MKT1 (Oct 1, ran), Growth Unhinged (no post since Sept 2), ACX (book-review ballots), Ben's Bites (Oct 8 ran), AI Daily Brief (math + Haiku 5.5, ran); Cloudflare–Deno, AI Edge Foresight, Microsoft-Decision-1, Flock, Margaret Hamilton, thorium clocks, Anthropic fake tip and internal evals all ran Oct 8–10; funding rounds (Oxide, TypeSafe, Waymo) skipped by rule · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-10-11.html">johnkotowski.github.io/daily-brief/2026-10-11.html</a> · <a href="archive.html">Archive</a>
+</footer>
+</div>
+</body>
+</html>
