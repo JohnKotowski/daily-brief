@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · Tuesday, October 13, 2026</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+<body>
+<div class="container">
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Tuesday, October 13, 2026 · 1 work call + Lily 4:15 + Mark 7:00 (personal calendars live again) + board clear + 9 conversations + 17 stories</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Tue Oct 13</h2>
+
+<div class="agenda-note">
+<strong>Personal calendars read live this morning</strong> — the claude.ai Calendar connector came back bound to johnhkotowski@gmail.com and all 8 personal-side calendars answered, so today's items are current, not carried over. <code>gog</code> itself is still revoked (day 48) and the connector has dropped out on 4 of the last 7 runs, so this is not fixed — one interactive command settles it for good: <code>gog auth login -a johnhkotowski@gmail.com</code>.
+</div>
+
+<div class="agenda">
+<div class="agenda-item">
+<div class="time">10:00–11:00 AM</div>
+<div class="body">
+<div class="title">Content Strategy Weekly <span class="cal-tag">pricingsaas</span></div>
+<div class="meta">Google Meet <a href="https://meet.google.com/nwr-jbov-zon">nwr-jbov-zon</a> · Rob organising, you're accepted, Oliver declined · first one since launch week — Ulrik's Sunday note says he expects "a large spike in search volume", so bring whatever the Supercut demo and site numbers show so far</div>
+</div>
+</div>
+<div class="agenda-item">
+<div class="time">4:15–5:15 PM</div>
+<div class="body">
+<div class="title">Lily — Wildcats U13BB practice <span class="cal-tag">PuckFinder</span></div>
+<div class="meta">Nepean Sportsplex, pad #2 (1701 Woodroffe Ave) · confirmed live on the PuckFinder feed this morning · the Family calendar has no entry today, so the feed is the only source — same slot it has shown since Oct 5</div>
+</div>
+</div>
+<div class="agenda-item">
+<div class="time">7:00–8:30 PM</div>
+<div class="body">
+<div class="title">Mark — Raiders U14B White practice <span class="cal-tag">PuckFinder</span></div>
+<div class="meta">Howard Darwin Arena (Merivale) · added to the feed Oct 8 · Mark's team per the Family calendar's Belleville tournament note (U14 B White = Mark this season; Josh's skates show up separately as CanPowerSkate) · 1h45 gap after Lily's session, different rinks about 10 min apart — no squeeze</div>
+</div>
+</div>
+</div>
+
+<div class="agenda-note" style="margin-top:12px;">
+<strong>Lookahead — this is the week to plan around.</strong><br>
+<strong>Wed Oct 14 · ⚠️ two kids, two rinks, same hour:</strong> "Apex at Fred Barrett" 4:00–5:00 PM (Family) overlaps Lily's Girls Pathways skate 4:15–5:15 PM at Minto (PuckFinder). Fred Barrett is in south Gloucester, Minto is Barrhaven — one parent each. Then Mark's Raiders Team Goal Setting Session 6:30–8:00 PM at 1073 Greenbank (pizza provided for the kids).<br>
+<strong>Thu Oct 15:</strong> CRA source-deduction deadline ($3,888.45 — see Conversations). Josh's parent-teacher interviews 2:00–2:30 PM, St. Joseph HS gym — Ms. Jowsey (Math) 2:00, Ms. Jung (Religion) 2:10, Mr. Martinson (Computer Tech) 2:20, confirmation t513451. Evening: Mark's Raiders practice 6:15–7:15 PM Minto South and Josh's CanPowerSkate 7:00–7:50 PM at Darwin — different kids, rinks 15 min apart, so it's a two-car evening rather than a conflict.<br>
+<strong>Fri Oct 16 – Sun Oct 18 · ⚠️ Lily is in Durham Region all weekend:</strong> Fri 9:15 AM vs Lindsay Lynx and 2:45 PM vs Burlington Barracudas, both at Delpark Homes Centre (Oshawa); Sat 9:00 AM vs Central York Panthers at South Courtice, 4:30 PM at Durham West Lightning (Newcastle); Sun 10:45 AM Clarington Flames Applefest (Whitby). A 9:15 Friday face-off in Oshawa means driving down Thursday night, straight after the evening skates. Mark is home all weekend: Fri 7:00 PM at Blues Hockey (Bob MacQuarrie), Sat 12:00 off-ice at Proving Grounds + 7:00 PM practice at Bell Centennial, Sun 10:00 AM Amped (arrive 9:30) + 11:30 AM at Ottawa Sting (Brian Kilrea). Divide and conquer: one parent in Durham with Lily, one in Ottawa with Mark and Josh. Also on the feed as of overnight: Sun 4:15 PM "Raiders U18B-D vs Team F" at Walter Baker — that doesn't match any of the kids' teams, so check PuckFinder isn't pulling in a stray house-league entry.<br>
+<strong>Sun Oct 18:</strong> Nicole's deadline for the Copenhagen Nov 26 / Dec 4 answer. <strong>Mon Oct 19:</strong> "Happy birthday!" on the buyerson calendar — Marcin assumed a family birthday thing this coming weekend; with the tournament, the birthday dinner is probably in a Whitby hotel.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin-top:10px;">1 work event today · Checked live via <code>gog</code>: john@buyerson.co and john@pricingsaas.com (both return only Content Strategy Weekly; the buyerson calendar itself is clear) · Checked live via the claude.ai Calendar connector (bound to johnhkotowski@gmail.com this run): primary, Family, PuckFinder, SSHD AAA 2013, Nepean Wildcats U11B, Girls Major – Green Eagles, 2015 Myers Snipers, Holidays in Canada — 8 of 8 answered; the four team-import feeds are still empty for the week, the live hockey all comes through PuckFinder and Family.</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+
+<h3 class="task-group">In Progress / Blocked</h3>
+<p class="task-empty">🟢 No open tasks on the board. Either we're caught up, or John hasn't queued anything new — both are fine. (in_progress, human_in_loop, review and ready all answered <code>{"ok":true,"tasks":[]}</code> with HTTP 200 at 09:03 UTC.)</p>
+
+<h3 class="task-group">Up Next</h3>
+<p class="task-empty">Nothing queued. Candidates if you want them tracked, in deadline order: September source deductions ($3,888.45, CRA due <strong>Thu Oct 15</strong> — two business days left), the post-closing signature package from James Smith (new yesterday), the HubSpot migration run + report-back to Oliver (day 7), the Copenhagen answer for Nicole (by Oct 18), a weekend for Marcin (Oct 24–25 is the clean one — see his card), James Smith's Q3 legal account ($6,203.70, due Nov 2), and the Thursday-night drive to Oshawa.</p>
+
+<!-- ============== SECTION 3 · ACTIVE CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+
+<div class="agenda-conflict">
+<strong>⚠️ Work mail only — day 48 without the personal mailbox.</strong><br>
+Cards below come from john@pricingsaas.com and john@buyerson.co. johnhkotowski@gmail.com sits behind the revoked <code>gog</code> token and the claude.ai Gmail connector still needs a sign-in (the Calendar one worked today; Gmail did not). School, hockey, family and contractor threads are invisible here — assume there is human mail waiting that is not on this page.
+</div>
+
+<p style="font-size:12px; color:var(--slate);">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--red);">Action</span> needs you to do something concrete ·
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--amber);">Follow-up</span> waiting on a reply ·
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; color:#fff; background:var(--olive);">FYI</span> informational
+</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>James Smith (Upside Law · post-closing package)</div><div class="when">James Mon 1:48 PM ET · <strong>new</strong> · sent to Chris, you on copy</div></div>
+<div class="subj">PricingSaaS – Post-Transaction Materials — signatures needed, plus the significant-control register</div>
+<div class="note">The closing cleanup package is here: share-purchase paperwork, termination of the founders' shareholders agreement, Rob's resignation and the Chris + Ulrik director appointments (Option B — you stay on as the Canadian-resident director). James has already filed the board change. Two things from your side: (1) sign your pieces — ask him for DocuSign rather than printing; (2) the Individuals with Significant Control register needs tax jurisdiction, birthdate and citizenship(s) for anyone holding more than 25% of WTP's voting shares. That is a Chris/Ulrik answer, so a one-liner pointing James at them clears it. Same reply can acknowledge his Q3 account from Oct 3 — <strong>$6,203.70, due Nov 2</strong>, still unanswered after 10 days.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1313a94c17f61a">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Lizeth Garcia (Zuleta · payroll)</div><div class="when">Lizeth Fri Oct 2 · CRA remittance due <strong>Thu Oct 15</strong> — 2 business days</div></div>
+<div class="subj">Source Deduction September 2026 — $3,888.45 to remit</div>
+<div class="note">September source deductions on $15,000 gross payroll (2 employees). Pay through RBC business banking (CRA · payroll deductions, period Sept 2026). Thursday is the deadline and Wednesday is the realistic last day to send so it clears — queue it today. Nothing on the thread since Lizeth's note, so I cannot tell whether it has been paid; if it has, ignore this card.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a0fe1d9e0b61e93">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Oliver Brunchmann (WTP · HubSpot migration)</div><div class="when">Oliver Tue Oct 6 "Go ahead" · nothing since · day 7</div></div>
+<div class="subj">Hubspot Migration — "Looks good! Go ahead with the migration."</div>
+<div class="note">Seventh brief in a row. Oliver approved the fixed-up test record a week ago today and the thread has been silent since; he declined this morning's Content Strategy call, so there is no meeting where this comes up naturally. If the ~2,930-member push already ran, one line with the count that landed and a few spot-checked records closes it. If it hasn't, run it today, spot-check across ICP tiers, and report back before his Wednesday morning.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a0f8428811e1b29">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Marcin Maslej (Urbanworks · friend visit)</div><div class="when">Marcin Thu Oct 8 2:02 PM ET · unanswered 5 days</div></div>
+<div class="subj">Catching up + few ideas — "Should I come by towards the end of October or early November?"</div>
+<div class="note">With the hockey calendar readable again, the answer is <strong>Oct 24–25</strong>. That weekend is all in Ottawa — Sat: Mark practice 2:00 PM Darwin and Lily vs Carleton Place 2:15 PM Minto South; Sun: Lily practice 9:30 AM, Mark Amped 10:00 AM, Mark vs Ottawa West 7:00 PM Bell Centennial — so Saturday evening and Sunday afternoon are open and he can tag along to a game. Oct 31–Nov 1 is out: Mark's team is in Belleville Fri–Sun for the Mid-Season Tilt and Lily plays at Smiths Falls Saturday lunchtime. He also assumed a family birthday thing this coming weekend — tell him it's a Whitby tournament instead. Two lines today keeps the thread warm; he promised to "firm it up this time".</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a052a72460ca3ae">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Action</span>Nicole Høyer (WTP · Copenhagen visit)</div><div class="when">Nicole Wed Oct 7 · Rob and David have answered, you haven't · reply by <strong>Oct 18</strong> (5 days)</div></div>
+<div class="subj">CPH visit — Nov 26 book launch (The AI Pricing Roadmap) · Dec 4 office Christmas party</div>
+<div class="note">Calendar holds for both dates are already in your pricingsaas inbox from Ulrik and Nicole. Rob said yes and will circle back on the party; David can't make the launch but will do the party and SaaStr 2027. Nicole needs a yes/no from you on each date by Sunday so she can book flights and hotel. Nov 26 is a Thursday (fly out Nov 24 or 25) in the middle of hockey season — the Thursday-night Oshawa drive this week is a preview of what Karine would be covering solo, so settle it together before you reply.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1156d8ab9576ec">Open thread →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Follow-up</span>Rob Litterst (PricingSaaS · Supabase security)</div><div class="when">Rob Tue Oct 6 "Keep getting these fyi" · day 7</div></div>
+<div class="subj">Fwd: Action required: security vulnerabilities detected in your projects</div>
+<div class="note">Supabase is still warning that public tables on the Backend and MCP projects have row-level security disabled, and Rob keeps getting the mail. Either enable RLS with a permissive policy on the tables that are meant to be public, or tell Rob it's accepted risk so he can filter the alert. Either way a one-line reply stops him re-forwarding it every week.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a11322eb5feb6a5">Open thread →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">Follow-up</span>Ron Kugler (XaaS Works · congratulations)</div><div class="when">Ron Thu Oct 8 6:15 AM ET · 5 days silent</div></div>
+<div class="subj">Congrats!! — "I recall our conversation back in 2024 on how you wanted to build something, and indeed you have!"</div>
+<div class="note">A warm, personal note on the WTP news, no ask attached. He's an old contact who remembers the 2024 conversation — worth two lines back today ("thanks Ron, that conversation stuck with me too") so it doesn't go a week unanswered. Nothing to coordinate.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a11b0308ea1b6b2">Open thread →</a>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">FYI</span>Angela Paulo (Zuleta · HST audit + promissory note)</div><div class="when">Angela Sat Oct 10 · thumbs-up to your "thank you" · nothing needed</div></div>
+<div class="subj">Invoices (Audit) — everything submitted to the CRA agent Saturday; waiting on her reply</div>
+<div class="note">Zuleta completed all the audit requirements and submitted them Oct 10; Angela also left the agent a voicemail and will forward whatever comes back. Separately she confirmed receipt of the promissory-note copy Rob re-sent (the signed version, after the unsigned one went out first). Both threads are now on their side of the net.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a0a051d60d36cbc">Open thread →</a>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head"><div class="who"><span class="badge">FYI</span>Rob Litterst (PricingSaaS · three threads he's handling)</div><div class="when">Teneo Fri · Liv/Oliver Thu · EPIC Thu · you're cc'd on all three</div></div>
+<div class="subj">Teneo HCIT report request · WTP YouTube/podcast graphics · EPIC Insights conjoint</div>
+<div class="note">Jack Hutson (Teneo) asked for a quick HCIT commercial-model trends report; Rob told him the partnership ended with the merger and pointed him at the free agent on the new site — Jack accepted, closed. Liv's YouTube + podcast graphics work is paused until November (Oliver: October budget already spent). Matthew Johnston (EPIC Insights) wants to pitch conjoint work; Rob will raise it with Ulrik, and Matt has emailed Ulrik directly. Nothing for you on any of them.</div>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a12226d02b252e8">Open thread →</a>
+</div>
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin-top:10px;">Left out on purpose: Boris at Polylane (cold pitch, addressed to "Jan"), Outskill sponsorship (third bump, no media kit exists), fdesignstudio audit pitch, Ulrik's reply on the Oct 10 demo (ran yesterday), Rob's "this is cool" forward of the Pulse-agent fix, calendar invitations, newsletters and SaaS digests.</p>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Meta ships Muse Wonder, its first frontier model — benchmarks it says match Fable 5.1 and GPT-6 Astra, $4 / $20 per million tokens via the Meta Model API <span class="source-tag">TechCrunch · HN 627 pts</span>
+<span class="teaser">Two models: Muse Wonder (API) and Muse Wonder Full (Muse Code subscribers only). The pitch is "active memory" — Meta claims a MemoryBench lead over Fable, Opus and Astra.</span></summary>
+<div class="body-news">
+<p>Meta's Superintelligence Lab released Muse Wonder and Muse Wonder Full on Monday, the first frontier-scale release since Alexandr Wang restructured Meta's AI effort in August 2025. Both are larger than the lightweight Muse Spark; Meta's own testing puts them level with Fable 5.1 and GPT-6 Astra overall and ahead on coding-style tasks. Wonder is served through the Meta Model API at $4 per million input tokens and $20 per million output; Wonder Full is only for Muse Code subscribers and not available by API. The differentiator Meta leads with is "active memory", with a claimed MemoryBench score above Fable, Opus and Astra. Trained at the Prometheus data centre in Ohio. Worth a side-by-side on a PricingSaaS extraction task this week — the price sits under Opus.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder/">TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Codex CLI 0.157 now installs a persistent, self-updating background daemon by default — and the GitHub issue asking for opt-in has no maintainer reply <span class="source-tag">GitHub via Hacker News · 553 pts</span>
+<span class="teaser">The daemon outlives the terminal, inherits the first session's working directory and env, checks for updates hourly, and can kill an active turn mid-update.</span></summary>
+<div class="body-news">
+<p>Opening an interactive Codex session now auto-starts a daemon that keeps running after you close the window, runs a full copy of the platform package, and is refreshed by a detached updater polling every hour. The objections in the thread are specific: it happens silently, it carries whichever environment started it, updates can interrupt in-flight work, and it bypasses package-manager-installed binaries. A downstream packager has already shipped a commit disabling it by default; OpenAI has not responded in the thread. If you run Codex on the Mac mini alongside the Morgan fleet, check <code>daemon_auto_start</code> — a stray daemon with Morgan's env is exactly the kind of thing that shows up as a mystery process in <code>tmux</code>.</p>
+<a class="source-link" href="https://github.com/openai/codex/issues/48195">GitHub issue →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Zuckerberg: Meta has "reached the frontier" and he rejects calls for a slowdown — "AI is a technology that can be engineered with normal guardrails" <span class="source-tag">Slashdot</span>
+<span class="teaser">Muse Wonder will be sold to businesses as a paid, closed product. He declined to give a P(doom) and said Meta is "already working on the next step up".</span></summary>
+<div class="body-news">
+<p>The business side of the Muse Wonder launch: Meta is positioning it as a closed, paid enterprise model that beats Opus 5.5, Fable 5.1 and GPT-6 Astra on "some technical benchmarks", good for anything from reading a lease to making sense of financial or health records. Asked about the slowdown calls that have been circulating since the "political revolt" memo, Zuckerberg said he's "much closer to the belief" that AI can be engineered like any other technology, wouldn't put a number on catastrophic risk, and confirmed the spend on models, infrastructure and talent continues. Note the pivot from open-weights Llama to closed Muse — the open-model lane in the US is now mostly empty.</p>
+<a class="source-link" href="https://meta.slashdot.org/story/26/10/12/1910233/mark-zuckerberg-says-meta-has-reached-ai-frontier-rejects-calls-for-slowdown">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Linus Torvalds: "I actually really like using AI" — "I use AI to do the things that I'm bad at", and a warning about doing "something real and important" with it <span class="source-tag">Slashdot</span>
+<span class="teaser">From an on-stage conversation with Dirk Hohndel at Open Source Summit Europe. He built a guitar-pedal interface with it; kernel maintainers are drowning in weak AI-generated patches.</span></summary>
+<div class="body-news">
+<p>Torvalds, who a year ago thought AI "was just not very good", now uses it for the work outside his own strengths — his example is a guitar-pedal interface — while keeping it away from kernel work that has to be right. The flip side he raised is the flood of low-quality AI-generated patches hitting maintainers, the same pressure that has System76 banning AI-generated contributions to its COSMIC desktop outright. His view of what still makes Linux work is unchanged: "incremental improvement and steady progress all the time". Pairs with the "AI is a tool" essay below — same argument from the two ends of the skill curve.</p>
+<a class="source-link" href="https://linux.slashdot.org/story/26/10/13/034206/linus-torvalds-on-why-ai-works-for-him">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Study of 700+ software firms: AI coding agents raised lines of code 30% and pull requests 23% — resolved Jira issues didn't move, and review time rose 49% <span class="source-tag">Slashdot · Ars Technica</span>
+<span class="teaser">"Little evidence that firms increase software output or reduce employment." Human review became the bottleneck: PRs needing changes nearly doubled, comments per PR up 35%.</span></summary>
+<div class="body-news">
+<p>The Jellyfish-data study is the first large cross-company look at agent adoption and it lands on the gap everyone suspected: more code, more commits, more PRs, but no statistically significant change in shipped issues or epics. The cost shows up downstream — time from PR to merge up 49%, the share of PRs sent back for changes nearly doubled, and 14% more people doing reviews. AI review tools were in use at 80% of firms by March 2026 yet wrote only 23% of review comments. The lesson for a two-person shop is the opposite of the big-firm one: you don't have a review bottleneck, so the output gain is real — but only if nobody is reading the diffs, which is also the risk.</p>
+<a class="source-link" href="https://tech.slashdot.org/story/26/10/12/0234217/ai-coding-agents-generate-more-code-but-not-more-software">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>"AI Models Can Provably Hide Arbitrary Capabilities" — an encrypted sub-network in the weights that only a secret trigger unlocks, resistant to fine-tuning, noising and adversarial training <span class="source-tag">arXiv via Hacker News · 200 pts</span>
+<span class="teaser">Draguns, Motwani, Douglas and Schroeder de Witt argue elicitation-based safety audits have a hard floor: you cannot prompt out what is cryptographically locked.</span></summary>
+<div class="body-news">
+<p>Current dangerous-capability audits assume that if a model can do something, the right prompt or fine-tune will surface it. This paper builds the counterexample: a "digital locker" that embeds a hidden network in a model's weights, provably hard to find or interpret even with full weight access, and activated only by a secret key. On a small chemistry-prediction task standing in for CBRN capability, the hidden behaviour survived fine-tuning, weight noise, gradient trigger search and latent adversarial training. The practical implication is for supply chain, not prompts — open weights from an untrusted source can carry things no eval will find — which is the argument for provenance over red-teaming. Lands the same week as the White House incident-reporting mandate.</p>
+<a class="source-link" href="https://arxiv.org/abs/2610.13928">arXiv →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Epic delays its Disney shooter and tells the team "No more hand-written code" — all art "generated with full AI workflows", humans as "visionaries and creative drivers" <span class="source-tag">Slashdot · Bloomberg</span>
+<span class="teaser">The Marvel + Star Wars game slated for March now has no date. Production is "AI first" on tools including Claude.</span></summary>
+<div class="body-news">
+<p>Bloomberg's sources say Epic's Disney-partnered shooter has slipped from March with no new date, and that the studio has switched the project to an "AI first" model: a game director told staff there would be no more hand-written code and that art would come from full AI pipelines, with people directing rather than making. Epic's Jake Jones framed it as "AI-accelerated development, led by Epic developers who are the visionaries". Read it against the 700-firm study above — this is the maximal version of the bet, on a title that already missed its date. Whether the delay is because of the switch or despite it is the question nobody in the piece answers.</p>
+<a class="source-link" href="https://games.slashdot.org/story/26/10/12/2128209/epic-games-delays-disney-project-asks-developers-to-use-more-ai">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>"AI is a tool. Using it well takes skill." — a reply to Rich Hickey's "it's automation, not a tool", and the line "Tools can amplify poor judgment as readily as good judgment" <span class="source-tag">yyhh.org via Hacker News · 397 pts</span>
+<span class="teaser">Hard to control doesn't mean not a tool; compilers and spreadsheets automate too. The useful question is whether the operator directs, evaluates and fixes — or hands off and doesn't check.</span></summary>
+<div class="body-news">
+<p>The essay takes Hickey's argument seriously and then dismantles it: a thing a human can wield to a purpose is a tool, even if it has its own behaviour, and most tools we trust (compilers, spreadsheets, autopilots) are heavily automated. What separates good use from bad is skill — directing the system, judging the output, catching and repairing errors — and that skill is unevenly distributed, which is why the same model produces Torvalds' guitar pedal and the kernel's patch flood. It also calls out anthropomorphic language ("the model conspired to…") as a way of hiding engineering problems. Short, calm, and the best framing of the week's "does it help?" studies.</p>
+<a class="source-link" href="https://yyhh.org/blog/2026/10/ai-is-a-tool/">yyhh.org →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>Hackers heated supermarket fridges to 50°C across Europe — 80 Carrefour stores, 150 Intermarché, 5% of Monoprix; food spoiled, fires reported, Danfoss controllers on "outdated firmware" <span class="source-tag">Slashdot · Reuters · HN 677 pts</span>
+<span class="teaser">Store control panels were reachable from the internet. France's PM ordered an investigation; Spain, Portugal, Poland, Germany and Belgium reported the same thing.</span></summary>
+<div class="body-news">
+<p>Attackers remotely drove connected refrigeration in hundreds of French supermarkets into defrost — Les Mousquetaires says about 150 Intermarché stores had fridges held at 50°C for six hours — spoiling stock and, per Reuters, starting fires in some locations; deliveries and shelf pricing were disrupted too. ANSSI reportedly traced the entry point to Danfoss store controllers exposed online and running old firmware; Claroty's Team82 had published authentication-bypass and code-execution flaws in the Danfoss AK-SM 800A series earlier this year. The scale across six countries in days makes it the biggest OT attack on retail on record. The lesson is the boring one: internet-reachable building controllers with vendor firmware nobody updates.</p>
+<a class="source-link" href="https://it.slashdot.org/story/26/10/12/1748203/hackers-heat-french-supermarket-fridges-sparking-fires-and-spoiling-food">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Ukrainian drones took out three of Yandex's largest data centres in a week — payments, banking apps, email, ride-hailing and grocery chains' cloud went down across Russia <span class="source-tag">Slashdot · Ars Technica</span>
+<span class="teaser">Zelenskyy called it a "symmetrical response" to Russia's late-September strikes on Ukrainian data centres and mobile networks. Yandex holds ~70% of Russian search.</span></summary>
+<div class="body-news">
+<p>Russia's digital economy is unusually centralised on one company, and three Yandex facilities going dark within days took its cloud (which serves big grocery and fast-food chains), payments, navigation and e-commerce with it. The strikes answer a Russian drone campaign that cut connectivity for up to 100,000 Kyiv households two weeks ago. Pro-Kremlin bloggers are openly warning the whole stack could collapse if it continues. The infrastructure point for everyone else: data centres are now military targets, and the Finland and Ohio build-outs are being planned with that in mind.</p>
+<a class="source-link" href="https://tech.slashdot.org/story/26/10/12/1832205/russia-was-not-ready-for-the-data-center-war-it-started-with-ukraine">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Plug-in "balcony" solar is now legal in 10 US states, California most recently, with New York on the governor's desk — Germany has over a million units, IKEA sells kits, one panel costs under $300 <span class="source-tag">National Geographic via Hacker News · 183 pts</span>
+<span class="teaser">A unit plugs into a standard wall outlet and typically covers 10–30% of a home's electricity. Nearly two dozen more states have bills in.</span></summary>
+<div class="body-news">
+<p>Utah legalised plug-in solar in spring 2025 and Colorado, New Jersey, Virginia and California have followed; the hardware is a panel plus a micro-inverter that feeds a regular outlet, no electrician or utility interconnection. Germany is the proof point with more than a million installed and IKEA in the channel. Engineer Joshua Pearce predicts it will "take off like hotcakes" in the US now that the code barrier is gone. Ontario hasn't moved on this — worth watching for the south-facing side of the house, since the hard part was never the panel, it was the paperwork.</p>
+<a class="source-link" href="https://www.nationalgeographic.com/environment/article/balcony-plug-in-solar-panels-renewable-energy">National Geographic →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Citroën revives the 2CV as an electric city car — a Paris Motor Show concept with showrooms targeted for 2028, heritage as the answer to Chinese EVs <span class="source-tag">BBC via Hacker News · 334 pts</span>
+<span class="teaser">The 1948 original was built so a farmer could cross a ploughed field without breaking a tray of eggs. The new one is a small retro runabout aimed at a soft European EV market.</span></summary>
+<div class="body-news">
+<p>Citroën's CEO Xavier Chardon calls it "a modern, ingenious and refreshing response to the mobility challenges of tomorrow"; what it actually is, is European brands pulling their most-loved badges off the shelf — Renault's 5 and 4 already did it — because nostalgia is one of the few things Chinese manufacturers can't ship. It's a concept for now, with a production version planned for 2028. No price or range yet. Fun read, and a real signal about where mass-market EV demand in Europe sits.</p>
+<a class="source-link" href="https://www.bbc.com/news/articles/c620r33plgppo">BBC →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>Latent Space — Anthropic's "dynamic workflows": the lead Claude agent writes the program that spawns, coordinates and collects its own subagents, instead of a developer wiring a fixed roster <span class="source-tag">Latent Space · Oct 12</span>
+<span class="teaser">Harrison Stall and CJ Avilla from Anthropic at AI Engineer NYC: "the next version of multi-agent orchestration". Costs more than single-agent runs, finds more; evals, lower parallelism and "dreaming" memory keep it in check.</span></summary>
+<div class="body-news">
+<p>Flows are the Managed Agents feature behind Every's "One Agent for the Whole Company" piece yesterday: rather than a coordinator plus pre-defined workers, the lead agent plans the job and emits code that launches agents, routes results and manages information flow. Agents share a filesystem, you set a session budget, and every handoff is inspectable in Claude Console. The honest caveats are the useful part — flows are much more expensive than a single agent and the presenters recommend evals, dialling default parallelism down, and using the dreaming memory feature so repeat runs get cheaper. This is the same shape as the Workflow tool in the Morgan fleet; worth a read before touching the inbox-sweep orchestration.</p>
+<a class="source-link" href="https://www.latent.space/p/claude-dynamic-workflows">Latent Space →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Lenny's — Alex Cornell on designing Meta's Muse: an avatar, a three-layer status display, a generative feed, and his mum apologising to the agent <span class="source-tag">Lenny's Newsletter · Oct 12</span>
+<span class="teaser">The demo that lands: years of forgotten Instagram saves turned into a SkyMall-style daily catalogue. Takeaway for designers: nothing is pixel-perfect any more, and an agent feels more like messaging than an app.</span></summary>
+<div class="body-news">
+<p>Cornell leads design for Muse, Meta's consumer agent, and the conversation is about what you ship when the output is generated at runtime. Muse has a custom avatar, a status display with three layers for three levels of technical user, a personalised "ideas" surface and a generative feed — the Instagram-saves catalogue is generative UI in a shipped product. His mother apologises to hers and uses it to track his golf shot by shot. The design lesson is the mindset shift: you design the frame and the behaviours, not the screen. Useful companion to the Muse Wonder launch above — it's the consumer face of the same model family.</p>
+<a class="source-link" href="https://www.lennysnewsletter.com/p/how-meta-designed-muse-an-ai-agent">Lenny's →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Product Compass — Paweł Huryn built a seven-bot product team in Grok Bot with no code: research, strategy, marketing, design, specs, engineering and a product lead as the front door <span class="source-tag">Product Compass · Oct 12</span>
+<span class="teaser">Configured by talking to them; shared skills, apps, email, memory files and scheduled routines (a weekly competitor check). Bots ask before sending external email or spending money.</span></summary>
+<div class="body-news">
+<p>The template is a swarm with a single point of contact and specialised workers, each with its own skill set and shared memory, plus permission rules for anything with blast radius. Huryn's honest conclusion is that swarms cost more than a tool like Claude Code and only earn it for high-impact or always-on work — the weekly competitor scan is the always-on example. The structure is close enough to the Morgan / Brad / Adam / Erik split to be worth comparing against; the "ask before external email or purchases" rule is exactly the draft-before-send rule here.</p>
+<a class="source-link" href="https://www.productcompass.pm/p/grok-bot-product-swarm">Product Compass →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>AI Daily Brief — "How to Go from AI Power User to AI Leader": why an internal AI champions programme is the highest-ROI enterprise move, and why most of them die the day after certification <span class="source-tag">AI Daily Brief · Oct 12</span>
+<span class="teaser">Champions are "peer plus one": nominate people who use AI unprompted, train them on their own team's work with a pass/fail, give them two sponsors, and make someone own the follow-through.</span></summary>
+<div class="body-news">
+<p>The episode treats the champion role as a real job rather than a badge: someone a step ahead of their peers who collects live use cases from colleagues' actual work, anywhere on the spectrum from ambassador to internal forward-deployed engineer. The programme design is concrete — managers must give time, training is on the team's own tasks with a test, and each champion gets an HR/L&amp;D sponsor plus an AI-fluent one. The warning is that networks collapse without an owner, and that champions have to understand the whole idea-to-production path including evals and the "good enough to ship" call. Relevant to the WTP integration: this is the role Rob and you are informally playing for the Copenhagen team.</p>
+<a class="source-link" href="https://www.aidailybrief.ai/e/2026-10-12">AI Daily Brief →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Astral Codex Ten — book review of "We Present Television" (1940): broadcasters predicting colour, big screens, televised politics and remote meetings — and "an unseen force is drawing us all together moment by moment" <span class="source-tag">Astral Codex Ten · Oct 10</span>
+<span class="teaser">A reader-contest finalist on a collection of essays from TV's experimental era. The reviewer's frame: "Television" was a bigger idea than the box, and the box's limits were constraints on the idea.</span></summary>
+<div class="body-news">
+<p>The pleasure of the piece is how much the 1940 broadcasters got right from almost nothing — colour, large screens, politics on air, meetings at a distance — and how the reviewer reads the "unseen force" line as the internet seen through a cathode-ray tube. The argument underneath is that an early industry's technical ceiling tells you about the medium's current state, not its destination, which is the sanest possible lens for the "AI can't do X yet" genre. Weekend-length read; no action.</p>
+<a class="source-link" href="https://www.astralcodexten.com/p/your-book-review-we-present-television">Astral Codex Ten →</a>
+</div>
+</details>
+
+<footer>
+Generated by Morgan · 2026-10-13 05:14 ET · Sources: gog (buyerson + pricingsaas calendars, both work inboxes), claude.ai Google Calendar connector (all 8 johnhkotowski@gmail.com calendars, live), Mission Control (raw API), Hacker News, TechCrunch, Slashdot, Latent Space, Lenny's, Product Compass, AI Daily Brief, Astral Codex Ten · <strong>Not available this run:</strong> johnhkotowski@gmail.com mail (gog invalid_grant day 48; claude.ai Gmail connector needs sign-in) · Checked, nothing new or already covered: Stratechery (Oct 12 is a personal day; weekly ran Oct 10), Platformer (no post since the Oct 9 math piece, ran Oct 11), Ben's Bites (Oct 8 ran), MKT1 (Oct 1 ran), Growth Unhinged (swag ran yesterday), Every (One Agent ran yesterday; nothing newer) · Left out for room or by rule: GLM-Legal (page would not render, unverifiable), Intel D270 480 GB GPU (no date or price), Brad Smith on UK AI regulation, Kevin Kelly's 2016 predictions retrospective, Firefox 158 JPEG-XL, Fitbit Edge, Q3 PC shipments, Amazon–Decart talks and the Plaud-exec round (funding, by rule), Google "Muse Wonder" HN thread (same story as TechCrunch) · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-10-13.html">johnkotowski.github.io/daily-brief/2026-10-13.html</a> · <a href="archive.html">Archive</a>
+</footer>
+</div>
+</body>
+</html>
