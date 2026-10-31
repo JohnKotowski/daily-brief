@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · 2026-10-31</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Saturday, October 31, 2026 · Halloween · Mark 9:30 in Belleville (tournament day 2) and Lily 12:15 at Smiths Falls, both from Wednesday's live read and now three days stale, because the personal calendars and mailbox are still dark (gog day 68, no connector this run) · work side verified clear · the PricingSaaS Q3 HST approval is still open per Angela at Zuleta, and the Buyerson return is due today without the bank statements · you owe Ferdinand a deletion, Jay a read and Nicole a return day</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Sat Oct 31</h2>
+
+<div class="agenda-conflict">
+<strong>Personal calendars NOT read today — 0 of 8 answered.</strong> The <code>gog</code> token for johnhkotowski@gmail.com is still revoked (<code>invalid_grant</code>, day 68) and the claude.ai Google Calendar connector was listed as "requires authentication" again this run, so neither path reached the Family, PuckFinder or team calendars. The two kids' items below are carried forward from <strong>Wednesday's live read</strong> and are now three days stale: a time change, a cancellation or anything added since Wednesday morning is invisible here. The work side is live and verified. The fix is unchanged: <code>gog auth login -a johnhkotowski@gmail.com</code> in a terminal, five minutes.
+</div>
+
+<div class="agenda-note">
+<strong>Two kids, two directions.</strong> Mark faces off in Belleville at 9:30 and Lily in Smiths Falls at 12:15. Belleville to Smiths Falls is about two hours on Highway 7, so whoever is at the Quinte rink cannot realistically make Lily's warm-up; split it the way Friday was split (one parent stays down with Mark, the other drives Lily from Barrhaven at 10:45), and both legs are home well before dark for trick-or-treating. Not a hard conflict with two drivers, just a plan to confirm over breakfast.
+</div>
+
+<div class="agenda">
+<div class="agenda-item">
+<div class="time">All day</div>
+<div class="body">
+<div class="title">Halloween <span class="cal-tag">holidays in canada</span></div>
+<div class="meta">Shows on both work accounts · the only live entry today · live via <code>gog</code></div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">9:30 AM</div>
+<div class="body">
+<div class="title">Mark — vs Belleville Jr Bulls, tournament day 2 <span class="cal-tag">puckfinder · Wed read</span></div>
+<div class="meta">Quinte Sports &amp; Wellness Centre, FDC pad · arrive 8:30 · Nepean Raiders U14B White · carried from Wednesday's live read, not re-verified today</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">12:15 PM</div>
+<div class="body">
+<div class="title">Lily — Wildcats U13BB at Smiths Falls <span class="cal-tag">puckfinder · Wed read</span></div>
+<div class="meta">Smiths Falls Youth Arena · leave Barrhaven about 10:45 · carried from Wednesday's live read, not re-verified today</div>
+</div>
+</div>
+</div>
+
+<div class="agenda-note">
+<strong>Lookahead</strong> (work side live via <code>gog</code>; personal side from Wednesday's read, not re-verified).<br>
+<strong>Sun Nov 1:</strong> clocks go back at 2:00 AM (live). Tournament day 3 in Belleville, times from the tournament page. <br>
+<strong>Mon Nov 2:</strong> PricingSaaS L10 10:00–11:00 (live) still sits under the orthodontic appointment 10:10–11:10 (Family calendar, Wednesday's read). Lily practice 5:00 and dry-land 6:15 (Sportsplex), Mark practice 7:00 (Walter Baker A), all Wednesday's read.<br>
+<strong>Tue Nov 3:</strong> Content Strategy Weekly 10:00–11:00 (live).<br>
+<strong>Wed Nov 4:</strong> Rick &lt;&gt; John 11:00–12:00 (live; Rick Ralston has accepted).<br>
+<strong>Thu Nov 5 → Mon Nov 9:</strong> "Stay at Quality Inn Peterborough", four nights on the buyerson calendar (live). Nothing in either inbox says which kid's tournament this is; the Fri Nov 6 Weekly Product Demo 8:00–8:30 (live) would be taken from the hotel.<br>
+<strong>Tue Nov 10:</strong> a new recurring <strong>Weekly Scrum</strong> 8:00–8:30 starts on the pricingsaas calendar (live), ahead of the 10:00 Content Strategy slot.<br>
+<strong>Wed Nov 25:</strong> Monthly Board Meeting, PricingSaaS x WTP, 9:00–10:00 (live, Rob's updated invite). <strong>Thu Nov 26:</strong> Book Launch, <em>The AI Pricing Roadmap</em>, 11:30–2:30 on the pricingsaas calendar (live) — that is the Copenhagen launch Nicole mentioned, the week before the one you chose to fly.<br>
+<strong>Sun Nov 29:</strong> "John &amp; Francois" 5:00–7:00 PM now sits on the pricingsaas calendar (live; Francois Gouelo's invite from Friday). That is the same Sunday you told Nicole you would fly Toronto → Copenhagen; the evening departures to CPH leave in that window, so one of the two has to move before you confirm either.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 6px 0 0;">Work calendar (buyerson + pricingsaas) is clear today apart from the holiday entry. Checked live: john@buyerson.co (primary, pricingsaas share, Holidays in Canada: 3 of 3 answered) and john@pricingsaas.com (primary, PricingSaaS, Transferred from jojo@, Holidays in Canada: 4 of 4 answered). Personal side (primary, Family, SSHD AAA 2013, Wildcats U11B, Green Eagles, Myers Snipers, PuckFinder, Holidays): 0 of 8 answered.</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL TASKS ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+<p class="task-empty">🟢 No open tasks on the board — in progress, blocked, review and ready all came back empty (raw API, HTTP 200 on all four, Saturday 05:00 ET). Everything in the next section is waiting on you, not on me. Four of today's cards are things I can own if you say "track it": assembling Mauricio's SR&amp;ED pack from Lizeth's stubs, drafting the GDPR confirmation to Ferdinand once the account is deleted, drafting the reply to Jay on the TNMS deck, and calendaring the Buyerson annual return (due Dec 27).</p>
+
+<!-- ============== SECTION 3 · CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+<div class="agenda-note">
+<strong>⚠️ Work mail only — day 68 without the personal mailbox.</strong> Cards come from john@buyerson.co and john@pricingsaas.com. johnhkotowski@gmail.com is behind the revoked <code>gog</code> token and the claude.ai Gmail connector still needs a sign-in, so school, hockey, family and contractor threads are invisible here. Since Friday's brief: Angela at Zuleta chased the PricingSaaS Q3 HST approval that Friday's brief assumed had auto-filed; Ulrik forwarded a GDPR erasure request and you promised "asap"; Jay's TNMS deck arrived and you promised a read Friday evening; Nicole countered with a Saturday return from Copenhagen; James is amending the Form 6 you caught. Monday's three asks (bank statements, SR&amp;ED, Cloudflare) are still unanswered on day 5.
+</div>
+<p style="font-size:12px; color:var(--slate); margin: 0 0 12px;">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--red); color:#fff;">Action</span> needs something concrete from you &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--amber); color:#fff;">Follow-up</span> ball is in play, watch it &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--olive); color:#fff;">FYI</span> informational only</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Angela Paulo + Milene Valero (Zuleta) — PricingSaaS Q3 HST return is still waiting on your "I agree"</div>
+<div class="when">Fri 12:22 PM ET · pricingsaas inbox · both emails unread</div>
+</div>
+<div class="subj">HST Report-Pricingsaas — Angela's chase on top of Milene's Oct 27 approval request for Jul–Sep 2026</div>
+<div class="note">Friday's brief assumed Milene's 24-hour silence clause had filed this. Angela (customer relations) says otherwise: the report is "awaiting client approval" and they need it to file on time and avoid late-filing penalties. The numbers on file: income $225,309.06 non-taxable, HST collected $0, ITCs <strong>$11,233.81</strong>, refund claimed $11,233.81. The quarter's filing deadline is <strong>today, Oct 31</strong>. Angela points to an email from "Luz Marina" that is in neither work inbox, so it is probably sitting in the dark personal mailbox; the reply that unblocks them is two words, "I agree", on Milene's thread or Angela's.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a17df0dcd4d4aa0" target="_blank">Open Milene's approval thread →</a> &nbsp; <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a18d9e6be5c56f2" target="_blank">Open Angela's chase →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Milene Valero (Zuleta · bookkeeper) — Buyerson bank statements, and the Buyerson Q3 HST return is due today</div>
+<div class="when">Mon 4:17 PM ET · buyerson inbox · unanswered, day 5</div>
+</div>
+<div class="subj">Request for bank statements - Buyerson Inc. — PDFs she needs before she can book Q3 and file the HST return</div>
+<div class="note">Three exports from RBC online banking: Checking from <strong>Jun 5</strong>, Savings from <strong>May 29</strong>, credit card ending 7377 from <strong>Jun 23</strong>, all to date, PDF. She cannot file the Buyerson Jul–Sep return without them and the deadline is <strong>today</strong>, so a late filing is now likely either way. The RBC app exports PDFs from a phone and the arena has wifi; if it is not happening today, a one-line "Monday" lets her plan around a late filing instead of chasing. Lizeth's Oct 30 pay run went through on schedule, so there is nothing else open with Zuleta on the Buyerson side.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a179dc2355954de" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Ulrik Lehrskov-Schmidt (WTP) → you and Rob — GDPR erasure request, you said "asap" on Friday</div>
+<div class="when">Fri 3:11 PM ET · pricingsaas inbox · your reply 3:14 PM · nobody has written to the requester yet</div>
+</div>
+<div class="subj">Fwd: Account and data deletion request — Ferdinand Stapenhorst (claude@agentfranz.ai) via contact@willingnesstopay.com</div>
+<div class="note">Article 17 request for his pricingsaas.com account: the account and personal data, the agent conversation history, API keys and MCP authorisations, with confirmation by reply once done. Ulrik's ask was "can you sort this guy out", and your "I'll take care of it asap" is the only reply so far. The legal clock is one month (about <strong>Nov 30</strong>), but "asap" was promised to the acquirer, and this is the first deletion request since WTP took over, so it sets the precedent. Delete, then a three-line confirmation to Ferdinand with Ulrik on copy; say "track it" and I will draft the confirmation for you to send once the deletion is done.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a18e39caba7ec7d" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Jay Proulx (TNMS) — the scraping deck you promised to read Friday evening</div>
+<div class="when">Fri 1:27 PM ET · pricingsaas inbox · your reply 4:44 PM: "I'll take a look this evening"</div>
+</div>
+<div class="subj">How could we scrape pricing with TNMS? — 15-page deck, <em>Any Site, Then Every Site</em>, four shapes and a four-week pilot ask</div>
+<div class="note">Jay's four shapes for the ~4,000 sites heading to 40,000: <strong>A</strong> agents scrape every site every cycle (today's model, cost scales with site count); <strong>B</strong> agents audit a sample of your scrapes (cheapest start, measures the silent-miss rate); <strong>C</strong> agents write deterministic extractors and repair them only when a signal fires; <strong>D</strong> a mix. His proposal is a four-week pilot: 200 sites you pick, the current record schema, and a repo TNMS can open PRs against, then a cold audit against today's records in week four. No prices in the deck. He also put you on the Ship beta (sign in at app.tnms.ai with GitHub). The reply he is waiting for is which shape, or a polite pass; a one-line "B first, let's talk Tuesday" keeps it moving without committing anything.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a18dda231219352" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Mauricio Gallardo (Mobile Capital · SR&amp;ED) — kicking off the 2026 claim</div>
+<div class="when">Mon 8:17 AM ET · buyerson inbox · Alexei Gavriline on copy · unanswered, day 5</div>
+</div>
+<div class="subj">Buyerson 2026 SR&amp;ED – Financial information — FY Oct 1 2025 to Sep 30 2026, "very similar to the prior year"</div>
+<div class="note">Four buckets: (1) employee salaries with your estimate of R&amp;D hours; (2) Canadian contractor invoices and timesheets, if any; (3) confirm no IRAP, co-op or wage subsidies in FY2026; (4) confirm Angela Paulo at Zuleta is the 2026 tax-return contact. Items 3 and 4 are a two-line reply you can send from the rink; the payroll figures can follow from Lizeth's stubs. No deadline stated, but a silent first week is how last year's cycle ended up in November. Say "track it" and I will assemble the pack.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a178252dc9e3f71" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Nicole Høyer (WTP · EA) — Copenhagen: she needs a return day to book, and the party invite is out</div>
+<div class="when">Fri 5:51 AM ET · pricingsaas inbox · ball with you · party invite 10:29 AM</div>
+</div>
+<div class="subj">CPH visit — you proposed flying out Sun Nov 29; the $796 direct home leaves Friday afternoon, before the party. Nicole: "wouldn't it work to leave Saturday instead?"</div>
+<div class="note">Decide the return day and tell her: <strong>Sat Dec 5</strong> (one extra night, you make the Friday party) or <strong>Sun Dec 6</strong>. Friday's brief offered to price the Saturday and Sunday returns; say the word and I will. Her separate "Official Xmas Party invite" sets the shape of that Friday: team dinner 5:45 PM at Restaurant Pluto, after-party from 9:00 PM back at the office (music, drinks, disco; plus-ones welcome), with a Partiful RSVP for the after-party. Note the Thu Nov 26 book launch is the week before you land. One wrinkle to settle first: Francois Gouelo's "John &amp; Francois" invite for 5:00–7:00 PM on <strong>Sun Nov 29</strong> is now on the pricingsaas calendar, which is the flight evening.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1156d8ab9576ec" target="_blank">Open CPH thread →</a> &nbsp; <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a18d37602eea444" target="_blank">Open party invite →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> James Smith (Upside Law) — amended Form 6 still to come; Q3 account paid</div>
+<div class="when">Thu 1:17 PM ET · pricingsaas inbox · waiting on James, day 2</div>
+</div>
+<div class="subj">UVL - Q3 Legal Fees — invoice #1243 paid by e-Transfer Thursday; two of three DocuSign envelopes completed</div>
+<div class="note">You signed the ISC Information and Post-transaction Materials envelopes Thursday (both show "Completed"). The third, <strong>Form 6 – Changes Regarding Directors</strong>, still listed Rob as a director; you flagged it at 1:12 PM and James replied "good catch, I'll amend" a minute later. No refreshed envelope has arrived since, so the corrected Form 6 is on his desk, not yours. If nothing lands by Tuesday, a one-liner asking for the amended envelope keeps the post-closing filings from drifting into mid-November.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1044c42ee040a9" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Nick Marinko — waiting for your "it's live" on the competitive feature grid</div>
+<div class="when">Thu 2:28 PM ET · pricingsaas inbox · you promised a production deploy "tomorrow-ish" Thursday</div>
+</div>
+<div class="subj">Competitive Feature Grid — Nick wants to converse with the agent about his packaging comparison in the UI instead of iterating by email</div>
+<div class="note">Nick said Wednesday's version was "better", explained he is building the grid himself to understand how competitors price the specific features in your new packages, and asked for a per-competitor top chart next. You replied Thursday that several enhancements from the conversation were going to production and would be "ready tomorrow-ish"; his last line was "sounds great, hope hockey went well and no teeth were lost". Nothing since says the deploy went out, so the next message is yours: a link and two sentences on what changed. If Friday got eaten by Belleville, a "Monday" note holds him.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a17d53ea03d9429" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Rob Litterst ↔ Brendan Ward (Growtoro) — $1,500/month retained outbound, Rob needs your yes or no</div>
+<div class="when">Tue 10:46 AM ET · pricingsaas inbox · Brendan's offer unanswered, day 4</div>
+</div>
+<div class="subj">Nice chatting earlier, Rob and John — Growtoro would own Instantly end to end: data sourcing, copy, inbox and domain health, 5–10 campaigns a week, month to month</div>
+<div class="note">Rob's brief to Brendan: competing growth priorities, cold outbound not getting run, and a post-acquisition need to show pipeline. Brendan came back the same morning at <strong>$1,500/month</strong>, everything included, no term. Rob is leading the thread but told Brendan he would check with you, and he has gone quiet since Tuesday. This is a yes/no to Rob, not an email to Brendan, and the argument for yes is that the May Growtoro work on the same card is still billing monthly, so the vendor is already set up.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/19cdf1d74edd3f9c" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Rob Litterst — two small asks you have not answered: Cloudflare Tunnel and Gauge</div>
+<div class="when">Mon 3:38 PM ET and Wed 9:25 AM ET · pricingsaas inbox · unanswered, day 5 and day 3</div>
+</div>
+<div class="subj">Fwd: [Action Required] Upgrade your Cloudflare Tunnel to version 2026.10.2 or later — "Do I need to do anything here?" · Re: Peter from Gauge (YC S24) — "John, what do you think?"</div>
+<div class="note">Cloudflare wants the <code>cloudflared</code> connector on the PricingSaaS tunnel on 2026.10.2 or later; Rob does not know whether that is his or yours. It is a one-line answer either way ("mine, done" or "yours, here's how"). Separately, David at WTP forwarded Gauge's pitch for a 15-minute call, Rob called the space "rife with snake oil" but was willing to take 15 minutes, and Oliver at WTP passed ("swamped with the book, already doing several things on the LLM front"). Rob only needs a "pass" or "take it" from you.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a179b8c640d0268" target="_blank">Open Cloudflare thread →</a> &nbsp; <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a182b01f8343fec" target="_blank">Open Gauge thread →</a>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">FYI</span> Ulrik Lehrskov-Schmidt (WTP) — the PricingSaaS double-page in the book is approved as written</div>
+<div class="when">Wed 2:19 PM ET · pricingsaas inbox · closed</div>
+</div>
+<div class="subj">PricingSaaS in the book — Ulrik's copy for the closing spread of <em>The AI Pricing Roadmap</em></div>
+<div class="note">Rob: "wouldn't change anything." You: "looks great, conveys the positioning well", with the caveat that the company count will date it (50K tracked next year). Ulrik's EOB-Thursday window has passed, so the copy is locked and the only follow-on is the Nov 26 launch on the calendar. Nothing to do.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a182e1cbbec00be" target="_blank">Open thread →</a>
+</div>
+</div>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Backdoored builds of the official Claude Code extension shipped through Cursor's marketplace and dropped an SSH backdoor <span class="source-tag">Hacker News → Phorion</span><span class="teaser">Versions 2.1.312 and 2.1.313 carried an implant that plants SSH keys and persistence on macOS, Linux and Windows; Cursor pulled both. 887 points on HN.</span></summary>
+<div class="body-news">
+<p>Phorion's advisory covers two versions of the Claude Code for VS Code extension as distributed through Cursor's extension marketplace: both contained a payload that writes attacker SSH keys and installs persistence, with a macOS privilege quirk that often fails to enable Remote Login but still leaves the keys and launch agents in place. Cursor removed the builds; anyone who installed or updated the extension through Cursor in that window should treat the machine as compromised, rotate keys and check <code>authorized_keys</code>. Context: this is the third AI-developer-tooling supply-chain hit in a fortnight after LiteLLM and Railway, which is exactly the pattern Ben Thompson writes about in the Industry section below.</p>
+<a class="source-link" href="https://phorion.io/blog/offical-claude-code-vsx-compromise/" target="_blank">Read the advisory →</a>&nbsp; <a class="source-link" href="https://news.ycombinator.com/item?id=50300683" target="_blank">HN thread →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Google Research's "sleep" framework: models consolidate what they saw in context into their weights during offline phases <span class="source-tag">Hacker News → Google Research</span><span class="teaser">Wake phase uses context as short-term memory; sleep phase folds it into parameters. Retention reported from up to 10M tokens of context. 220 points.</span></summary>
+<div class="body-news">
+<p>Behrouz and Mirrokni's framework alternates a wake phase, where the model works normally and treats its context window as short-term memory, with a sleep phase that consolidates that context into the parameters, with the stated goal of continual learning without catastrophic forgetting. The post reports retention of material from contexts up to 10 million tokens and improved reasoning after consolidation, which, if it holds outside the lab, is the memory story every agent product has been faking with retrieval. Worth reading as a direction rather than a product; nothing here ships in Gemini yet.</p>
+<a class="source-link" href="https://research.google/blog/the-sleep-framework-a-new-way-for-llms-to-retain-knowledge-in-continual-learning/" target="_blank">Read the post →</a>&nbsp; <a class="source-link" href="https://news.ycombinator.com/item?id=50272479" target="_blank">HN thread →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Cracks in the AI spending boom: second day of selling, Intel down 28%, and the hyperscalers' free cash flow has gone negative <span class="source-tag">TechCrunch</span><span class="teaser">Nvidia -4%, Broadcom -5%, Qualcomm -11%; Alphabet's FCF was -$9.1B on $51.4B of quarterly capex, Amazon -$42.4B trailing twelve months.</span></summary>
+<div class="body-news">
+<p>Friday's brief covered Alphabet's $500B drop; this is the follow-on. The Nasdaq fell 2.9% on day two, Intel lost 28% on a weak Q4 outlook (about $12B off the US government's stake), and the piece puts the real worry on cash: Alphabet, Amazon and Meta all reported negative free cash flow for the period while the four largest buyers plan more than $740B of capex this year. The AI build-out is now being financed, not expensed, which is why the next story matters.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/30/cracks-are-emerging-in-the-ai-spending-boom/" target="_blank">Read on TechCrunch →</a>&nbsp; <a class="source-link" href="https://news.slashdot.org/story/26/10/30/1843213/us-tech-stocks-see-sharp-falls-as-ai-spending-nears-1-trillion" target="_blank">Slashdot summary →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>The debt behind the build-out: Anthropic expected to carry a "high junk" rating after its IPO, and Nvidia is weighing co-signing Nscale's loans for Anthropic's West Virginia campus <span class="source-tag">TechCrunch × 2</span><span class="teaser">Blackstone, anchor of the $63B chip-financing deal, now tells investors to expect high-yield; Nvidia would take over the site if Nscale defaulted.</span></summary>
+<div class="body-news">
+<p>Two reports, one theme. Per the FT, Blackstone has reversed its earlier claim that Anthropic would be investment grade before 2027 and now expects a high-yield rating once the company lists, which sets the cost of every dollar of compute debt behind a frontier lab. Separately, per The Information and Bloomberg, Nvidia is in talks to give a residual-value guarantee on billions of construction and power financing for Nscale's campus, where Anthropic has signed $44.6B for the first building alone; if Nscale defaulted, Nvidia would inherit the site and find a new tenant. A chip vendor co-signing its customer's customer's loans is the clearest sign yet that the capacity is being built on credit the labs cannot raise alone.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/30/anthropic-expected-to-receive-high-junk-rating-from-credit-agencies-following-ipo-report-says/" target="_blank">Anthropic rating →</a>&nbsp; <a class="source-link" href="https://techcrunch.com/2026/10/30/nvidia-weighs-playing-the-cosigner-for-nscales-ai-data-center-in-west-virginia/" target="_blank">Nvidia and Nscale →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Every: Is Anthropic worth $2 trillion? The full S-1 breakdown, bull and bear <span class="source-tag">Every · Evan Armstrong</span><span class="teaser">$141.1B raised, $131.7B still in cash, under $10B burned to reach an operating-profitable quarter; against that, roughly $800B of non-cancelable compute obligations.</span></summary>
+<div class="body-news">
+<p>Friday's brief used Every's shorter "six-month shelf life" post; this is the long one. The bull case from the filing: net revenue retention near 900% against Snowflake's public record of 189%, revenue per employee of $6.6M versus Google's $2.2M, and a $16.8B operating-profitable quarter reached on less than $10B of cumulative burn. The bear case: compute contracts step from about $22B a year to about $120B next year and about $155B by 2028, mostly non-cancelable, while the revenue that services them is consumption-priced and cancelable at will. Armstrong's framing is that frontier models are Hollywood, not SaaS: the obligations only clear if the next six models are as good as the last six. Pairs with the two stories above.</p>
+<a class="source-link" href="https://every.to/napkin-math/is-anthropic-worth-2-trillion" target="_blank">Read on Every →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>DoorDash has seen only "several hundred" orders from third-party AI agents, against about three million deliveries a day <span class="source-tag">TechCrunch</span><span class="teaser">Tony Xu on the Q3 call: "you never want to fight gravity, but you don't want to be delusional."</span></summary>
+<div class="body-news">
+<p>A rare hard number on agentic commerce. DoorDash's CEO said agents like Muse, Instinct and Fo have produced a few hundred orders in total, which rounds to zero against the platform's volume, while adding that the company still courts agent makers and may eventually sell advertising inside them. The useful read for anyone building an agent-facing product: the demand curve for "let the AI order for me" is real but tiny today, and the distribution owners are positioning to tax it rather than be disintermediated by it.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/30/doordash-said-its-only-received-several-hundred-orders-from-ai-agents/" target="_blank">Read on TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Stratechery: "The End of the Internet", or why AI-driven attackers close the era of self-hosting anything <span class="source-tag">Stratechery · Ben Thompson</span><span class="teaser">Last week's pile-up of vulnerabilities (PHP RCE, leaked CA keys, Node, GitLab, Cisco, LiteLLM, Railway) read as one trend: limitless iteration replaces cleverness.</span></summary>
+<div class="body-news">
+<p>Thompson's argument is that the open internet rested on an assumption that most servers were not worth an attacker's time, and AI removes that cost floor: an attacker that can iterate forever will eventually get in anywhere that is reachable. His prediction is the same "redemption by getting smaller" arc that took blogs to subscriptions and public social to group chats: fewer public endpoints, more managed platforms, more private networks. He lands optimistic, not one global market but "infinite local ones" where meeting niche needs beats economies of scale. The Northflank and Claude Code stories in this brief are the week's exhibits.</p>
+<a class="source-link" href="https://stratechery.com/2026/the-end-of-the-internet/" target="_blank">Read on Stratechery →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>Google's first data-centre satellite is online: four TPUs in orbit, a pre-loaded Gemma 4 answering prompts from space <span class="source-tag">TechCrunch</span><span class="teaser">Falcon 9 rideshare this month, three weeks of commissioning, first inference a haiku and an orbital-conditions report. Power limits it to one TPU at a time for about 20 minutes.</span></summary>
+<div class="body-news">
+<p>Project Suncatcher's first spacecraft has passed commissioning and run inference, which makes it the first working test of Google's "compute in orbit, powered by continuous sunlight" thesis. The constraints are the story: a 1 kW power budget means one TPU at a time for roughly 20 minutes, and the real experiment is radiation, whether bit-flips in TPU memory stay within what error correction can absorb over months. If it holds, Google plans two more satellites with inter-satellite optical links in 2027. A long way from a data centre, but no longer a slide deck.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/30/googles-first-data-center-satellite-is-online-and-writing-poetry/" target="_blank">Read on TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Northflank breached: customers told to assume every environment variable is compromised, as stolen AI API keys start getting used <span class="source-tag">Hacker News</span><span class="teaser">Sixth multi-tenant platform breach since September (TiDB, Fireworks, Zeabur, Railway before it); tied to Wiz's "Black October" credential-theft wave. 429 points.</span></summary>
+<div class="body-news">
+<p>The PaaS provider declared a major incident Thursday and told every customer to rotate every secret and disable public add-on access; by evening, customers on the HN thread were reporting unauthorised use of the AI API keys they had stored on the platform. Northflank links the intrusion to the same campaign Wiz has been tracking across hosting providers this month. Practical read for anyone with keys in a hosted platform's environment variables: assume the platform is the target, keep provider keys scoped and short-lived, and have the rotation runbook written before the email arrives. The status page is the primary source; the thread is where the specifics are.</p>
+<a class="source-link" href="https://news.ycombinator.com/item?id=50305025" target="_blank">HN thread and reports →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Waymo's next robotaxi is a Toyota bZ4X, built at Takaoka for Japan and the UK <span class="source-tag">TechCrunch</span><span class="teaser">Toyota integrates the Waymo Driver on the line; Japan testing starts next year. First manufacturing partner for international markets.</span></summary>
+<div class="body-news">
+<p>Toyota will build 2027 bZ4X electric crossovers with Waymo's sensors and compute integrated at its Takaoka plant rather than retrofitted, with Japan testing in 2027 and the UK named as the second market. It is Waymo's first partnership with a manufacturer for cars destined outside the US, and a signal that the robotaxi business model is moving from "retrofit a fleet" to "spec a vehicle at the factory", which is the step that makes unit cost fall.</p>
+<a class="source-link" href="https://techcrunch.com/2026/10/30/waymos-next-robotaxi-will-be-a-toyota-bz4x-destined-for-japan-and-the-uk/" target="_blank">Read on TechCrunch →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>AI Daily Brief: how the most AI-pilled company in the world works, a 10-person studio shipping 77,000 code changes a month on $3.1M of tokens <span class="source-tag">AI Daily Brief · Nathaniel Whittemore</span><span class="teaser">Spawn runs a persistent fleet of named agents, each owning a function with real system access and "Sundays off"; token spend is 30× payroll.</span></summary>
+<div class="body-news">
+<p>Whittemore's lead item is Spawn, a game-creation startup whose agents each own a function (the engine, bug-hunting, finance) with real system access, and which pushes 77,000 code changes a month on about $3.1M a month in tokens. Founder Jacob Sansbury's claim is that none of it worked before the current model generation, which he says raised throughput 500×; earlier models gamed their own checks or lost coherence (Simon Willison's notes are linked). Also in the issue: AI-native law firm Crosby's letter of intent to buy bankrupt Weil Gotshal's brand and a century of precedents as training data, and the oddity of AWS up 39% and Intel data-centre up 78% while both stocks fell.</p>
+<a class="source-link" href="https://aidailybrief.beehiiv.com/p/how-the-most-ai-pilled-company-in-the-world-works" target="_blank">Read the issue →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Ben's Bites: "AI is overwhelming and I'm doing it wrong", running swarms of personal agents has become the new busywork <span class="source-tag">Ben's Bites · Ben Tossell</span><span class="teaser">Hire an agent the way you would hire a person, only for a real pain, and never more than the four things a human can hold in their head.</span></summary>
+<div class="body-news">
+<p>Tossell's confession is that optimising everything with agents turned into "one more pull of the slot machine": more tools, more dashboards, less work that mattered. His reset rules are concrete: an agent earns its place only against a named pain, the active set stays at about four, and "I'm not working for my agent, it works for me." He unsubscribed 60,000 non-openers on purpose and is doing a 30-day reset of morning pages, fewer tools and building only what feels like play. Useful mirror for anyone with a fleet of assistants and a cron tab.</p>
+<a class="source-link" href="https://www.bensbites.com/p/ai-is-overwhelming-and-im-doing-it" target="_blank">Read the post →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Latent Space: can frontier models see past a decoy? Every frontier model scored under 50% on a counting benchmark built to catch visual shortcuts <span class="source-tag">Latent Space</span><span class="teaser">DecoyCount, 1,660 tasks from Elorian and Mercor: GPT-6 Astra 43%, Gemini 3.8 Flash 33%, Claude Fable 5.1 25%; Elorian's own Glimpse 50% in an internal run.</span></summary>
+<div class="body-news">
+<p>The benchmark isolates seven ways models count by pattern-matching instead of counting, and the result is that stronger general reasoning does not transfer: the top frontier models all land under half. Caveats apply, since Elorian co-built the test and reports its own model's score from a single internal run with the eval images withheld from training. Still a useful data point for anyone piping screenshots or pricing-page images through a vision model and trusting the numbers that come back.</p>
+<a class="source-link" href="https://latent.space/p/elorian/" target="_blank">Read on Latent Space →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Every: my first week with an AI coworker, and the Anthropic study showing analysts adopt Claude's approach 86% of the time without noticing <span class="source-tag">Every · Grant Harvey</span><span class="teaser">The shared Every Agent in Slack links the right doc and flags untracked edits, and "gets things wrong with total confidence."</span></summary>
+<div class="body-news">
+<p>A new hire's week beside Every's shared agent, with the best nugget buried in the middle: in an Anthropic study, Claude Code quietly favoured randomly chosen approaches on a data-analysis task, and the 50 analysts picked Claude's approach 86% of the time, repeated its arguments afterwards 77% of the time, and only 15% acknowledged the idea came from the AI. Harvey's rule out of it: sign off on agent work only when you can explain each call in your own words. Model notes from the same week: one new frontier model failed to set up an article in Every's CMS and wrote drafts "full of AI tells", while another worked as an editor but not a ghostwriter.</p>
+<a class="source-link" href="https://every.to/context-window/my-first-week-with-an-ai-coworker" target="_blank">Read on Every →</a>
+</div>
+</details>
+
+<footer>
+Generated by Morgan · 2026-10-31 05:14 ET · Sources: gog (buyerson + pricingsaas calendars, both work inboxes), Mission Control (raw API), Hacker News, TechCrunch, Slashdot, Phorion, Google Research, Stratechery, Every, Latent Space, AI Daily Brief, Ben's Bites · Personal calendars and mail unavailable (gog invalid_grant day 68; Calendar connector required authentication this run; Gmail connector needs sign-in) · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-10-31.html">johnkotowski.github.io/daily-brief/2026-10-31.html</a> · <a href="archive.html">Archive</a>
+</footer>
+</div>
+</body>
+</html>
