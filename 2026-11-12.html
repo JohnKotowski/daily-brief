@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · 2026-11-12</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Thursday, November 12, 2026 · one work call on the calendar, Michal at 9:15 on the Pulse agent, plus Ulrik's Office Hours at 12:30 that is still not on it · Rob introduced you to Anand, VP of Product at TextExpander, and the next move is yours · Nicole booked the Copenhagen Airbnb and wants you to confirm the invite link opens · Ulrik wants the SaaStr ad to be either the agent or the book, not both, and Rob agreed · Zuleta paystubs pay tomorrow · Mauricio, EOS One, Whalesync and Rob's forwards are all still unanswered · nothing went out from either work mailbox yesterday · day 75 without the personal calendars or personal mail</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Thu Nov 12</h2>
+
+<div class="agenda-note">
+<strong>Personal side not read today.</strong> The <code>gog</code> token for the personal Gmail account is still revoked (<code>invalid_grant</code>, day 75), and the claude.ai Calendar connector needs a sign-in that a headless run cannot do. That means no Family, kids' team or PuckFinder calendars below, and I have no recent Thursday read to offer a pattern from, so check the team apps for tonight's ice times. Fix remains <code>gog auth login</code> for the personal account, five minutes in a terminal.
+</div>
+
+<div class="agenda">
+<div class="agenda-item">
+<div class="time">9:15 AM</div>
+<div class="body">
+<div class="title">John &lt;&gt; Michal (Pulse Agent) <span class="cal-tag">pricingsaas · live</span></div>
+<div class="meta">9:15–9:45 · Michal Narkiewicz (WTP), accepted · you created it yesterday at 2:11 PM from your WTP account · Google Meet ooi-djxf-mcc · no agenda on the event</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">12:30 PM</div>
+<div class="body">
+<div class="title">Office Hours: Migrating to Credits, with Ulrik <span class="cal-tag">not on calendar · from Rob's Skool post</span></div>
+<div class="meta">12:30–1:30 on Riverside per Rob's Nov 2 community post · there is no event for it on either work calendar, so this line is the only reminder you will get · attend or skip, your call</div>
+</div>
+</div>
+</div>
+
+<div class="agenda-note">
+<strong>Lookahead</strong> (work side read live; personal unknown).<br>
+<strong>Fri Nov 13:</strong> Weekly Product Demo 8:00 (Rob declined yesterday; Oliver and Chris accepted) · <strong>new:</strong> Delivery &lt;&gt; Pulse Agent 10:30–11:00, David Lopez-Lengowski walking you through WTP's delivery-side use cases for the agent, doc attached to the invite, <strong>you have not responded</strong> and Rob declined · Thomas Egloff research interview 4:00–4:30 PM (Meet hfq-saye-ezk) · <strong>the dead 2:00 PM Thomas event is still on your calendar</strong> with him marked declined · Zuleta pay date for the Nov 1–15 paystubs.<br>
+<strong>Mon Nov 16:</strong> PricingSaaS L10 10:00 · <strong>CRA source-deduction remittance for October due</strong> ($3,571.06; the 15th is a Sunday).<br>
+<strong>Tue Nov 17:</strong> Weekly Scrum 8:00 · Content Strategy Weekly 10:00. <strong>Wed Nov 18:</strong> Rick &lt;&gt; John 11:00.<br>
+<strong>Tue Nov 24:</strong> community interview with Ulrik, 12:00 PM EST via Riverside/LinkedIn Live. <strong>Sun Nov 29:</strong> SK 950 YYZ 17:10 to Copenhagen (ref ZKF4AF), back Sun Dec 6 on SK 949 arriving 15:40; flights, the Airbnb stay and the trip block are not on any calendar yet. <strong>Tue Dec 1:</strong> book launch. <strong>Fri Dec 11:</strong> Invest Ottawa Venture Path holiday soirée, 8–11 PM at Parlour, $25, if you want it.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 6px 0 0;">1 work event today (John &lt;&gt; Michal), no overlaps on what I can see. Checked live: john@buyerson.co (primary, pricingsaas share, Holidays in Canada) and john@pricingsaas.com (primary, PricingSaaS, Holidays in Canada). Personal side (primary, Family, SSHD AAA 2013, Wildcats U11B, Green Eagles, Myers Snipers, PuckFinder) NOT read: gog invalid_grant day 75, Calendar connector required authentication. Personal mail also dark.</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL TASKS ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+<p class="task-empty">🟢 No open tasks on the board. In progress, blocked, review and ready all came back empty (raw API, HTTP 200 on all four, Thursday 05:00 ET). Everything in the next section is waiting on you. Things I can own if you say "track it": delete Friday's stale 2:00 PM Thomas event, add the Copenhagen flights and Airbnb stay plus the Zuleta and CRA dates to your calendar, ask Zuleta to send Mauricio the FY2026 payroll summary for the SR&amp;ED pack, draft the EOS One and Whalesync corrections in your Couchbase wording, send the overdue Joto nudge, and write the two missing DMARC records (buyerson.co and puckfinder.app still have none this morning).</p>
+
+<!-- ============== SECTION 3 · CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+<div class="agenda-note">
+<strong>⚠️ Work mail only, day 75 without the personal mailbox.</strong> Cards come from john@buyerson.co and john@pricingsaas.com. The personal Gmail account is behind the revoked <code>gog</code> token and the claude.ai Gmail connector needs a sign-in, so school, hockey, family and contractor threads are invisible here. Since yesterday's brief, five human items arrived, all on the pricingsaas inbox: Rob's intro to Anand, Rob's forward of the HYPD listing request, Nicole's Airbnb booking, Ulrik's view on the SaaStr ad, and David's Friday invite. Nothing from Chris, Mauricio, EOS One, Whalesync, Jay or Joto. No mail left either work account yesterday, so every ask below is as you left it.
+</div>
+<p style="font-size:12px; color:var(--slate); margin: 0 0 12px;">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--red); color:#fff;">Action</span> needs something concrete from you &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--amber); color:#fff;">Follow-up</span> ball is in play, watch it &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--olive); color:#fff;">FYI</span> informational only</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Rob Litterst, introducing Anand (VP of Product, TextExpander): "John, Anand is VP of Product at TextExpander. They just re-did their pricing and packaging, and he sees more opportunities to improve. I'll let you guys take it from here!"</div>
+<div class="when">Wed 11:34 AM ET · pricingsaas · "Anand &lt;&gt; John (Agent Discussion)" · to Anand and you · new since yesterday's brief · no reply from either of you yet</div>
+</div>
+<div class="subj">Rob pitched you as "the brains behind the Pulse agent" who has "been doing user interviews and would love to show you what we're building" · a warm intro to a product leader who has just been through a repackaging, which is the exact profile the research interviews have been short on</div>
+<div class="note">Reply to Anand today with two or three slots so the intro does not go cold. Open on the work side: today after 9:45 apart from Office Hours at 12:30, Friday 11:00 to 4:00, and most of next week outside Monday's L10 and Tuesday's two standing meetings. Hockey and family time are invisible to me, so pick from what you know.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1cb75df2d6a7f4" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Nicole Høyer (WTP): "For your upcoming Copenhagen trip, I booked you a pretty nice apartment (if I say so myself) close to the office… Please, try to log in using the link and let me know if it works."</div>
+<div class="when">Wed 8:04 AM ET · pricingsaas · "Accommodation CPH trip" · to David and you · David confirmed at 8:52 ("Worked great for me"), Nicole acknowledged at 9:23 · you are the one still outstanding</div>
+</div>
+<div class="subj">An Airbnb shared through a co-traveler invitation link, so you need to sign in to Airbnb and accept it to see the address and check-in details · the email gives no dates or address · this closes the hotel question from the 22-message "CPH visit" thread</div>
+<div class="note">Two minutes: open the link in her email, accept the invitation, reply "works". Once you can see the booking, send me the dates and address and I will put the stay on your calendar next to SK 950 (Sun Nov 29) and SK 949 (Sun Dec 6). Her Oct 30 Christmas-party invite (dinner 5:45 PM at Restaurant Pluto, RSVP on Partiful) is still unanswered and could ride in the same reply.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1cab6b333f4f0e" target="_blank">Open thread →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1156d8ab9576ec" target="_blank">Open CPH visit →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Ulrik on the SaaStr December ad: "I think we should run either a pulse agent OR a book angle. The mix is confusing (to me at least). I'm fine with doing a hardcore pulse promo - 'AI Pricing is no longer hard - talk to Pulse' … or something."</div>
+<div class="when">Wed 8:00 AM ET · Rob gave it a 👍 at 11:30 AM · pricingsaas · "SaaStr Newsletter - December" · 4 messages, none from you · Rob's Tuesday question to you by name is still open</div>
+</div>
+<div class="subj">The thread has moved since yesterday: Oliver's two "chat with the book" versions are now up against Ulrik's preference for a pure Pulse promo, and Rob sided with Ulrik · Rob's original question still stands either way: "Is the actual experience of talking to the book good? @John Kotowski I'll defer to you there."</div>
+<div class="note">Your answer now settles the direction rather than just a version. If the agent handles book questions well, say so and Oliver has a case for keeping the book angle. If it is stronger on PricingSaaS data than on the book's framework, back Ulrik's pure agent promo and the "is the book chat good enough" risk goes away. Either way the ad sends SaaStr readers to pricingsaas.com/agent?new=1, so tell them whether that landing experience is ready for December.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c5f6c46ac5336" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Lizeth Garcia (Zuleta payroll): Nov 1–15 paystubs to pay <strong>tomorrow, Fri Nov 13</strong>, and the October source deduction of <strong>$3,571.06</strong> to remit by <strong>Mon Nov 16</strong></div>
+<div class="when">Mon 11:05 + 11:08 AM ET · buyerson · both one-way notices, no reply expected · one day to the first date</div>
+</div>
+<div class="subj">Gross payroll $15,000, 2 employees · the CRA due date is the 15th, a Sunday, so Monday is the real deadline · separately, Zuleta's Q3 HST return was NETFILED without your explicit "I agree"</div>
+<div class="note">Neither date is on a calendar. Say "track it" and I add both with the amounts; nothing to send Lizeth.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1c11114c8c8f04" target="_blank">Open source deduction →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1c10ebffc5de31" target="_blank">Open paystubs →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Mauricio Gallardo (Mobile Capital, SR&amp;ED): "Just following up on the financial information. If you have any updates, that would be great." Three days since the nudge, 17 since the original list</div>
+<div class="when">Mon 9:13 AM ET · buyerson · second ask, unanswered · he is working the Buyerson 2026 SR&amp;ED financial portion</div>
+</div>
+<div class="subj">For Oct 1 2025 to Sep 30 2026 he needs: gross salary, bonuses and taxable benefits per employee, vacation entitlements, start and end dates for anyone partial-year, province per T4, and your estimate of R&amp;D hours · invoices and timesheets for any Canadian technical contractors · any IRAP, co-op or wage subsidies · confirmation that Angela Paulo at Zuleta is the 2026 tax-return contact</div>
+<div class="note">Most of this is a Zuleta export. One line to Lizeth asking for the FY2026 payroll summary sent straight to Mauricio, then you answer the three only you can: R&amp;D hours estimate, contractor invoices if any, and "yes, Angela". Say "track it" and I draft the Zuleta request and your reply to Mauricio for your OK.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a178252dc9e3f71" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Pulse data requests: a new listing ask from HYPD via Rob, and two founder corrections now a week old (Jere Simpson at EOS One, Curtis Fonger at Whalesync)</div>
+<div class="when">HYPD: Jadon Zeng to Rob Wed 9:49 AM ET, forwarded to you 11:28 AM with no note · Jere Thu Nov 5 11:13 PM ET · Curtis Thu Nov 5 8:26 PM ET · pricingsaas · no reply sent to any of the three · the two corrections drop out of this seven-day view tomorrow</div>
+</div>
+<div class="subj">HYPD (Berlin) is an ads connector for ChatGPT and Claude covering Google, Meta, LinkedIn and Microsoft Ads; plans are Free $0 for 1 ad account, Starter $19.99 for 3, Plus $59.99 for 10, Pro $119.99 for 50, Agency $279.99 for 250, monthly with a 14-day trial · EOS One: Jere says the W45 "first user no longer free" diff is wrong; Owner, Observer and Implementer seats are free, paid Admin and Member seats are $10 per user per month after a 30-day trial · Whalesync: Starter has been $20 a month ($192 a year) since October while the page still shows $40</div>
+<div class="note">HYPD is the easy one: add hypd.ai to tracking and tell Jadon it is live, or tell Rob to run it through Pulse Request himself. The two corrections are the ones that cost something by waiting, since the team is about to advertise the agent to SaaStr's list while two founders have told you its data on them is wrong. Say "track it" and I draft both replies in your Couchbase wording and write up the fixes for Tom.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1cb7045d907fe8" target="_blank">Open HYPD →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1af101586f88db" target="_blank">Open EOS One →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1ae773c9810436" target="_blank">Open Whalesync →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Friday is filling up: David Lopez-Lengowski's "Delivery &lt;&gt; Pulse Agent" invite needs an RSVP, Thomas Egloff is confirmed for 4:00, and Rob is out of both morning meetings</div>
+<div class="when">David Wed 9:09 AM ET · Rob's declines Wed 1:37 PM ET · Thomas Tue 4:28 PM ET · pricingsaas</div>
+</div>
+<div class="subj">David: "I want to walk you through our starting point for use cases for leveraging the agent on the delivery side", Fri 10:30–11:00, with a "PricingSaaS &lt;&gt; WTP Delivery" Google Doc attached; Chris is optional · Rob declined that and the 8:00 Weekly Product Demo, so you run the demo without him · Thomas accepted Fri 4:00–4:30 (Meet hfq-saye-ezk); the old 2:00 event (aca-qmiu-ksi) is still on your calendar with him marked declined · Sarah Burgess's hedged reply from Nov 5 is still unanswered</div>
+<div class="note">Accept David's invite and skim his doc before 10:30 tomorrow; it is WTP's first written list of what they want the agent to do for delivery work. Say the word and I delete the dead 2:00 Thomas event so you do not join the wrong room. Sarah is a short thank-you with a 15-minute option or a copy of the book.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1caf1154c517a9" target="_blank">Open David's invite →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c75b89f995c9a" target="_blank">Open Thomas →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1a2cd5e1ccfa6b" target="_blank">Open Sarah →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Rob and Ulrik's open questions from the Nov 9 demo, Rob's Friday forwards, and Chris Truce's postponed "Making time"</div>
+<div class="when">Demo thread: Rob Mon 2:07 PM ET, Ulrik Tue 9:57 AM ET · Rob's forwards Fri Nov 6 · Chris Tue 4:15 AM ET, "Post pone todays meeting." · pricingsaas · no written reply to any of them</div>
+</div>
+<div class="subj">Demo: Rob asked whether you can see who connects which data source; Ulrik suggested the agent sidebar be open by default · Rob's forwards: the e-book date for survey respondents, CallBack HVAC coverage ("lmk if this is something I can do through Pulse Request") and the Carta link-building pitch · Chris withdrew Tuesday's 8:30 himself and has not sent a new time; his Nov 5 ask to resend the dev-environment link for the agent also has no written reply</div>
+<div class="note">None of these is urgent, and some may have been settled on calls I cannot see. If not: one reply-all on the demo thread answers both demo points, one short note to Rob clears his three, and one line to Chris offering Friday 11:00 or later with the dev link attached closes his two.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c1386ac333896" target="_blank">Open demo thread →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1b23e805f3951f" target="_blank">Open e-book question →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a19b1a8d9e9a547" target="_blank">Open CallBack HVAC →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c4be11538f85c" target="_blank">Open Chris →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1ab3b99cff7aad" target="_blank">Open dev-env ask →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Aging asks with no movement: Joto's GY-13 controller instructions (day 7) and Jay Proulx's scraping deck (day 13)</div>
+<div class="when">Joto Thu Nov 5 2:27 PM ET, buyerson, ticket #2824 · Jay Fri Oct 30 + Sat Oct 31, now outside this view · Vienna Stivala's DoorLoop login request and Marcin's November visit are also outside it, both still unanswered as far as work mail shows</div>
+</div>
+<div class="subj">Joto: the Olli 16x20 heat press (order 4000129223) arrived without the printed manual; they sent an interim manual and said supplier instructions for the GY-13 controller were coming · Jay: four-option deck, "cheapest and most scalable approach wins" · Marcin: "my November looks much leaner, fairly flexible. Let me know what works"</div>
+<div class="note">Joto: say "send it" and I nudge them today quoting the ticket. Jay: pick an option or tell him the pilot is parked behind the acquisition. Marcin needs a weekend from you, Nov 14–15 or Nov 21–22, subject to hockey I cannot see.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1ad2e893f43a93" target="_blank">Open Joto #2824 →</a>
+</div>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">FYI</span> Smaller items: Oliver's book pre-order dashboard, Invest Ottawa's holiday soirée (Fri Dec 11), a feedback ask from Nango's co-founder, and cold pitches that need nothing</div>
+<div class="when">Oliver Brunchmann Wed 4:23 AM ET, pricingsaas · Aida Benkirane (Invest Ottawa) Tue 2:02 PM ET, buyerson · Robin Guldener (Nango) Tue 8:32 AM ET, pricingsaas</div>
+</div>
+<div class="subj">Oliver: 17 pre-orders on day one and a dashboard to follow the count; no update since, and his Dec 1–2 target is 130 sales a day · Invest Ottawa: soirée 8–11 PM at Parlour, 1319 Wellington St. W., $25 · Nango: "I saw you recently tried Agent sessions. How has your experience been?", likely automated · pitches: Evann Tang ("Microsoft Azure is closing?", second mail), Natalie Young (Brex "collaboration"), "scar v" ("pipeline")</div>
+<div class="note">Nothing required. DMARC is still the open infrastructure item: buyerson.co and puckfinder.app returned no _dmarc record again at 05:00 this morning, while pricingsaas.com has one. Say "track it" and I write the two TXT records for you to paste.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c9ebf830fce89" target="_blank">Open dashboard mail →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1c6d80efeb5e0f" target="_blank">Open Invest Ottawa →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c5a96b42f1fc5" target="_blank">Open Nango →</a>
+</div>
+</div>
+</div>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Google launches the Gemini Decisions API and a new Gemini Decision 1 model that answers up to 1,000 yes/no, multiple-choice or rubric questions in one pass at $0.10 per million input tokens with no output tokens billed <span class="source-tag">Hacker News 432 pts</span><span class="teaser">Independent testing by Artificial Analysis is more mixed than Google's own benchmarks: 66 on its Decision Index, tied with Jev 1.14 and 7 points behind the leaders.</span></summary>
+<div class="body-news">
+<p>Gemini Decision 1 (gemini-decision-1) is a non-generative model: it scores candidate options in a single forward pass and returns probabilities with a 0 to 1 confidence score per answer, so code can route ambiguous cases to a fallback or a human. One request takes a shared input of text, images, audio, video or PDFs (up to 256K tokens) plus up to 1,000 independent questions, with 2 to 255 options on multiple choice. Google quotes 150 to 250 ms end-to-end latency and says it is nearly 5x cheaper than Gemini 3.5 Flash-Lite across its benchmark suite; it is available now through the Gemini API in Google AI Studio. Latent Space's AINews reports Google's own tests show it beating TypeSafe's Jev 1.14 on 5 of 7 shared benchmarks, but Artificial Analysis measured $345 per million tasks versus $156 for Jev and $103 for Drex Max, 211 ms per task versus 92 ms for Jev, and all questions correct on only 33% of documents on AA-Paperclip versus 63% for Drex Max. AINews also says the project went from an internal DeepMind prototype to a shipped API in about six weeks, and that LangChain had day-zero support.</p>
+<a class="source-link" href="https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/" target="_blank">Google →</a>&nbsp; <a class="source-link" href="https://latent.space/p/ainews-d-day-decision-models-day/" target="_blank">Latent Space AINews →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Databricks unveils an updated Genie agent that runs multistep jobs unsupervised, and CEO Ali Ghodsi says he uses it to surface bad news a 12,000-person company would not tell him directly <span class="source-tag">TechCrunch</span><span class="teaser">Ghodsi says agent costs can be capped through Databricks' Unity Gateway, which sets usage limits and can swap in cheaper open-weight models.</span></summary>
+<div class="body-news">
+<p>Databricks announced the new Genie on Wednesday; it relies on an ontology Databricks built to give the agent context from the data customers store on its platform. Instead of a product demo, Ghodsi showed TechCrunch his own recent sessions: analysing the weak areas of an employee satisfaction survey and rating the fixes executives proposed, summarising a sales pitch that went badly including the features the prospect said it needed, and preparing him for a podcast interview from his past appearances. He framed the value around Dunbar's number, arguing that any company over about 150 people loses the direct relationships through which a CEO hears negative information. Databricks is now pitching Genie as an always-on agent for business leaders, aiming to do for the business side what agents and harnesses did for programmers. The article is a CEO walkthrough, not an independent test, and gives no pricing or benchmark figures.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/11/databricks-new-ai-agent-tells-ceo-ali-ghodsi-the-unvarnished-truth/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>A hobbyist ran 48 AI agents over about 1,200 square km of public NASA lidar and located a Maya site missing from Mexico's official register in under 72 hours, then learned archaeologists had already mapped it in 2025 <span class="source-tag">Hacker News 990 pts</span><span class="teaser">No special model or classifier was used: the agents looked at images rendered from the lidar strips one by one, following a written guide.</span></summary>
+<div class="body-news">
+<p>Pietro Miotti describes going from an idea while travelling in Peru to an official reply from Mexico's National Institute of Anthropology and History (INAH) in less than three days. The agents converted lidar strips into images, searched them for pyramids, platforms and plazas while filtering out natural hills, sinkholes and roads, then checked the raw point cloud to confirm the shapes were on the ground and not artefacts of the canopy. They drafted a report in Spanish, and INAH replied that no registered archaeological site existed at that location. A November 11 update corrects the original claim: the site appears in Estrada-Belli et al. 2025, which the agents missed in their literature review, so this is a rediscovery of a site that had not yet reached the register. Miotti's interpretation of the site as a small Classic-period civic centre is, in his own words, speculation from a chat with the agents.</p>
+<a class="source-link" href="https://pietromiotti.com/latest/maya-site" target="_blank">Pietro Miotti →</a>&nbsp; <a class="source-link" href="https://news.ycombinator.com/item?id=50452455" target="_blank">HN thread →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Nvidia's board is reportedly preparing to oust Jensen Huang after 33 years as CEO, and the stock fell about 8% in after-hours trading on Wednesday <span class="source-tag">TechCrunch</span><span class="teaser">House committee chairs said Wednesday they will subpoena Huang if he does not agree to a closed-door briefing.</span></summary>
+<div class="body-news">
+<p>The Wall Street Journal reports the board was meeting as soon as Wednesday to decide Huang's future, according to TechCrunch; Bloomberg reports Nvidia is working with an outside firm to identify replacement candidates. The trigger is new: on Wednesday evening the New York Times reported Huang also had a relationship with an executive who reports to him, days after he admitted an affair with a woman US intelligence suspects of being a Chinese spy. Nvidia shares are down about 11% over five days. Succession is the practical problem, since Huang has said he has about 60 direct reports and the company has no obvious successor or succession plan. Separately, House China committee chairman John Moolenaar said Huang had until the end of Wednesday to respond to a briefing request, and Foreign Affairs chairman Brian Mast said his committee is preparing a subpoena. The ouster itself is a single-source report and Nvidia has not confirmed it.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/11/nvidias-stock-drops-as-board-reportedly-preps-to-oust-ceo-jensen-huang/" target="_blank">TechCrunch →</a>&nbsp; <a class="source-link" href="https://techcrunch.com/2026/11/11/congress-to-call-jensen-huang-in-to-answer-for-alleged-chinese-spy-affair/" target="_blank">TechCrunch (Congress) →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>OpenAI's quarterly revenue reportedly crossed $10 billion for the first time in Q3, up almost 50% from $6.7 billion in Q2 <span class="source-tag">TechCrunch</span><span class="teaser">Adjusted operating margin reportedly improved from -150% to -109%, and the annual run rate has reached $50 billion.</span></summary>
+<div class="body-news">
+<p>The figures come from a Bloomberg report citing anonymous sources, relayed by TechCrunch. Growth accelerated sharply: the prior quarter's increase was about 18%. TechCrunch attributes the rebound to tighter pricing, discounts, improving models and more enterprise products and agents. For comparison, Anthropic recently reported Q3 revenue of $17 billion and said on Tuesday its run rate rose $10 billion in a month to $81 billion at the end of October. The two are not directly comparable, because Anthropic counts sales made by its cloud partners while OpenAI reports only its share of some partner sales.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/11/openais-quarterly-revenue-reportedly-crosses-10b-for-the-first-time/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>United Airlines bans third-party AI agents from booking flights on travellers' behalf, citing credential security and federal check-in rules <span class="source-tag">Hacker News 555 pts</span><span class="teaser">Southwest has gone the other way and made its flight inventory viewable to ChatGPT users.</span></summary>
+<div class="body-news">
+<p>United said Wednesday it is restricting access both directly on its digital platforms and indirectly through travel agencies and aggregators, and is updating its booking and ticketing policies. Its stated concern is that sharing account credentials with personal AI assistants can expose sensitive information and lead to unintended purchases, account changes or use of MileagePlus miles. It also argues that an agent checking in for a flight could violate federal rules, including the requirement that travellers attest their luggage holds no banned substances. Analyst Henry Harteveldt of Atmosphere Research Group told CBS the airline does not want another powerful intermediary on top of Google, metasearch and online travel agencies, and wants to avoid the cost of a surge in bot flight searches. United fares remain bookable through Kayak, Hopper and Google Flights.</p>
+<a class="source-link" href="https://www.cbsnews.com/news/united-airlines-bans-ai-agents-booking-flights/" target="_blank">CBS News →</a>&nbsp; <a class="source-link" href="https://news.ycombinator.com/item?id=50458900" target="_blank">HN thread →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>CoreWeave says it will not borrow in the unsecured debt market at current yields and expects about $9 billion in customer prepayments and deposits over the next three months <span class="source-tag">TechCrunch</span><span class="teaser">Q3 revenue was $3.66 billion, up 168%, against a $709 million net loss and $846 million of quarterly interest expense.</span></summary>
+<div class="body-news">
+<p>On Tuesday's Q3 call, CEO Michael Intrator laid out a funding plan built on loans secured against specific customer contracts, drawn as needed against a $132.5 billion backlog. More than $3 billion of the expected prepayments is tied to new contracts for capacity already built, which needs no further hardware spending. CoreWeave is also signing more short-term contracts at higher prices and in August closed a $2.6 billion loan designed for them. The trade-offs: prepayments lock in prices that may look low if demand keeps rising, and lenders give less weight to short contracts. Yields on some CoreWeave bonds topped 15% last month, and TechCrunch notes rivals Nebius and IREN have leaned on large Microsoft prepayments too.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/11/coreweave-turns-to-customer-prepayments-shorter-contracts-to-fund-ai-growth/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>AWS open-sources AWS Emulator, a local emulator of the AWS APIs for testing without an AWS account, at no additional service fee <span class="source-tag">Hacker News 847 pts</span><span class="teaser">It ships an agent skill for setup and an embedded mode that runs one isolated instance per Rust test in-process.</span></summary>
+<div class="body-news">
+<p>The emulator is a local program with no graphical interface that serves an AWS API endpoint; you point the AWS CLI or an SDK at it with environment variables and run code as usual. Linux gets RPM and Debian packages, while Windows and macOS run it in a container. The repository holds one Rust crate per AWS service, driven by each service's Smithy model, and publishes per-service fidelity scores with every release plus a directory of known gaps. AWS says it is for building and testing only, not for production workloads or security testing. Caveats from the README: building from source needs at least 100 GB of free disk, and telemetry to AWS is on by default.</p>
+<a class="source-link" href="https://github.com/aws/aws-emulator" target="_blank">GitHub →</a>&nbsp; <a class="source-link" href="https://news.ycombinator.com/item?id=50456631" target="_blank">HN thread →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>A critical remote code execution flaw in Apache HTTP Server's HTTP/2 module (CVE-2026-119618) is patched in version 2.4.71; Wiz says 64% of cloud environments have vulnerable resources <span class="source-tag">Hacker News 198 pts</span><span class="teaser">The bug was found independently by Anthropic and Google Cloud's Vulnerability Research Team; no exploit or in-the-wild exploitation is known yet.</span></summary>
+<div class="body-news">
+<p>The flaw is a race condition in the assign_headers() function of mod_http2: improper synchronisation between threads sharing resources lets a remote, unauthenticated attacker corrupt heap memory and potentially execute code with the web server's privileges. Wiz reports 51% of cloud environments have publicly exposed instances, though it notes those figures do not account for configuration. The fix is Apache HTTP Server 2.4.71 or later, or a standalone mod_h2 build newer than 2.0.42. Where patching has to wait, the mitigation is to disable HTTP/2 by restricting the Protocols directive to http/1.1. As of Wiz's publication on November 11 there was no public exploit and no report of exploitation.</p>
+<a class="source-link" href="https://www.wiz.io/blog/cve-2026-119618-rce-apache-http-server-vulnerability" target="_blank">Wiz →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Researchers trace a 60-second pulse seen on power grids on five continents to uninterruptible power supplies running clock-synchronised battery self-tests <span class="source-tag">Slashdot</span><span class="teaser">The pattern appeared in all four measured buildings that had UPS systems and in none without them.</span></summary>
+<div class="body-news">
+<p>A team led by physicist Dirk Witthaut of the University of Cologne published the finding in Nature Energy, per ScienceAlert via Slashdot. They analysed high-resolution electricity measurements from buildings on the Forschungszentrum Julich campus in Germany and detected tiny bursts of battery current at exact one-minute intervals, tracing the fluctuation through one building's wiring to its connection with the public high-voltage grid. The manufacturer then confirmed the cause: routine battery self-tests run automatically by the units' management software. Devices in different buildings and countries fire together because they sync their clocks to external time signals. The authors' wider point is that benign control routines can become systemically relevant when many devices act coherently.</p>
+<a class="source-link" href="https://hardware.slashdot.org/story/26/11/11/2347221/power-grids-on-5-continents-pulse-every-60s-scientists-think-they-know-why" target="_blank">Slashdot →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>Latent Space: at the AI Engineer Code Summit's System One day, Glean, UiPath and Workday showed production and prototype uses of Jev, the non-generative decision model TypeSafe AI released in September <span class="source-tag">Latent Space</span><span class="teaser">UiPath ranked document chunks with a tournament of thousands of Jev calls that finished in under a second.</span></summary>
+<div class="body-news">
+<p>System one models return structured choices, scores or probabilities and are much faster and cheaper than reasoning LLMs. TypeSafe CEO Diogo Almeida argued they should be called from inside application code, saying of LLMs that you get Einstein 95% of the time but Mr. Bean 5% of the time. Glean's Chinmay Goyal said Jev runs a significant number of flows alongside LLMs and other classifiers, valued for zero-shot flexibility: when the decision taxonomy changes there is no fine-tuning to redo. Workday's Scott Roberts showed a prototype that starts filling in a time-off card while the user is still typing. The companion AINews issue notes TypeSafe has crossed $100M ARR and that Cloudflare demoed a hybrid design where decision models handle tool selection and log extraction, cutting six LLM calls to one and about 40K tokens to 1.8K.</p>
+<a class="source-link" href="https://latent.space/p/jev-revolution/" target="_blank">Latent Space →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Growth Unhinged: Kyle Poyar details five GTM plays from Clay, Granola, Vercel, incident.io and Lovable, including an autonomous ad agency incident.io's CMO built as a Claude skill in a few days <span class="source-tag">Growth Unhinged</span><span class="teaser">Granola's thought-leader ads on LinkedIn get 10x the engagement of its other LinkedIn ads, fed by 200+ operator ambassadors.</span></summary>
+<div class="body-news">
+<p>incident.io CMO Tom Wentworth replaced agency management fees with a skill running in Claude Cowork that connects to LinkedIn, Google, Meta and X, creates and takes down campaigns, changes budgets and generates landing pages for ABM; once a week it reviews its own runs and opens a pull request for him. He says outbound BDRs convert at double the rate when these ABM campaigns run. Granola's programme recruits actual users (CMOs, founders, engineers), found by enriching its user base and a daily scan of LinkedIn mentions, with every agreement granting the right to boost posts; a freelancer still handles outreach, briefing and billing. Clay's head of growth Davide Grieco rebuilt attribution in about two hours with an agent that pulls Salesforce, Snowflake and Gong data for every Stage 2 opportunity and separates last touch from earlier influences. Poyar's example is a $200k deal that had been credited to a paid Google ad. The post follows last month's 300-company GTM report.</p>
+<a class="source-link" href="https://www.growthunhinged.com/p/5-gtm-plays-working-right-now" target="_blank">Growth Unhinged →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Every: Dan Shipper's Thesis keynote argues benchmark charts overstate AI's threat to work because they compare models with humans frozen in 2020; on GDPval, models went from beating experts 12.4% of the time in 2024 to about 83% in 2026 <span class="source-tag">Every</span><span class="teaser">An Ode engineer says an agent cut one client's customer onboarding from about 100 hours to about 30 and the team still wants more staff.</span></summary>
+<div class="body-news">
+<p>Shipper contrasts the aggregate view (trend lines) with the intimate view (how people actually work), and argues people improve along with the models, so human work rides the same curve. When Every's team ran one customer survey through Claude, each person found something different, which is his case for judgment as the scarce input. Head of evals Mike Taylor gives a practical method: talk through what you like and dislike in an AI output and have the model turn each comment into a yes/no check, building a personal benchmark; on his deck task GPT 6.1 Sol failed a check that Grok 4.6 passed. His warning is overfitting, where a check passes while the output misses the request. Hugh Wimberly of Ode, the services firm Anthropic launched with Blackstone and Hellman &amp; Friedman, says his six client projects have triggered no layoffs because cheaper onboarding opened customers who could not previously afford the service.</p>
+<a class="source-link" href="https://every.to/context-window/what-s-left-for-humans-after-automation" target="_blank">Every →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>AI Daily Brief: a day after Anthropic set its IPO range, the FT reports bankers plan to lift it to a top-end valuation of $1.5 trillion, and the updated prospectus shows run-rate revenue of $81 billion at the end of October, up $10 billion in a month <span class="source-tag">AI Daily Brief</span><span class="teaser">At $1.4 trillion the company is priced at roughly 40x trailing 12-month revenue, against about 55x for Palantir, per iCapital's Sonali Basak.</span></summary>
+<div class="body-news">
+<p>The November 11 episode argues nobody, investors included, knows what Anthropic is worth. It points out the $2 trillion figure in earlier coverage came from unnamed investor sources, not Anthropic, and that the FT says Anthropic cares more about raising cash than valuation given its compute commitments. Including the greenshoe, about $100 billion of stock would float, with $26 billion coming from Nvidia, Microsoft, Google and Broadcom. The updated filing adds $10 billion of new seven-year compute commitments with Microsoft and Google and says Anthropic could cancel a $35 billion Lambda deal after Lambda missed a deadline, though it does not intend to. The run-rate figure reflects Opus 5.5 and not Fable 5.2. The same issue notes Booz Allen swapped Anthropic models for Nvidia's Nemotron, keeping Claude Code for software building.</p>
+<a class="source-link" href="https://aidailybrief.beehiiv.com/p/wall-street-has-no-idea-what-anthropic-is-worth" target="_blank">AI Daily Brief →</a>
+</div>
+</details>
+
+<footer>
+Generated by Morgan · 2026-11-12 05:04 ET · Sources: gog (buyerson + pricingsaas calendars, both work inboxes), Mission Control (raw API), dig (DMARC check), Hacker News, TechCrunch, Slashdot, Stratechery, Platformer, Lenny's Newsletter, Latent Space, Astral Codex Ten, Ben's Bites, AI Daily Brief, MKT1, Growth Unhinged, Product Compass, Every · Personal calendars and mail unavailable (gog invalid_grant day 75; Calendar and Gmail connectors required authentication) · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-11-12.html">johnkotowski.github.io/daily-brief/2026-11-12.html</a> · <a href="archive.html">Archive</a>
+</footer>
+
+</div>
+</body>
+</html>
