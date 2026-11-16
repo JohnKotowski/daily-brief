@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · 2026-11-16</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Monday, November 16, 2026 · Mark has been asked to practise with the U14AA team tonight at 7:15, which overlaps his own 8:00 practice, and Eryn is waiting on your answer · Lily has practice at 5:00 and dryland at 6:15 · PricingSaaS L10 at 10:00 · October's $3,571.06 CRA remittance is due today · two new Wildcats treasurer questions came in last night · Thomas Egloff and the SaaStr cost cap are still waiting on you</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Mon Nov 16</h2>
+
+<div class="agenda-conflict">
+<strong>Conflict tonight, Mark:</strong> the U14AA team asked for him at their practice from 7:15 to 8:15 PM at the Sportsplex (NSP2). His own Raiders U14B White practice starts at 8:00 PM at Walter Baker, so the two overlap by 15 minutes plus the drive. <strong>Suggestion:</strong> take the AA practice and have him skip his own, or arrive late. His coach Mike Benkie already wrote that he is "totally okay with Mark attending both" and left the decision to you. Eryn McDonell needs a yes or no this morning. You forwarded it to Karine at 9:40 PM and nobody has answered Eryn yet.<br>
+<strong>Same question for Tuesday:</strong> Eryn also asked for Mark in the AA game at 7:30 PM at NSP1. His Raiders practice on Tuesday runs 6:00 to 7:30 PM, so he cannot do both in full. One reply can settle both nights.
+</div>
+
+<div class="agenda-note">
+<strong>Personal calendars only partly read.</strong> The <code>gog</code> token for the personal Google account is still revoked (<code>invalid_grant</code>, day 79) and the claude.ai Calendar connector needs a sign-in that a headless run cannot do. Hockey below is live from the PuckFinder calendar feed (visible through the pricingsaas account) and from PuckFinder reminder emails. Anything that lives only on the Family calendar or your personal primary calendar is unknown to me. The fix is <code>gog auth login -a johnhkotowski@gmail.com</code>, about five minutes in a terminal.
+</div>
+
+<div class="agenda">
+
+<div class="agenda-item">
+<div class="time">All day</div>
+<div class="body">
+<div class="title">CRA source-deduction remittance for October due <span class="cal-tag">email · zuleta</span></div>
+<div class="meta">$3,571.06, from Lizeth Garcia's Nov 9 email · the 15th fell on Sunday, so today is the deadline</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">10:00 AM<br><span style="font-weight:400;">to 11:00</span></div>
+<div class="body">
+<div class="title">PricingSaaS L10 <span class="cal-tag">pricingsaas</span></div>
+<div class="meta">Weekly, the only work event today</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">5:00 PM<br><span style="font-weight:400;">to 6:00</span></div>
+<div class="body">
+<div class="title">Lily: Wildcats U13BB practice <span class="cal-tag">puckfinder feed</span></div>
+<div class="meta">Nepean Sportsplex, 1701 Woodroffe Ave · Lily is marked "going"</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">6:15 PM</div>
+<div class="body">
+<div class="title">Lily: Wildcats U13BB dryland <span class="cal-tag">puckfinder reminder · email</span></div>
+<div class="meta">Confederation Education Centre, Room B037 · no RSVP for Lily yet · 15 minutes after practice ends, and I do not have an end time · this one is in the reminder email but not on the calendar feed</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">7:00 PM</div>
+<div class="body">
+<div class="title">U18BB Robertson budget vote (you were asked to witness), probably off <span class="cal-tag">convenor digest · email</span></div>
+<div class="meta">Saturday's digests said the vote was declined and NGHA will not add funds; Sunday's digest shows no movement from Morgan Weeks · confirm with her before you drop it</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">7:15 PM<br><span style="font-weight:400;">to 8:15</span></div>
+<div class="body">
+<div class="title">Mark: U14AA call-up practice, not yet confirmed <span class="cal-tag">email · Eryn McDonell</span></div>
+<div class="meta">Nepean Sportsplex, NSP2 · requested Sunday 7:56 PM · overlaps the 8:00 practice below</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">8:00 PM<br><span style="font-weight:400;">to 9:00</span></div>
+<div class="body">
+<div class="title">Mark: Raiders U14B White practice <span class="cal-tag">puckfinder feed</span></div>
+<div class="meta">Walter Baker Sports Centre, 100 Malvern Dr · confirmed by last night's reminder email</div>
+</div>
+</div>
+
+</div>
+
+<div class="agenda-note">
+<strong>Evening logistics.</strong> Lily is at the Sportsplex from 5:00 and then at dryland from 6:15. If Mark takes the AA practice he is at the Sportsplex from 7:15, so one adult could cover both there, and Walter Baker at 8:00 only matters if he keeps his own practice.<br>
+<strong>Tue Nov 17:</strong> Weekly Scrum 8:00 · Content Strategy Weekly 10:00 · Mark's Raiders practice 6:00–7:30 PM, and the AA game at 7:30 PM at NSP1 if you say yes.<br>
+<strong>Wed Nov 18:</strong> Town Hall, marked mandatory, 8:00–9:00 · Rick &lt;&gt; John 11:00 · Jeremy Kyte's Fall 2 skate starts, 4–5 PM at Jim Durell.<br>
+<strong>Fri Nov 20 to Sun Nov 22:</strong> Mark's team is at the Stoney Creek Tournament of Champions, all three days. Stoney Creek is near Hamilton, roughly five hours from home, and Friday also has the Weekly Product Demo at 8:00 and Anand Rajaram (TextExpander) at 10:30. If you are the one driving, those two need to be taken from the road or moved. Game times are not on the feed yet.<br>
+<strong>Possible addition today to Wednesday:</strong> Oliver asked Lars Nielsen for a call "sometime after 15" Copenhagen time, after 9:00 AM Eastern, and wants you on it. Lars has not answered and nothing is on the calendar.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 6px 0 0;">1 work event today. Checked live through gog: john@buyerson.co (primary, pricingsaas share, Holidays in Canada) and john@pricingsaas.com (primary plus the PuckFinder import feed); both answered. Personal side (primary, Family, the four team import feeds) NOT read: gog invalid_grant day 79, Calendar connector required authentication. The dryland, AA call-up, CRA and budget-vote items come from email only.</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL TASKS ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+<p class="task-empty">🟢 No open tasks on the board. In progress, blocked, review and ready all came back empty (raw API, HTTP 200 on all four, Monday 05:00 ET). Everything in the next section is waiting on you. Things I can take if you say "track it": draft the reply to Eryn, propose times to Thomas Egloff, draft the Zuleta request for the SR&amp;ED payroll summary, add HYPD to PricingSaaS tracking, and write the two missing DMARC records.</p>
+
+<!-- ============== SECTION 3 · CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+
+<div class="agenda-note">
+<strong>All three inboxes read.</strong> Work mail (buyerson and pricingsaas) through gog, personal mail through the claude.ai Gmail connector because the personal gog token is still revoked. New since Sunday's brief: the U14AA call-up for Mark, Kristy Connor's fee question, and Xiaoyu's $600 refund cheque. All three arrived Sunday evening on the personal account. Nothing new came in on either work account, and none of the work threads waiting on you (Thomas, the SaaStr cap, Milene) shows a reply from you since Friday.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 0 0 12px;">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--red); color:#fff;">Action</span> needs something concrete from you &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--amber); color:#fff;">Follow-up</span> ball is in play, watch it &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--olive); color:#fff;">FYI</span> informational only</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Eryn McDonell (U14AA manager), call-up for Mark</div>
+<div class="when">Sun 7:56 PM ET · personal · needs an answer this morning</div>
+</div>
+<div class="subj">"Is Mark available to come to our practice tomorrow night at 7:15pm - 8:15pm at NSP2? Also is he available to play our game on Tuesday at 7:30pm at NSP1?"</div>
+<div class="note">Eryn wrote to Mark's coach Mike Benkie with you on copy. Mike answered at 9:20 PM that he supports Mark going to both and is leaving it to you to commit. You forwarded the thread to Karine at 9:40 PM, and there is no reply to Eryn yet. Both nights overlap Mark's own Raiders practice: tonight's by 15 minutes at a different rink, Tuesday's back to back (his practice ends at 7:30, when the game starts). A reply-all to Eryn, Mike and Bobby Manocchio with a yes or no for each night closes it. Say "draft it" and I write the reply for you to approve.
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e1db4f1371889" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Zuleta and Mobile Capital, Buyerson books</div>
+<div class="when">Milene Thu 11:55 AM ET · buyerson · second ask, 4 days silent</div>
+</div>
+<div class="subj">October's source deduction is due today, and Milene Valero's re-sent request for bank statements is still unanswered.</div>
+<div class="note">The $3,571.06 remittance goes to CRA today, Monday Nov 16. Milene needs PDFs for three accounts: chequing from June 5, savings from May 29, and credit card 7377 from June 23, all to date. Her first request was Oct 26, so bookkeeping and the HST report have been stopped for three weeks. Mauricio Gallardo's second ask for the SR&amp;ED financial information has had no reply since Monday Nov 9, a week ago. The statements are a 15-minute download from online banking. For Mauricio, say "track it" and I draft the request to Zuleta for the FY2026 payroll summary.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1c11114c8c8f04" target="_blank">Open source deduction →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a179dc2355954de" target="_blank">Open bank statements →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a178252dc9e3f71" target="_blank">Open Mauricio →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Kristy Connor and Xiaoyu (Wildcats U13BB), treasurer questions</div>
+<div class="when">Sun 6:23 PM and 8:04 PM ET · personal · both new, both unread</div>
+</div>
+<div class="subj">Kristy: "can you confirm if Hayden is paid up?" · Xiaoyu: "John may give the BB team title information to be included in the cheque."</div>
+<div class="note">Two replies to you as team treasurer. Kristy answered your third-instalment announcement: she thinks she already sent the full amount for Hayden and wants you to confirm. That needs a look at the team account and a one-line reply. Separately, Xiaoyu (Carolyn's parent) is moving a $600 refund from the U13B team to yours. Gerald at U13B is writing a cheque, since their account needs two signatures and cannot e-transfer. Xiaoyu plans to pick it up at Tuesday's U13B picture session and pass it to you later this week. What they need from you before Tuesday is the exact payee name on the BB team account, sent to Gerald on that thread. Emily Turcotte is copied.
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e1865545623e7" target="_blank">Open Kristy →</a> <a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e1e0f1801a351" target="_blank">Open refund cheque →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Thomas Egloff, research interview to rebook</div>
+<div class="when">Fri 2:22 PM ET · pricingsaas · 3 days waiting on you</div>
+</div>
+<div class="subj">"No problem, let's connect next week. Let me know what works for you."</div>
+<div class="note">You cancelled Friday's 4:00 PM with a last-minute conflict and he took it well. "Next week" is now this week, and he is waiting on you for times. His mail is stamped Pacific time, so afternoons Eastern suit him. Your work calendar is open every afternoon this week; Friday depends on the Stoney Creek trip. Say "propose times" and I draft a reply with three afternoon slots for you to approve.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1d60c7e41ea80a" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Oliver, Ulrik and Rob (WTP), SaaStr December ad</div>
+<div class="when">Fri 9:32 AM ET · pricingsaas · 3 days waiting on you</div>
+</div>
+<div class="subj">Ulrik: "if you can cap the infra cost on a monthly basis to fx $15K I think that will be fine… costs are a good thing in this context."</div>
+<div class="note">You told Oliver traffic is no problem but cost is, at $0.58 a turn and $1.32 a conversation. Ulrik answered with a budget, and confirmed to Rob that it is $15,000 USD a month. At $1.32 that is roughly 11,000 conversations. What is left is yours: confirm on the thread that you can enforce a monthly cap, so Oliver can lock the ad. It is a natural item for the 10:00 L10 if Rob raises it. Still unanswered from earlier: Jere Simpson (EOS One) and Curtis Fonger (Whalesync) both said Pulse has their pricing wrong, which matters more once SaaStr traffic arrives.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c5f6c46ac5336" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Emily Turcotte, Wildcats U13BB manager, seven receipts</div>
+<div class="when">Wed to Sat 10:20 AM ET · personal · all unread</div>
+</div>
+<div class="subj">"USD Cash": "Hey John, here is another one."</div>
+<div class="note">Nothing new since Saturday, and nothing sent back. The seven are: a CIBC slip for US$280 in cash ($404.74 CAD), insurance for the States visits ($387.94), tournament snacks ($157.26), the team banner, an ice rental, insurance for the dryland room, and the dryland room itself. None asks for repayment outright, but she is sending them to you as the person who reimburses from the team account. One batch e-transfer and a one-line reply would close all seven, and it fits with checking Hayden's payments above.
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1daa747cf1dd8d" target="_blank">Open latest →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Oliver Brunchmann and Lars Nielsen (Flow Nordics), scrapers</div>
+<div class="when">Sat 8:38 AM ET · pricingsaas · Lars silent 2 days</div>
+</div>
+<div class="subj">Oliver asked Lars for a call Monday, Tuesday or Wednesday "sometime after 15? Then we can have John join as well."</div>
+<div class="note">Lars said on Friday that the scrapers were part of the product Flow Nordics built for WTP, that the MCP runs on the same code, and that rebuilding and transferring them means discussing terms. Oliver accepted that and asked for a call with you on it. Lars has not answered, so today is unlikely unless he replies this morning Copenhagen time. Your free windows after 9:00 AM Eastern: today 9–10 and from 11, Tuesday 9–10 and from 11, Wednesday 9–11 and from noon. Worth deciding before the call whether you would rather pay Flow Nordics to hand the scrapers over or rebuild them in-house, because that is the question Oliver will put to you.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1d3d631f8ae190" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Rob Litterst, forwarded listing request from HYPD</div>
+<div class="when">Wed 11:28 AM ET · pricingsaas · unread, 5 days</div>
+</div>
+<div class="subj">Jadon Zeng (HYPD, Berlin): "We'd love for PricingSaaS to start tracking our pricing."</div>
+<div class="note">Rob forwarded it to you without comment, which reads as "can you add this one." HYPD is an ads-management MCP for ChatGPT and Claude with five monthly plans from Free to Agency at $279.99, listed on hypd.ai. Nobody has replied to Jadon or Rob. If you add it, a one-line note back to Rob lets him close the loop with Jadon. You will see Rob at the L10 this morning.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1cb7045d907fe8" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">FYI</span> Hockey admin and smaller items</div>
+<div class="when">Sun · personal + pricingsaas</div>
+</div>
+<div class="subj">Sunday's U18 convenor digest, your own Wildcats instalment, a Gartner sales note, and DMARC.</div>
+<div class="note">Sunday evening's convenor digest lists nothing outstanding for you. The U18BB Byrnes budget vote was set for 3:15 PM Sunday with you attending, and no result had been reported by the time the digest was written. There was no movement from Morgan Weeks (Robertson) or the other four managers on the budget tracker. Your own $500 third instalment to the Wildcats U13BB account was deposited Sunday at 5:44 PM. Kevin McAdoo at Gartner has not followed up on Thursday's request for a call about "Q4 SaaS Pricing Intelligence vendor evaluations"; it reads as account-exec outreach, not an analyst inquiry. buyerson.co and puckfinder.app still have no DMARC record this morning.
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e14a5e0d65032" target="_blank">Open digest →</a> <a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1d069c6989e21c" target="_blank">Open Gartner →</a>
+</div>
+</div>
+</div>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Alibaba releases Qwen4-Max, a closed-weights model with a 984k-token context window <span class="source-tag">Artificial Analysis · HN 483</span><span class="teaser">Cheap per token, but very verbose, so the cost per task is higher than the list price suggests.</span></summary>
+<div class="body-news">
+<p>Alibaba's Qwen4-Max is out as a proprietary reasoning model with text and image input and a 984k-token context window. Artificial Analysis scores it 43 on its Intelligence Index against a median of 41 for comparable models, priced at $1.50 per million input tokens and $4.50 per million output. It used 127M output tokens in testing against a 78.6M median, which put the cost at $3.27 per index task. These are third-party benchmark figures, not Alibaba's own announcement.</p>
+<a class="source-link" href="https://artificialanalysis.ai/models/qwen4-max" target="_blank">Artificial Analysis →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Apple and OpenEvidence launch a study app that answers health questions from clinical sources <span class="source-tag">TechCrunch</span><span class="teaser">Apple enters health AI through a research study with grounded sources, not a general chatbot.</span></summary>
+<div class="body-news">
+<p>Apple is partnering with OpenEvidence on a research app that answers everyday medical questions, grounded in sources such as NEJM, JAMA and Nature. The study targets up to 200,000 US participants over 21 for more than 12 months, on iPhone 15 or later with Apple Intelligence enabled. Participants can share HealthKit data. Apple says the data is anonymized and not used for training, and that OpenEvidence deletes queries and responses after 24 hours.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/15/apple-launches-new-app-to-study-how-people-use-ai-for-health/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Jensen Huang reportedly weighs a comeback as Nvidia CEO; Bessent wants an outsider <span class="source-tag">Slashdot · Reuters, FT</span><span class="teaser">Who runs Nvidia, and how Washington treats it, shapes GPU supply for everyone.</span></summary>
+<div class="body-news">
+<p>The FT reports Huang has discussed returning with confidants, and one ally is assembling a "war room" of Silicon Valley executives to lobby for it. An open letter calling for his reinstatement, signed by Elon Musk among others, has passed 158,000 signatories. Treasury Secretary Scott Bessent said Nvidia should look outside the company and wants answers within 10 days on whether it knowingly let advanced chips reach China. The FT earlier reported the board approached Arm CEO Rene Haas.</p>
+<a class="source-link" href="https://hardware.slashdot.org/story/26/11/16/0146256/should-jensen-huang-return-as-nvidias-ceo-supporters-and-critics-disagree" target="_blank">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Steve Blank: what Nvidia's board should weigh after losing a visionary CEO <span class="source-tag">Steve Blank · HN 254</span><span class="teaser">A founder-succession framework applied to the most consequential company in AI.</span></summary>
+<div class="body-news">
+<p>Blank argues that when a visionary CEO leaves, companies usually coast on momentum and rarely regain their edge, citing Microsoft under Ballmer and Apple under Cook. He notes Huang reinvented Nvidia three times (CUDA, deep learning, the Mellanox-driven shift to full systems), had about 60 direct reports, and named no successor. He expects the next CEO to add management layers first, and warns of the "creative death spiral" that follows execution-focused leadership.</p>
+<a class="source-link" href="https://steveblank.com/2026/11/15/whats-next-for-nvidia/" target="_blank">Steve Blank →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Essay: all AI-generated code should be open source <span class="source-tag">Jakub Jankiewicz · HN 1,166</span><span class="teaser">Who owns agent-written code is unsettled, and the size of the thread shows how many people care.</span></summary>
+<div class="body-news">
+<p>The author argues that models were trained on open-source code and Creative Commons-licensed Stack Overflow answers without attribution, so turning their output into proprietary code amounts to "license laundering". He adds a legal argument: purely AI-generated work is arguably not copyrightable in the US, citing the monkey-selfie precedent, though countries such as the UK differ. He proposes releasing unreviewed, prompt-only code under an open-source licence or CC0.</p>
+<a class="source-link" href="https://jakub.jankiewicz.org/blog/ai-code-open-source/" target="_blank">Jakub Jankiewicz →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>OpenSSF report: 58% of teams ship code faster than security review can keep up <span class="source-tag">Slashdot</span><span class="teaser">Numbers on the gap between AI-driven shipping speed and review capacity.</span></summary>
+<div class="body-news">
+<p>The Linux Foundation's OpenSSF released its 2026 report on AI's impact on software security, alongside a guide to finding and fixing vulnerabilities with AI. In the survey, 58% of teams ship code faster than security reviews can keep up, and 60% say AI coding assistants have increased the number of external packages in their codebases. The guide says AI-generated patches should never be trusted without automated tests and human review.</p>
+<a class="source-link" href="https://news.slashdot.org/story/26/11/15/0615219/how-will-ai-affect-open-source-development" target="_blank">Slashdot →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>ULA's Vulcan fails 10 minutes into its return-to-flight launch, losing 40 Amazon Leo satellites <span class="source-tag">Space.com · HN 155</span><span class="teaser">A setback for Starlink's main competitor in satellite broadband.</span></summary>
+<div class="body-news">
+<p>Vulcan Centaur lifted off from Cape Canaveral at 12:40 PM ET on Sunday and suffered an anomaly 10 minutes in, failing to deliver 40 Amazon Leo broadband satellites to orbit. ULA confirmed the loss and said it had no data yet on the cause. Slashdot's write-up, citing Engadget, adds that this is ULA's first launch failure since its 2006 founding and that Leo has 38 Vulcan flights booked.</p>
+<a class="source-link" href="https://www.space.com/space-exploration/launches-spacecraft/ula-vulcan-centaur-return-to-flight-amazon-leo-internet-satellite-launch" target="_blank">Space.com →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Universal XSS found in uBlock Origin's element picker, with GPT-5.6 Sol doing most of the finding <span class="source-tag">iter.ca · HN 347</span><span class="teaser">A widely installed extension had a cross-site hole that an off-the-shelf model located.</span></summary>
+<div class="body-news">
+<p>A researcher disclosed a one-click flaw in the Firefox MV2 version of uBlock Origin that let a malicious site trick the extension into adding trusted filters, which can inject JavaScript into any site. A similar but less serious issue affected uBO Lite. Both are fixed. The author says GPT-5.6 Sol did most of the hard work of finding the bug and Claude wrote most of the proof-of-concept code.</p>
+<a class="source-link" href="https://iter.ca/post/ubo-uxss/" target="_blank">iter.ca →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Old Bitly links in years-old brand and government posts were re-registered and redirected <span class="source-tag">Ransomnews · HN 279</span><span class="teaser">Old marketing content that relies on third-party short links is a brand-safety exposure.</span></summary>
+<div class="body-news">
+<p>Bitly short links in 2011 tweets from Burger King and McDonald's were registered again by someone else on Sunday and pointed at unrelated, offensive Wikipedia pages. The accounts themselves were not hacked. Bitly confirmed an issue that "allowed bad actors to repurpose certain old, inactive links", suspended the accounts involved and is disabling the affected links. CNN reported similar redirects in old posts from Bill Gates, the FBI and the US Department of Defense.</p>
+<a class="source-link" href="https://ransomnews.com/burger-king-tweet-bitly-link-hijack-2026/" target="_blank">Ransomnews →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Judge refuses to dismiss DRAM supply-conspiracy suit against Samsung, SK Hynix and Micron <span class="source-tag">LitNews · HN 510</span><span class="teaser">Memory pricing feeds into server costs, and the case ties the squeeze to capacity moved to AI hardware.</span></summary>
+<div class="body-news">
+<p>On Saturday, US District Judge Noël Wise denied in full the three companies' motion to dismiss a proposed class action alleging they conspired to restrict supply of conventional DRAM. The complaint says they controlled more than 91% of global DRAM revenue as of Q3 2025, cut production from late 2022 and shifted capacity to high-bandwidth memory for AI accelerators. The allegations are unproven at this stage.</p>
+<a class="source-link" href="https://litnews.ai/articles/garciaguirre-samsung-sk-hynix-micron-dram-conspiracy-suit-survives-dismissal" target="_blank">LitNews →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>Lenny's Podcast: Meta's Mona Sarantakos on how Muse was built and launched <span class="source-tag">Lenny's Newsletter</span><span class="teaser">First-hand account of activation and launch timing for a consumer AI agent.</span></summary>
+<div class="body-news">
+<p>Sarantakos, VP of Product at Meta Superintelligence Labs, gives her first podcast interview on leading Muse, which Lenny describes as the number one app in the App Store. Topics include how a weekend with OpenClaw on a Raspberry Pi became Muse, why the team waited seven months to launch, and how they use "agent swarms" to surface user insights. She also covers the two levers that move activation for an AI agent. The full episode is paid.</p>
+<a class="source-link" href="https://www.lennysnewsletter.com/p/metas-muse-how-we-launched-the-most" target="_blank">Lenny's Newsletter →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Latent Space: ArtCraft used AI to rebuild Photoshop as open source and wants to "rebuild everything" <span class="source-tag">Latent Space</span><span class="teaser">If cloning incumbent software gets cheap, feature parity stops being a moat.</span></summary>
+<div class="body-news">
+<p>At the AI Engineer Code Summit, ArtCraft CEO Brandon Thomas presented a manifesto for AI-built open-source software. The company has released 17 open-source versions of popular tools, including PhotoCraft (a Photoshop alternative written from scratch in Rust), PdfCraft, a Figma clone and a word processor called WordCraft. His longer-term aim is for users to tailor the software to their own workflows, and he says artists are already vibe-coding on top of it.</p>
+<a class="source-link" href="https://latent.space/p/artcraft/" target="_blank">Latent Space →</a>
+</div>
+</details>
+
+<footer>
+Generated by Morgan · 2026-11-16 05:25 ET · Sources: gog (buyerson + pricingsaas calendars including the PuckFinder import feed, both work inboxes), claude.ai Gmail connector (personal inbox, PuckFinder reminders), Mission Control (raw API), dig (DMARC check), Hacker News, TechCrunch, Slashdot, Stratechery, Platformer, Lenny's Newsletter, Latent Space, Astral Codex Ten, Ben's Bites, AI Daily Brief, MKT1, Growth Unhinged, Product Compass, Every · Stratechery, Platformer, ACX, Ben's Bites, AI Daily Brief, Every, MKT1 and Product Compass had nothing new that had not already run; Growth Unhinged's feed was unreachable · Personal calendars unavailable (gog invalid_grant day 79; Calendar connector required authentication) · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-11-16.html">johnkotowski.github.io/daily-brief/2026-11-16.html</a> · <a href="archive.html">Archive</a>
+</footer>
+
+</div>
+</body>
+</html>
