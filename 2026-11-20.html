@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Brief · 2026-11-20</title>
+<style>
+  :root { --cream:#f4f9fd; --ink:#152230; --rust:#1fa1ff; --rust-dark:#0772c0; --olive:#0fb5c0; --sand:#dde9f3; --slate:#4a5b6e; --rule:#c2d4e3; --ocean:#0b5786; --gold:#d18b1f; --green:#1b7a3e; --amber:#c68514; --red:#b8453a; }
+  * { box-sizing: border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif; background:var(--cream); color:var(--ink); margin:0; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .container { max-width: 720px; margin: 0 auto; padding: 18px 16px 60px; }
+  header.brief-head { padding: 10px 0 18px; border-bottom: 2px solid var(--rust); margin-bottom: 16px; }
+  header.brief-head h1 { font-size: 24px; margin: 0 0 2px; color: var(--rust-dark); letter-spacing: -0.01em; }
+  header.brief-head .sub { font-size: 13px; color: var(--slate); margin: 0; }
+  nav.section-nav { background: var(--sand); border-radius: 6px; padding: 10px 12px; margin: 0 0 18px; font-size: 12px; position: sticky; top: 4px; z-index: 10; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; }
+  nav.section-nav a { color: var(--rust-dark); text-decoration: none; margin-right: 14px; font-weight: 600; display: inline-block; }
+  h2.bucket-head { font-size: 16px; color: var(--rust-dark); margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* AGENDA */
+  .agenda { display: flex; flex-direction: column; gap: 6px; }
+  .agenda-item { display: flex; gap: 12px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .agenda-item .time { flex: none; width: 92px; font-weight: 700; color: var(--rust-dark); font-size: 13px; }
+  .agenda-item .body { flex: 1; min-width: 0; }
+  .agenda-item .title { font-size: 14px; font-weight: 600; line-height: 1.3; }
+  .agenda-item .meta { font-size: 12px; color: var(--slate); margin-top: 2px; }
+  .agenda-item .cal-tag { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; background: var(--sand); color: var(--slate); margin-left: 4px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.05em; }
+  .agenda-conflict { border-left: 3px solid var(--red); background: #fdf2f2; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-conflict strong { color: var(--red); }
+  .agenda-note { border-left: 3px solid var(--amber); background: #fdf8ec; padding: 8px 12px; border-radius: 0 6px 6px 0; margin: 8px 0; font-size: 13px; }
+  .agenda-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* TASKS */
+  h3.task-group { font-size: 13px; color: var(--slate); margin: 14px 0 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .task { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  .task .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .task .title { font-weight: 700; font-size: 14px; }
+  .task .due { font-size: 11px; color: var(--slate); flex: none; }
+  .task .due.overdue { color: var(--red); font-weight: 700; }
+  .task .chip { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; color: #fff; }
+  .task.in-progress .chip { background: var(--amber); }
+  .task.human-in-loop .chip { background: var(--gold); color: var(--ink); }
+  .task.review .chip { background: var(--olive); }
+  .task.ready .chip { background: var(--slate); }
+  .task .prio { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; vertical-align: middle; border: 1px solid var(--red); color: var(--red); }
+  .task .next { font-size: 13px; margin-top: 6px; }
+  .task a.task-link { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .task a.task-link:hover { text-decoration: underline; }
+  .task-empty { font-style: italic; color: var(--slate); font-size: 13px; padding: 8px 0; }
+
+  /* CONVERSATIONS */
+  .conv { display: flex; gap: 10px; background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 10px 12px; margin: 6px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); position: relative; }
+  .conv .flag { flex: none; width: 4px; align-self: stretch; border-radius: 2px; }
+  .conv.followup .flag { background: var(--amber); }
+  .conv.action .flag { background: var(--red); }
+  .conv.fyi .flag { background: var(--olive); }
+  .conv .main { flex: 1; min-width: 0; }
+  .conv .head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .conv .who { font-weight: 700; font-size: 14px; }
+  .conv .when { font-size: 11px; color: var(--slate); flex: none; }
+  .conv .subj { font-size: 13px; color: var(--slate); margin-top: 2px; }
+  .conv .note { font-size: 13px; margin-top: 6px; }
+  .conv .badge { display: inline-block; font-size: 10px; padding: 1px 7px; border-radius: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-right: 4px; color: #fff; vertical-align: middle; }
+  .conv.followup .badge { background: var(--amber); }
+  .conv.action .badge { background: var(--red); }
+  .conv.fyi .badge { background: var(--olive); }
+  .conv a.open-thread { font-size: 11px; color: var(--rust-dark); text-decoration: none; margin-top: 4px; display: inline-block; font-weight: 600; }
+  .conv a.open-thread:hover { text-decoration: underline; }
+
+  /* NEWS */
+  details.item { background: #fff; border: 1px solid var(--rule); border-radius: 8px; padding: 0; margin: 8px 0; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
+  details.item summary { cursor: pointer; padding: 12px 14px; font-weight: 600; font-size: 15px; line-height: 1.35; list-style: none; position: relative; padding-right: 30px; }
+  details.item summary::-webkit-details-marker { display: none; }
+  details.item summary::after { content: '+'; position: absolute; right: 14px; top: 12px; color: var(--rust); font-weight: 400; font-size: 18px; transition: transform 0.2s; }
+  details.item[open] summary::after { content: '−'; }
+  details.item summary .source-tag { display: inline-block; background: var(--sand); color: var(--slate); font-size: 11px; padding: 1px 7px; border-radius: 10px; margin-left: 6px; vertical-align: middle; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 500; }
+  details.item summary .teaser { display: block; font-weight: 400; font-size: 13px; color: var(--slate); margin-top: 4px; line-height: 1.4; }
+  details.item .body-news { padding: 0 14px 14px; }
+  details.item .body-news p { margin: 6px 0 10px; font-size: 14px; }
+  details.item .body-news a.source-link { display: inline-block; background: var(--rust); color: #fff; text-decoration: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  details.item .body-news a.source-link:hover { background: var(--rust-dark); }
+
+  footer { font-size: 11px; color: var(--slate); margin-top: 30px; padding-top: 12px; border-top: 1px solid var(--rule); text-align: center; }
+  footer a { color: var(--rust-dark); }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<header class="brief-head">
+<h1>Daily Brief</h1>
+<p class="sub">Friday, November 20, 2026 · OpenAI flagged suspicious activity on a Buyerson API key overnight and may revoke it within 24 hours · MCN asked for SR&amp;ED project summaries and GitHub evidence by end of today · the Zuleta bank statements went out yesterday afternoon · Weekly Product Demo at 8:00 AM, on the same day Mark's tournament starts in Stoney Creek · Osler, Oliver, Thomas Egloff and VideoDB are still waiting on you · personal mail and calendars could not be read for a third morning</p>
+</header>
+
+<nav class="section-nav">
+<a href="#agenda">Today's Agenda</a>
+<a href="#tasks">Tasks</a>
+<a href="#conversations">Conversations</a>
+<a href="#ai-products">AI Products</a>
+<a href="#ai-meta">AI Industry</a>
+<a href="#innovation">Innovation</a>
+<a href="#newsletters">Newsletters</a>
+</nav>
+
+<!-- ============== SECTION 1 · TODAY'S AGENDA ============== -->
+<h2 class="bucket-head" id="agenda">Today's Agenda · Fri Nov 20</h2>
+
+<div class="agenda-conflict">
+<strong>Overlap: Weekly Product Demo (8:00–8:30 AM) falls inside day 1 of Mark's Stoney Creek tournament (8:00 AM–4:00 PM block).</strong> The tournament entry is a placeholder with no game times, and I cannot see who is travelling with him. If you are driving, take the demo from the car or the rink on your phone, or ask Rob to present and send a Loom afterwards. If Karine has the tournament, there is no clash.
+</div>
+
+<div class="agenda-note">
+<strong>Personal calendars not read, so this agenda is incomplete.</strong> The <code>gog</code> token for the personal Google account is still revoked (<code>invalid_grant</code>, day 83) and the claude.ai Calendar connector is not available to a headless run. Your primary calendar, the Family calendar and the team import feeds on that account are unknown to me today. The work side answered. The fix is <code>gog auth login -a johnhkotowski@gmail.com</code>, about five minutes in a terminal.
+</div>
+
+<div class="agenda">
+
+<div class="agenda-item">
+<div class="time">8:00 AM<br><span style="font-weight:400;">to 8:30</span></div>
+<div class="body">
+<div class="title">Weekly Product Demo <span class="cal-tag">pricingsaas</span></div>
+<div class="meta">Romain and Nicole accepted, David is tentative, Chris Truce declined at 3:24 this morning · Ulrik's question from Wednesday, whether the packaging product is the right bet right now, has had no written answer from Oliver, so it may come up here</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">8:00 AM<br><span style="font-weight:400;">to 4:00 PM</span></div>
+<div class="body">
+<div class="title">Nepean Raiders U14B White · Stoney Creek Tournament of Champions, day 1 of 3 <span class="cal-tag">kids · PuckFinder feed</span></div>
+<div class="meta">Placeholder block from the import feed, no game times published there · continues Saturday and Sunday</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">10:30 AM<br><span style="font-weight:400;">to 11:00</span></div>
+<div class="body">
+<div class="title">Anand Rajaram and John Kotowski <span class="cal-tag">pricingsaas · looks stale</span></div>
+<div class="meta">Anand declined this slot on Monday and accepted Mon Nov 23 at 3:30 PM instead. The entry is still on your calendar, so I list it, but I do not expect him to join. Deleting it would free the slot.</div>
+</div>
+</div>
+
+<div class="agenda-item">
+<div class="time">By end<br><span style="font-weight:400;">of day</span></div>
+<div class="body">
+<div class="title">SR&amp;ED: project summaries and fiscal-year GitHub evidence to MCN <span class="cal-tag">deadline from Thursday's call</span></div>
+<div class="meta">Not a calendar event. The Fireflies recap of Thursday's kick-off records "Send project summaries and fiscal-year GitHub evidence by end of day tomorrow". Details in the conversations section.</div>
+</div>
+</div>
+
+</div>
+
+<div class="agenda-note">
+<strong>Sat Nov 21 and Sun Nov 22:</strong> Stoney Creek tournament days 2 and 3, 8:00 AM–4:00 PM placeholders again.<br>
+<strong>Sun Nov 22:</strong> Wildcats U13BB practice, 6:00–7:00 PM. Tournament day 3 ends at 4:00 PM on paper, and Stoney Creek is a long drive from Nepean, so one parent cannot do both.<br>
+<strong>Mon Nov 23:</strong> PricingSaaS L10 10:00–11:00 AM · Anand Rajaram 3:30–4:00 PM · Wildcats U13BB practice 5:00–6:00 PM · Raiders U14B White vs Stittsville Rams 6:45–8:15 PM. The practice and the game are 45 minutes apart, so two rinks may need two drivers.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 6px 0 0;">2 work events today, one of them probably stale. Checked live through gog: john@buyerson.co (primary plus the pricingsaas share) and john@pricingsaas.com (primary plus the PuckFinder import feed); both answered. Personal side (primary, Family, team import feeds on that account) NOT read: gog invalid_grant day 83, Calendar connector not attached to this run. No squash game is visible, but squash lives on the personal calendar, so I cannot check the buffer rule today.</p>
+
+<!-- ============== SECTION 2 · MISSION CONTROL TASKS ============== -->
+<h2 class="bucket-head" id="tasks">Mission Control · Open Tasks</h2>
+<p class="task-empty">🟢 No open tasks on the board. In progress, blocked, review and ready all came back empty (raw API, HTTP 200 on all four, Friday 05:10 ET). Everything in the next section is waiting on you. Things I can take if you say "track it": propose times to Thomas Egloff, pull the learnings from the 127 agent conversations for Oliver, check the VideoDB listing and the ContractorRise request, and draft the intro between Osler and your new counsel.</p>
+
+<!-- ============== SECTION 3 · CONVERSATIONS ============== -->
+<h2 class="bucket-head" id="conversations">Active Conversations · Last 7 Days</h2>
+
+<div class="agenda-note">
+<strong>Work inboxes read, personal inbox not.</strong> buyerson and pricingsaas came through gog. The personal inbox is dark for a third straight day: the gog token is revoked and no Gmail connector is attached to this run. The one personal card below is as it stood on Tuesday. Since Thursday's brief: you sent Milene the bank statements, the SR&amp;ED kick-off happened and left a deadline for today, Janni's demo was booked for Mon Nov 30, OpenAI sent a key-security alert, and Ulrik forwarded a new listing request. Nothing went out from either work account on Osler, Oliver, Thomas or VideoDB.
+</div>
+
+<p style="font-size:12px; color:var(--slate); margin: 0 0 12px;">
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--red); color:#fff;">Action</span> needs something concrete from you &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--amber); color:#fff;">Follow-up</span> ball is in play, watch it &nbsp;·&nbsp;
+<span class="badge" style="display:inline-block; font-size:10px; padding:1px 7px; border-radius:8px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; background:var(--olive); color:#fff;">FYI</span> informational only</p>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> OpenAI Trust &amp; Safety, API key on the Buyerson account</div>
+<div class="when">Today 3:32 AM ET · buyerson · new · 24-hour clock</div>
+</div>
+<div class="subj">"We have detected suspicious activity on your OpenAI API key (sk-pro…gQcA) … OpenAI may revoke the affected API Key if you do not rotate it within the next 24 hours."</div>
+<div class="note">This is an automated notice, not a person, and I am including it because of the deadline: roughly 3:30 AM Saturday. The message passes SPF, DKIM and DMARC for tm.openai.com, so it does look like it came from OpenAI. Even so, do not use the button in the email; go to platform.openai.com yourself, check usage on the key ending gQcA, and rotate it. Whatever uses that key will stop working when you rotate it or when OpenAI revokes it, so the new key has to go in wherever the old one lives. I checked the .env files in the top two levels of ~/Projects and did not find that key, so it is probably stored in a hosted service (Supabase, Vercel or similar) and I cannot tell you which.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1f815893daac25" target="_blank">Open alert →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Maria Linan and Mauricio Gallardo (MCN), SR&amp;ED claim</div>
+<div class="when">Thu 1:00 PM ET call · buyerson · due end of today</div>
+</div>
+<div class="subj">Fireflies recap: "Documentation: Send project summaries and fiscal-year GitHub evidence by end of day tomorrow."</div>
+<div class="note">I only have the automated recap, not the transcript, so check it against your own notes. It records that Mission Control's AI-agent framework is the strongest candidate this year, that PricingSaaS claims are out after the company sale, that the hockey scheduling work needs strong evidence that existing tools cannot solve the problem, and that the video analysis work may be for next year. Separately, Mauricio's request for the financial side (salaries, bonuses, vacation, start and end dates, R&amp;D hours for Oct 2025 to Sep 2026) has had no reply since his second ask on Nov 9, and both of his messages are still unread. Say "pull the GitHub evidence" and I assemble commit and PR summaries for the fiscal year for you to review before anything is sent.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a1f528f45c02f09" target="_blank">Open recap →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a178252dc9e3f71" target="_blank">Open Mauricio →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Jacques Du Plessis and Christina Brown (Osler), PricingSaas Inc. registered office</div>
+<div class="when">Tue 8:41 AM ET · buyerson · 3 days, no reply</div>
+</div>
+<div class="subj">Jacques: "If easier, please connect us with your new counsel and we can coordinate this with them directly."</div>
+<div class="note">Unchanged since yesterday. Osler is still listed as the registered office for PricingSaas Inc. Christina chased on Oct 16 and again Monday, and a partner then offered the easier route: one email introducing them to whoever handles corporate filings now. Tell me who the new counsel is and I draft the intro for you to approve.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/19a3c74baa9f3cc1" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Oliver Brunchmann (WTP), SaaStr December ad</div>
+<div class="when">Tue 2:24 AM ET · pricingsaas · 3 days, no reply</div>
+</div>
+<div class="subj">"Nice John, and what have we learned from those 127 conversations? And are any of the people 'Lead worthy'?"</div>
+<div class="note">Still unanswered and still unread, with Ulrik and Rob copied. Oliver is in the 8:00 demo invite list, so he may ask in person. Say "pull the learnings" and I summarise what people asked the agent and which of the 72 people look worth a sales follow-up, for you to send.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1c5f6c46ac5336" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Thomas Egloff, research interview to rebook</div>
+<div class="when">Fri Nov 13, 2:22 PM ET · pricingsaas · 7 days waiting on you</div>
+</div>
+<div class="subj">"No problem, let's connect next week. Let me know what works for you."</div>
+<div class="note">The "next week" you asked for ends today. Your work calendar is open after 8:30 AM if the 10:30 Anand entry is stale, unless you are in Stoney Creek. Next week has Monday and Tuesday before the Copenhagen trip takes over. If today is not realistic, a short note offering Monday or Tuesday keeps it alive. Say "propose times" and I draft it with three slots for you to approve.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1d60c7e41ea80a" target="_blank">Open thread →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Listing requests: Nischay Joshi (VideoDB) and Emin Celik (ContractorRise, via Ulrik)</div>
+<div class="when">Wed 2:21 AM and today 2:01 AM ET · pricingsaas · one waiting 2 days, one new</div>
+</div>
+<div class="subj">VideoDB: "Our page at pricingsaas.com/companies/videodb says VideoDB has no free tier and that paid plans start at $20 a month. Could you update the pricing"</div>
+<div class="note">Nobody has answered Nischay. He says the right description is free to start with $20 of credits and no credit card, then usage-based charges. New this morning: Ulrik forwarded, without comment, a request from ContractorRise's founder to be added to the companies PricingSaaS tracks (CRM and job software for small US contractors; Free $0, Pro $49, Business $99 a month, per their email). Say "fix it" and I check both pricing pages against our data and draft the two replies.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1ed88308750101" target="_blank">Open VideoDB →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1f7c2c6d3afa58" target="_blank">Open ContractorRise →</a>
+</div>
+</div>
+</div>
+
+<div class="conv action">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Action</span> Personal side, carried from Tuesday: Wildcats treasurer items, CIHA camp, Eric Glaude</div>
+<div class="when">Last read Tue Nov 17 · personal · not re-read for three days</div>
+</div>
+<div class="subj">Gerald needed the exact payee name for Carolyn's $600 refund cheque.</div>
+<div class="note">I could not open the personal inbox, so these are as they stood on Tuesday and you may have closed some. On the Wildcats account: the payee name for the refund cheque, Kristy's request to confirm Hayden is paid up, and Emily's seven receipts. Annie Bourdeau's CIHA 2027 Elite Summer Camp acceptance (Jul 12–16, 2027) wants payment by Tue Dec 1 plus health and waiver forms; the payment link's slug said Jul 19–23, worth checking before you pay. Eric Glaude had asked for your cell number for the Raiders staff text group; the bench request was for last night, so that part has passed.
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e1e0f1801a351" target="_blank">Open refund thread →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/johnhkotowski@gmail.com/#inbox/1a1e54e8f97608d1" target="_blank">Open Eric →</a>
+</div>
+</div>
+</div>
+
+<div class="conv followup">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">Follow-up</span> Rob Litterst and Janni Zesach (Volaris Group), Pulse demo</div>
+<div class="when">Thu 7:04 AM ET · pricingsaas · booked Mon Nov 30, 9:00–10:00 AM ET</div>
+</div>
+<div class="subj">Janni: "Thanks for the invite. I hope if it OK I bring to of my team members." Rob: "Yes, no problem!"</div>
+<div class="note">Janni said 9:00 AM ET works on either day and Rob sent the invite for Monday Nov 30. That is the slot I flagged yesterday: 9:00 AM ET is 3:00 PM in Copenhagen, the time Nicole planned to walk you to the apartment on the day you land. With three people from Volaris now attending, moving the check-in is probably easier than moving the demo. A note to Nicole would settle it, or ask Rob to shift to Tuesday at 9:00, which Janni also offered. The invite is in your inbox; I cannot see whether you have accepted.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1ef6f88b3ef96e" target="_blank">Open thread →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1f3990856c348d" target="_blank">Open invite →</a>
+</div>
+</div>
+</div>
+
+<div class="conv fyi">
+<div class="flag"></div>
+<div class="main">
+<div class="head">
+<div class="who"><span class="badge">FYI</span> Closed or quiet: Zuleta statements, Monday's product demo thread, AI Pricing Roadmap, cold pitches</div>
+<div class="when">Mon to Thu · buyerson + pricingsaas</div>
+</div>
+<div class="subj">You to Milene, Thursday 3:18 PM: "I am including all the statements from RBC, but also from Venn and Stripe … I attached a diagram that explains the money flow"</div>
+<div class="note">The bank statements went to Milene Valero with Angela Paulo copied, along with a note about PuckFinder launching since June. No reply yet, which is normal after one evening; the HST work can restart on their side. Per the standing rule, any HST approval request from Zuleta needs your explicit "I agree". The Product Demo thread from Nov 16 has not moved since Ulrik's Wednesday note; Oliver has not written his view. Oliver shared a Drive folder titled "The AI Pricing Roadmap" on Tuesday and you and Rob both acknowledged it. The rest of the week's personal-looking mail on pricingsaas is cold outreach (Xminds, Get To Scale, a paid-placement request from trygptinf, SOC 2 and SEO pitches) and needs no reply.
+<a class="open-thread" href="https://mail.google.com/mail/u/john@buyerson.co/#inbox/1a179dc2355954de" target="_blank">Open Zuleta →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1e62eadaddf7a6" target="_blank">Open demo thread →</a>
+<a class="open-thread" href="https://mail.google.com/mail/u/john@pricingsaas.com/#inbox/1a1ea3e7b33d491b" target="_blank">Open roadmap →</a>
+</div>
+</div>
+</div>
+
+<!-- ============== SECTION 4 · NEWS ============== -->
+
+<h2 class="bucket-head" id="ai-products">AI Products</h2>
+
+<details class="item">
+<summary>Google gives Gemini computer use on the Mac; an Apple job listing points to its own agent <span class="source-tag">TechCrunch</span><span class="teaser">Every major lab now has an agent that operates a desktop, and Apple appears to be building one.</span></summary>
+<div class="body-news">
+<p>Google's Gemini app for macOS can now carry out multistep tasks across native apps, local files and websites, shown in a live preview while your own screen and cursor stay free. Users can pause, stop and approve actions. It is available in English in the US on Google AI Plus, Pro and Ultra plans. TechCrunch notes Google is late: OpenAI, Anthropic and Meta already offer this. Separately, Bloomberg spotted an Apple listing for a senior engineering manager to build "an AI agent that can use a computer", one that browses, works across apps, runs commands and writes code. Apple did not comment.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/google-gives-gemini-the-ability-to-use-your-mac-for-you/" target="_blank">TechCrunch →</a>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/apple-may-be-developing-its-own-ai-agent-that-runs-your-mac/" target="_blank">TechCrunch on Apple →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Reuters: Meta employees report Muse mixing up conversations between accounts <span class="source-tag">TechCrunch · Reuters</span><span class="teaser">A cautionary case for any agent that holds private data for many users.</span></summary>
+<div class="body-news">
+<p>According to internal posts seen by Reuters, Meta staff said the Muse agent surfaced childcare requests, career advice, product orders and bank balances that were not theirs. One employee received another person's Capital One and Charles Schwab balances inside a chat about weather and tides. Another was reminded to answer a Signal message from her sister and said she had not granted access to other apps. Meta's response is that employees test different versions of Muse than the public, and that this testing is how protections get built. Muse launched in September and has more than 10 million downloads.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/metas-ai-agent-muse-is-mixing-up-conversations-and-exposing-private-data-report-says/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Anthropic says Claude Fable 5.2 solved two open problems in black hole physics <span class="source-tag">Anthropic · HN 501</span><span class="teaser">Agents left running for six weeks produced new results in theoretical physics, by the company's account.</span></summary>
+<div class="body-news">
+<p>An Anthropic researcher asked Claude for a list of open problems in theoretical physics, got 22 candidates, and set up separate agents on each; they ran in the background for about six weeks. Two were solved. One completes a calculation set out in 2003 and shows that a phase transition into a black hole, in a class of model universes, is abrupt and not smooth. The other proves the exact value of a limit on the mass of the lightest black hole in a simplified two-dimensional universe. Anthropic says neither result describes our universe directly or has practical uses. This is the company's own write-up, published on the day of its market debut.</p>
+<a class="source-link" href="https://www.anthropic.com/research/claude-black-hole-physics" target="_blank">Anthropic →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="ai-meta">AI Industry &amp; Meta</h2>
+
+<details class="item">
+<summary>Anthropic's first day of trading: opens at $111.50, closes at $97.17 <span class="source-tag">TechCrunch · Slashdot · Latent Space</span><span class="teaser">Thursday's brief had the $83 pricing; this is how the first day went.</span></summary>
+<div class="body-news">
+<p>ANT opened 34% above its $83 offering price, which briefly put the market value above $2 trillion, and closed up 17% at $97.17, a valuation of about $1.76 trillion by Platformer's figure. The $81.3 billion offering is the largest on record, ahead of SpaceX's $75 billion in June. Including a concurrent private placement, net proceeds are expected to be $104.8 billion, and TechCrunch reports roughly $220 billion in cash reserves. The prospectus shows $33.24 billion in revenue for the nine months to Sept. 30, per CNBC. The seven founders sold about $280 million of shares each. Latent Space expects lockup expiries to weigh on the price over the next year.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/anthropic-hits-nasdaq-exchanges-at-110-27-above-ipo-price/" target="_blank">TechCrunch →</a>
+<a class="source-link" href="https://slashdot.org/story/26/11/19/1753210/anthropic-tops-2-trillion-market-cap-after-ipo-debut" target="_blank">Slashdot →</a>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/anthropics-7-founders-cashed-out-nearly-2b-in-record-breaking-ipo/" target="_blank">TechCrunch on the founders →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Fireworks co-founder: most companies can skip frontier models once token spend passes $10,000 a month <span class="source-tag">TechCrunch</span><span class="teaser">A pricing argument: buyers are starting to compare cost per task, not cost per token.</span></summary>
+<div class="body-news">
+<p>Interviewed at Slush, Chenyu Zhao said open-weight models are now three to six months behind the frontier. His rule of thumb is that using the best model is the low-risk choice before product-market fit, and that at 10,000 to 100,000 users and $10,000 to $100,000 a month in tokens it is time to look at open models. He expects a "two-model world" with frontier models for planning and cheaper ones for routine work, which is why routing is getting attention. Fireworks sells exactly this, so he is not neutral, and the company disclosed two security incidents this autumn; Notion has disconnected from it.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/anthropic-rival-says-companies-can-mostly-skip-the-pricey-models/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="innovation">Innovation &amp; Infra</h2>
+
+<details class="item">
+<summary>Google signs with Blue Origin to launch data-centre satellites, first flight in early 2029 <span class="source-tag">Slashdot · Engadget</span><span class="teaser">Orbital compute moves from a research paper to a launch contract.</span></summary>
+<div class="body-news">
+<p>Under Project Suncatcher, each satellite will carry roughly a data-centre rack's worth of capacity, including Google's own tensor processing units, and will fly on New Glenn rockets into a sun-synchronous orbit for near-constant solar power. Google calls it a "long-term moonshot" to test whether AI infrastructure can run in space, away from the pressure data centres put on grids, land and cooling. Nothing launches for more than two years, so this is an experiment with a date, not a product.</p>
+<a class="source-link" href="https://science.slashdot.org/story/26/11/20/0010255/google-signs-deal-with-blue-origin-to-send-satellite-data-centers-into-orbit" target="_blank">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>JPMorgan, Visa and Mastercard disclose customer marketing data taken through third-party vendors <span class="source-tag">Slashdot · Reuters · HN 174</span><span class="teaser">The exposure came through marketing vendors, not the banks' own systems.</span></summary>
+<div class="body-news">
+<p>All three said core systems and payment networks were unaffected, and JPMorgan said the incident is unrelated to this week's banking outages. An extortion group calling itself "n0n" claimed the data on Nov 16. Reuters reviewed the JPMorgan set and found what appear to be 124 employee email addresses and more than 16,000 customer email addresses, some with phone numbers and postal codes, though it could not verify authenticity. The group has claimed about 200 incidents since September, according to eCrime.ch.</p>
+<a class="source-link" href="https://it.slashdot.org/story/26/11/19/2112238/jpmorgan-visa-mastercard-disclose-cyberattack-on-third-party-vendors" target="_blank">Slashdot →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>PHP ships fixes for seven critical remote code execution flaws; OpenSSL has a buffer overflow rated 9.8 <span class="source-tag">Slashdot · SecurityWeek · HN 245</span><span class="teaser">Another round of server patches, four weeks after PHP2Shell and a day after NGINX and Ruby.</span></summary>
+<div class="body-news">
+<p>PHP's updates cover all supported versions. One of the seven, CVE-2026-115560 in file-upload progress tracking, was disclosed last month and needs an unusual configuration to trigger; the maintainers' mitigation in the meantime was to disable session upload progress. For OpenSSL I have only the pull request title and the Hacker News listing: CVE-2026-121481, a buffer overflow in EVP_EncodeBlock(), listed at CVSS 9.8. I have not read an advisory, so treat the severity as reported. If anything of yours runs self-managed PHP, update it; hosted platforms patch on their own schedule.</p>
+<a class="source-link" href="https://developers.slashdot.org/story/26/11/19/2049222/php-readies-critical-security-updates-to-patch-another-rce-flaw" target="_blank">Slashdot →</a>
+<a class="source-link" href="https://github.com/openssl/openssl/pull/33652" target="_blank">OpenSSL pull request →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>UK tribunal orders the government to confirm its secret backdoor order to Apple <span class="source-tag">TechCrunch · HN 654</span><span class="teaser">A rare public ruling against secrecy in an encryption order with worldwide reach.</span></summary>
+<div class="body-news">
+<p>The Investigatory Powers Tribunal rejected the Home Office's claim that confirming the order would damage national security. The "technical capability notice" reportedly demanded access to encrypted iCloud data anywhere in the world and was later narrowed to British nationals; Apple refused, withdrew Advanced Data Protection from UK users and challenged both versions. Apple was legally barred from acknowledging the order until now and said it welcomes the decision. Liberty International, which brought the case, says this is the first known time the government has been made to confirm such a notice.</p>
+<a class="source-link" href="https://techcrunch.com/2026/11/19/u-k-government-forced-to-disclose-secret-apple-backdoor-order/" target="_blank">TechCrunch →</a>
+</div>
+</details>
+
+<h2 class="bucket-head" id="newsletters">Newsletter Picks</h2>
+
+<details class="item">
+<summary>Latent Space: how Linear got to $100M ARR, with more than half its issues now created by agents <span class="source-tag">Latent Space</span><span class="teaser">The most relevant read today for PricingSaaS: AI budgets, one-year deals and the end of pure seat pricing.</span></summary>
+<div class="body-news">
+<p>COO Cristina Cordova says agents created 3% of Linear's work a year ago and more than half now. Linear has over 40,000 paying customers and 177% net revenue retention, and was entirely seat-priced until June. She watches agent usage against app usage: if the first rises and the second does not, the product is becoming a commodity. On buying behaviour, she says dedicated AI budgets let products skip the usual fight for spend, that buyers are signing one-year deals and paid pilots, not three-year contracts, and that some overnight $100M stories are a handful of $30 to $40 million contracts. Linear has never hired an SDR.</p>
+<a class="source-link" href="https://latent.space/p/linear-scaling/" target="_blank">Latent Space →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Platformer: Anthropic goes public, with a protest outside its headquarters <span class="source-tag">Platformer</span><span class="teaser">The critical read on the same day's event.</span></summary>
+<div class="body-news">
+<p>Casey Newton sat out the writing because of his conflicts and edited the piece. It sets the record offering against more than 100 protesters outside Anthropic's San Francisco office, four of whom were arrested for allegedly blocking the entrance, and a "MisAnthropic Statement" signed by people as far apart as Gary Marcus and Guillaume Verdon. The statement accuses the company of using safety branding while weakening its pledges. The piece then turns to recursive self-improvement, the risk the company itself warns about.</p>
+<a class="source-link" href="https://www.platformer.news/anthropic-goes-public/" target="_blank">Platformer →</a>
+</div>
+</details>
+
+<details class="item">
+<summary>Astral Codex Ten: the AI forecasting agenda <span class="source-tag">Astral Codex Ten</span><span class="teaser">AI forecasters now match top humans on standard questions; the open problem is conditional ones.</span></summary>
+<div class="body-news">
+<p>Scott Alexander writes that specialised AI forecasters equal or beat top human performance on benchmarks such as ForecastBench and the Metaculus Cup, and that general models are about six months behind. The interesting use is conditional forecasting, "if we do X, what happens to Y", which speaks directly to decisions and which prediction markets handle badly. The Forecasting Research Institute found a year ago that AI did noticeably worse on conditional questions, and the experts he spoke to expect that to improve gradually, not flip at once.</p>
+<a class="source-link" href="https://www.astralcodexten.com/p/the-ai-forecasting-agenda" target="_blank">Astral Codex Ten →</a>
+</div>
+</details>
+
+<p style="font-size:12px; color:var(--slate); margin: 10px 0 0;">Checked, nothing included: Stratechery (Thursday's interview with Eric Seufert on agentic commerce is subscriber-only), Ben's Bites ("My wife thinks AI is a person", a personal essay), Lenny's (nothing since Tuesday's tools bundle), Product Compass (nothing since Tuesday's AI PM guide), MKT1 (nothing since Nov 6). Growth Unhinged's feed did not answer and no new issue arrived by email, so Wednesday's post, which ran yesterday, is still the latest I know of. Every's feed returned a web page, not a feed, and the AI Daily Brief podcast feed returned 404, so both went unchecked. Left out as funding, deals, overlap or unverified: Palo Alto Networks buying Applied Compute, Everful's raise, Nvidia approaching Arm's Rene Haas (the approach was reported here on Monday), TechCrunch's recap of the outages covered Tuesday to Thursday, and the New Scientist report on a pancreatic cancer virus therapy (HN 781), which I could not open to check.</p>
+
+<footer>
+Generated by Morgan · 2026-11-20 05:19 ET · Sources: gog (buyerson + pricingsaas calendars including the PuckFinder import feed, both work inboxes), Mission Control (raw API), Hacker News, TechCrunch, Slashdot, Stratechery, Platformer, Lenny's Newsletter, Latent Space, Astral Codex Ten, Ben's Bites, MKT1, Product Compass · Unreachable this run: Growth Unhinged, Every, AI Daily Brief feeds · Personal calendars and personal inbox unavailable (gog invalid_grant day 83; Calendar and Gmail connectors not attached to a headless run) · Permalink: <a href="https://johnkotowski.github.io/daily-brief/2026-11-20.html">johnkotowski.github.io/daily-brief/2026-11-20.html</a> · <a href="archive.html">Archive</a>
+</footer>
+
+</div>
+</body>
+</html>
